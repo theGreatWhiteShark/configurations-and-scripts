@@ -1,6 +1,11 @@
 All configuration files concerning Emacs.
 
-**Tip**: Just link your *.emacs* file in your using `ln -s` to the one in a Git repository. This way it's very easy to have your latest configurations on all the computers your are working at.
+**Tip**: Just link your *.emacs* file in your using a symbolic link to the one in a Git repository. This way it's very easy to have your latest configurations on all the computers your are working at.
+
+```
+# In the root of the repository
+ln -s emacs/.emacs ~/.emacs
+```
 
 # Emacs packages as submodules
 
