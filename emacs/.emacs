@@ -7,7 +7,7 @@
 (setq standard-indent 2)
 
 ;; loading personal scripts and functions from ~.elisp
-(defvar elisp-path '("~/.elisp/"))
+(defvar elisp-path '("~/git/configurations-and-scripts/emacs/.elisp/"))
 (mapcar #'(lambda(p) (add-to-list 'load-path p)) elisp-path)
 
 ;; Automatical loading of octave files
@@ -37,7 +37,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ESS and R
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  
-(add-to-list 'load-path "~/git/emacs-spass/ESS/lisp" "~/git/emacs-spass/ESS/etc")
+(add-to-list 'load-path "~/git/configurations-and-scripts/emacs/ESS/lisp" "~/git/configurations-and-scripts/emacs/ESS/etc")
 (load "ess-site")
 (require 'ess-site)
 
@@ -66,7 +66,7 @@
 
 ;; (setq default-abbrev-mode t)
 (setq save-abbrevs nil)
-(load "~/.emacs.d/abbrev_defs.el")
+(load "~/git/configurations-and-scripts/emacs/.emacs.d/abbrev_defs.el")
 ;; this stupid thing just don't seems to work. Skeletons have to be inserted by hand.
 
 ;; F5 for running code and generating pdf with knitr
@@ -83,8 +83,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org Mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq load-path (cons "~/git/emacs-spass/org-mode/lisp" load-path))
-(setq load-path (cons "~/git/emacs-spass/org-mode/contrib/lisp" load-path))
+(setq load-path (cons "~/git/configurations-and-scripts/emacs/org-mode/lisp" load-path))
+(setq load-path (cons "~/git/configurations-and-scripts/emacs/org-mode/contrib/lisp" load-path))
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-hook 'org-mode-hook 'turn-on-font-lock)
 
@@ -208,7 +208,7 @@
 (add-hook 'org-babel-after-execute-hook 'foreign-display-inline-images 'append)
 (add-to-list 'org-src-lang-modes (quote ("plantuml" . fundamental)))
 (setq
- org-ditaa-jar-path "~/git/emacs-spass/org-mode/contrib/scripts/ditaa.jar"
+ org-ditaa-jar-path "~/git/configurations-and-scripts/emacs/org-mode/contrib/scripts/ditaa.jar"
  org-plantuml-jar-path "~/scripts/java/plantuml.jar"
  org-babel-results-keyword "results" ; make babel results blocks lowercase
  org-confirm-babel-evaluate nil
@@ -252,28 +252,20 @@
 ;; MobileOrg
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
 
-;; automatic line breaking
-;; (add-hook 'org-mode-hook (lambda() (auto-fill-mode 1)))
-
-;; using org files to create reveal.js presentations
-(load-file "~/git/emacs-spass/my-org-reveal/ox-reveal.el")
-(require 'ox-reveal)
-(setq org-reveal-root "file:///home/phil/git/diverse/reveal.js")
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; org-mode
 
 ;; abbreviations
 (setq 
- abbrev-file-name "~/.emacs.d/abbrev_defs.el"
+ abbrev-file-name "~/git/configurations-and-scripts/emacs/.emacs.d/abbrev_defs.el"
  save-abbrevs t
 )
 
 ;; yasnippet
-(load-file "~/git/emacs-spass/my-yasnippet/yasnippet.el")
+(load-file "~/git/configurations-and-scripts/emacs/yasnippet/yasnippet.el")
 (require 'yasnippet)
 (setq yas-snippet-dirs
-      '("~/git/emacs-spass/my-yasnippet/snippets"
-	"~/git/emacs-spass/my-yasnippet/yasmate/snippets"))
+      '("~/git/configurations-and-scripts/emacs/yasnippet/snippets"
+	"~/git/configurations-and-scripts/emacs/yasnippet/yasmate/snippets"))
 (yas-global-mode 1)
 
 ;; but the prevents tab expansion in the terminal, so:
@@ -531,7 +523,7 @@
 (require 'ido)
 (ido-mode 'both) ;; for buffers and files
 (setq
- ido-save-directory-list-file "~/.emacs.d/cache/ido.last"
+ ido-save-directory-list-file "~/git/configurations-and-scripts/emacs/.emacs.d/cache/ido.last"
  ido-everywhere t
  ido-max-directory-size 100000
  ido-default-file-method 'selected-window ; use current window when visiting files
@@ -569,7 +561,7 @@
 (global-set-key (kbd "C-0") '(lambda()(interactive)(modify-frame-parameters nil `((alpha . 100)))))
 
 ;; activating smex for 'ido' like search in the emacs commands
-(setq smex-save-file "~/.emacs.d/smex.save")
+(setq smex-save-file "~/git/configurations-and-scripts/emacs/.emacs.d/smex.save")
 (require 'smex)
 (smex-initialize)
 (global-set-key (kbd "M-X") 'smex)
@@ -647,7 +639,7 @@
 	       ("Configuration"
 		(or 
 		 (filename . "~/")
-		 (filename . "~/.emacs.d/")
+		 (filename . "~/git/configurations-and-scripts/emacs/.emacs.d/")
 		 (mode . emacs-lisp-mode)))
 	       ("Programming"
 		(or
@@ -663,6 +655,7 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; interactive editing
+(add-to-list 'load-path "~/git/configurations-and-scripts/emacs/iedit")
 (require 'iedit)
 (define-key global-map (kbd "C-\\") 'iedit-mode)
 (global-set-key (kbd "C-|") 'replace-string)
@@ -695,7 +688,7 @@
 (require 'midnight)
 
 ;; using anything to find things
-(add-to-list 'load-path "~/git/emacs-spass/anything-config")
+(add-to-list 'load-path "~/git/configurations-and-scripts/emacs/anything-config")
 (require 'anything-config)
 (global-set-key (kbd "C-x b")
 		(lambda() (interactive)
@@ -859,7 +852,7 @@
 (require 'zenburn)
 
 ;; Another Zenburn theme (from the git repository)
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+(add-to-list 'custom-theme-load-path "~/git/configurations-and-scripts/emacs/.emacs.d/themes/")
 (load-theme 'zenburn t)		       
 
 ;; Accessing the command history more easy
@@ -883,17 +876,14 @@
 ;; configuring default printer
 (setq printer-name "ps6")
 
-;; enable pdf-tools for a better handling and i-search in pdf
-;; (pdf-tools-install)
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; http://www.jesshamrick.com/2012/09/18/emacs-as-a-python-ide/
-(add-to-list 'load-path "~/git/emacs-spass/python-mode")
-(setq py-install-directory "~/git/emacs-spass/python-mode")
+(add-to-list 'load-path "~/git/configurations-and-scripts/emacs/python-mode")
+(setq py-install-directory "~/git/configurations-and-scripts/emacs/python-mode")
 (require 'python-mode)
 
 ;; If you want to use Python2.7 instead, you have to set the following
@@ -972,7 +962,7 @@
 
 ;; activating polymode
 (setq load-path
-      (append '("~/git/emacs-spass/my-polymode/" "~/git/emacs-spass/my-polymode/modes")
+      (append '("~/git/configurations-and-scripts/emacs/polymode/" "~/git/configurations-and-scripts/emacs/polymode/modes")
 	      load-path))
 (require 'poly-R)
 (require 'poly-markdown)
@@ -1015,7 +1005,7 @@
 	    (local-set-key (kbd "M-;") 'windmove-right)))
 
 ;; Arduino
-(add-to-list 'load-path "~/git/emacs-spass/arduino-mode")
+(add-to-list 'load-path "~/git/configurations-and-scripts/emacs/arduino-mode")
 (setq auto-mode-alist (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode) auto-mode-alist))
 (autoload 'arduino-mode "arduino-mode" nil t)
 
@@ -1023,7 +1013,7 @@
 (global-set-key (kbd "M-SPC") 'set-mark-command)
 
 ;; Modifying markdown mode for correct displaying of German letters
-(add-to-list 'load-path "~/git/emacs-spass/markdown-mode")
+(add-to-list 'load-path "~/git/configurations-and-scripts/emacs/markdown-mode")
 (autoload 'markdown-mode "markdown-mode"
    "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
@@ -1089,7 +1079,7 @@
 
 ;; org-ref for handling citations. Requires the hydra, parsebib,
 ;; helm, helm-bibtex package
-(add-to-list 'load-path "~/git/emacs-spass/org-ref")
+(add-to-list 'load-path "~/git/configurations-and-scripts/emacs/org-ref")
 (require 'org-ref)
 
 ;; Local bibliography. This one is just available when the PKS home
