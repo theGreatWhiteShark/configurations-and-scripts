@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: unit
+# key: un
+# binding: direct-keybinding
+# --
+\unit[$1]{$2}
+$0

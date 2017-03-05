@@ -1,0 +1,11 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: stations
+# key: stations
+# binding: direct-keybinding
+# --
+wr.${1:name}.stations <- function( input, $2 ){
+    output.stations <- stations.constructor( list() )
+    for ( ss in seq_along( input ) )
+        output.stations[[ ss ]] <- wr.$1( .subset2( input, ss ), $2 )
+    return( output.stations )
+}

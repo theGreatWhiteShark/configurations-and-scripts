@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: hs
+# key: hs
+# binding: direct-keybinding
+# --
+#+STARTUP: hidestars
+$0

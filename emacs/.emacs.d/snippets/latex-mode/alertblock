@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: alertblock
+# key: alert
+# --
+\begin{alertblock}{$2}
+        $0
+\end{alertblock}

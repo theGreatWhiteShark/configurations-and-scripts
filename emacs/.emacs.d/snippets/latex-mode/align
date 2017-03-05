@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: align
+# key: al
+# binding: direct-keybinding
+# --
+\begin{align}
+$0
+\end{align}

@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: frac
+# key: fr
+# binding: direct-keybinding
+# --
+\frac{$1}{$2}$0

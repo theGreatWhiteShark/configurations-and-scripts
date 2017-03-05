@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: chapter
+# key: ch
+# binding: direct-keybinding
+# --
+\chapter{$1}
+$0

@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: folding-start
+# key: {{
+# binding: direct-keybinding
+# --
+##{{{
+$0
+##}}}

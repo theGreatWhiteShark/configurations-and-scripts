@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: color-red
+# key: cr
+# binding: direct-keybinding
+# --
+\color{red} $1 \color{black} $0

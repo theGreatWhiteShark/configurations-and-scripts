@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: hat
+# key: hat
+# binding: direct-keybinding
+# --
+\hat{$1} $0

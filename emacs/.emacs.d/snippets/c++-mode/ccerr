@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: ccerr
+# key: ccerr
+# binding: direct-keybinding
+# --
+cerr << 40;

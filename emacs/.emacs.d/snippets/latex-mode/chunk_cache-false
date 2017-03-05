@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: chunk_cache-false
+# key: cf
+# binding: direct-keybinding
+# --
+<<${1:buffer name}, cache = FALSE>>=
+  $0
+@

@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: bulk
+# key: bulk
+# binding: direct-keybinding
+# --
+wr.${1:name}.bulk <- function( input, $2 ) ){
+    return ( wr.$1.years( as.years( input ), $2 ) )
+}

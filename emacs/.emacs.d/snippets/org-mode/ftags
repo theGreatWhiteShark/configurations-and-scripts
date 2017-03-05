@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: ftags
+# key: ftags
+# binding: direct-keybinding
+# --
+#+FILETAGS: $1
+$0

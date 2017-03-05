@@ -1,0 +1,29 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: brief
+# key: brief
+# binding: direct-keybinding
+# --
+\documentclass{dinbrief}
+\address{Philipp M\"uller\\
+         Friebelstra{\ss}e 16\\
+         01219 Dresden}
+\backaddress{P. M\"uller, Friebelstra{\ss}e 16, 01219 Dresden}
+\signature{Philipp M\"uller}
+\place{Dresden}
+
+\begin{document}
+
+\begin{letter}{${1:Receiver}\\
+               ${2:Street}\\
+               {\bf ${3:City}}}
+
+\subject{$4}
+\opening{Sehr geehrte Damen und Herren,}
+
+$0
+
+\closing{Mit freundlichen Gr\"u{\ss}en}
+
+\end{letter}
+
+\end{document}

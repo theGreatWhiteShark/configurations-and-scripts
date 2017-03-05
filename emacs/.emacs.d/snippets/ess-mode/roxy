@@ -1,0 +1,12 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: roxy
+# key: roxy
+# binding: direct-keybinding
+# --
+##' @title $1
+##' @details $2
+##'
+##' @param $3
+##'
+##' @return $4
+##' @author Philipp Mueller $0
