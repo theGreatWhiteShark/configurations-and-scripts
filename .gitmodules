@@ -1,0 +1,42 @@
+[submodule "emacs/android-mode"]
+	path = emacs/android-mode
+	url = git://github.com/remvee/android-mode.git
+[submodule "emacs/anything-config"]
+	path = emacs/anything-config
+	url = git://repo.or.cz/anything-config.git
+[submodule "emacs/elscreen"]
+	path = emacs/elscreen
+	url = https://github.com/emacs-jp/elscreen
+[submodule "emacs/arduino-mode"]
+	path = emacs/arduino-mode
+	url = https://github.com/bookest/arduino-mode.git
+[submodule "emacs/ESS"]
+	path = emacs/ESS
+	url = https://github.com/emacs-ess/ESS
+[submodule "emacs/iedit"]
+	path = emacs/iedit
+	url = https://github.com/victorhge/iedit
+[submodule "emacs/markdown-mode"]
+	path = emacs/markdown-mode
+	url = https://github.com/jrblevin/markdown-mode.git
+[submodule "emacs/minimal"]
+	path = emacs/minimal
+	url = https://github.com/dandavison/minimal.git
+[submodule "emacs/yasnippet"]
+	path = emacs/yasnippet
+	url = git@github.com:theGreatWhiteShark/yasnippet.git
+[submodule "emacs/polymode"]
+	path = emacs/polymode
+	url = git@github.com:theGreatWhiteShark/polymode.git
+[submodule "emacs/org-mode"]
+	path = emacs/org-mode
+	url = git://orgmode.org/org-mode.git
+[submodule "emacs/org-ref"]
+	path = emacs/org-ref
+	url = https://github.com/jkitchin/org-ref.git
+[submodule "emacs/python-mode"]
+	path = emacs/python-mode
+	url = https://gitlab.com/python-mode-devs/python-mode.git
+[submodule "emacs/zenburn-emacs"]
+	path = emacs/zenburn-emacs
+	url = https://github.com/bbatsov/zenburn-emacs.git
