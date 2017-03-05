@@ -14,6 +14,17 @@ It is especially useful to introduce of the Emacs packages you use via Github in
 Before using, be sure to initialize and update your submodules. This way all the required code will be downloaded on your computer.
 
 ```
-git submodule init
-git submodule update
+# Recursively in order to get the code of the submodules of submodules
+# as well.
+git submodule update --init --recursive
+```
+
+# Hints
+
+In order to run **org-mode**, you have to change to the submodule's folder after updating and compile its lisp code.
+
+```
+cd org-mode
+make
+make autoloads
 ```
