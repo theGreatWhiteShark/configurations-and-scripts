@@ -6,8 +6,8 @@
 ;; indention
 (setq standard-indent 2)
 
-;; loading personal scripts and functions from ~.elisp
-(defvar elisp-path '("~/git/configurations-and-scripts/emacs/.elisp/"))
+;; loading personal scripts and functions from ~elisp
+(defvar elisp-path '("~/git/configurations-and-scripts/emacs/elisp/"))
 (mapcar #'(lambda(p) (add-to-list 'load-path p)) elisp-path)
 
 ;; Automatical loading of octave files
@@ -21,7 +21,7 @@
 		(font-lock-mode 1))))
 
 ;; activate on the fly spellchecking
-(load-file "~/.elisp/flyspell.el")
+(load-file "~/git/configurations-and-scripts/emacs/elisp/flyspell.el")
 (require 'flyspell2)
 (add-hook 'text-mode-hook
 	  (lambda() (flyspell-mode t)))
@@ -1045,11 +1045,6 @@
 
 ;; colors and human readable file size in dired
 (setq dired-listing-switches "-alh")
-
-;; loading the meghanada-server for a better editing experience using Java
-(require 'meghanada)
-(add-hook 'java-mode-hook (lambda () (meghanada-mode t)
-			    (add-hook 'before-save-hook 'delete-trailing-whitespace)))
 
 ;; transparent background
 (set-frame-parameter (selected-frame) 'alpha '(77 . 50))
