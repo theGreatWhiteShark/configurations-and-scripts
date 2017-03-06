@@ -972,24 +972,6 @@
 (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
 
 
-;; assigning new keybinding to windmove to ensure consistency with the navigation in i3wm
-(global-set-key (kbd "C-'") 'flyspell-auto-correct-previous-word)
-(global-set-key (kbd "M-'") 'comment-dwim)
-(global-set-key (kbd "M-S backspace") 'kill-sentence)
-(global-set-key (kbd "M-j") 'windmove-left)
-(global-set-key (kbd "M-k") 'windmove-up)
-(global-set-key (kbd "M-l") 'windmove-down)
-(global-set-key (kbd "M-;") 'windmove-right)
-(global-set-key (kbd "C-j") 'left-char)
-(global-set-key (kbd "C-l") 'next-line)
-(global-set-key (kbd "C-k") 'previous-line)
-(global-set-key (kbd "C-;") 'right-char)
-(global-set-key (kbd "C-S-j") 'left-word)
-(global-set-key (kbd "C-S-l") 'forward-paragraph)
-(global-set-key (kbd "C-S-k") 'backward-paragraph)
-(global-set-key (kbd "C-:") 'right-word)
-(global-set-key (kbd "C-S-;") 'right-word)
-
 
 (add-hook 'markdown-mode-hook
 	  (lambda()
@@ -1100,3 +1082,35 @@
 (require 'org-ref-arxiv)
 (require 'org-ref-pdf) ;; allows drag and drop of PDFs
 (require 'org-ref-url-utils) ;; drag and drop from the web browser
+
+
+
+;; assigning new keybinding to windmove to ensure consistency with the navigation in i3wm
+(global-set-key (kbd "C-'") 'flyspell-auto-correct-previous-word)
+(global-set-key (kbd "M-'") 'comment-dwim)
+(global-set-key (kbd "M-S backspace") 'kill-sentence)
+(global-set-key (kbd "M-S-j") 'windmove-left)
+(global-set-key (kbd "M-S-k") 'windmove-up)
+(global-set-key (kbd "M-S-l") 'windmove-down)
+(global-set-key (kbd "M-S-;") 'windmove-right)
+(global-set-key (kbd "C-j") 'left-char)
+(global-set-key (kbd "C-l") 'next-line)
+(global-set-key (kbd "C-k") 'previous-line)
+(global-set-key (kbd "C-;") 'right-char)
+(global-set-key (kbd "M-j") 'left-word)
+(global-set-key (kbd "M-l") 'forward-paragraph)
+(global-set-key (kbd "M-k") 'backward-paragraph)
+(global-set-key (kbd "M-;") 'right-word)
+(global-set-key (kbd "C-S-j") 'move-beginning-of-line)
+(global-set-key (kbd "C-S-k") 'beginning-of-buffer)
+(global-set-key (kbd "C-S-l") 'end-of-buffer)
+(global-set-key (kbd "C-S-;") 'move-end-of-line)
+(global-set-key (kbd "C-,") 'backward-kill-word)
+(global-set-key (kbd "C-.") 'kill-word)
+(global-set-key (kbd "C-S-.") 'kill-line)
+(global-set-key (kbd "C-S-,") 'backward-kill-sentence)
+(global-set-key (kbd "C-m") (lambda ()
+			     (interactive)
+			     (kill-word 1)
+			     (backward-kill-word 1)))
+(global-set-key (kbd "C-S-m") 'kill-whole-line)
