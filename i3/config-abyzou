@@ -28,7 +28,8 @@ floating_modifier $mod
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec /usr/bin/konsole
+#bindsym $mod+Return exec /usr/bin/konsole
+bindsym $mod+Return exec mate-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -154,13 +155,12 @@ bar {
 }
 
 # open thunderbird, firefox and eamcs as default startup
-exec --no-startup-id i3-msg 'workspace 2; exec firefox; exec thunderbird; workspace 1; exec konsole'
+exec --no-startup-id i3-msg 'workspace 2; exec firefox; exec thunderbird; workspace 1; exec mate-terminal'
 # exec --no-startup-id i3-msg 'workspace 2; exec chromium-browser; '
 
 # enable a lock screen
-# bindsym $mod+m exec /home/phil/scripts/bash/i3lock_default.sh
-bindsym $mod+m exec "~/scripts/bash/i3lock_screenshot.sh"
-exec xautolock -time 45 -locker '~/scripts/bash/i3lock_screenshot.sh'
+bindsym $mod+m exec "~/git/configurations-and-scripts/i3/i3lock_screenshot.sh"
+exec xautolock -time 45 -locker '~/git/configurations-and-scripts/i3/i3lock_screenshot.sh'
 
 # increase and decrease volume
 bindsym $mod+F2 exec "amixer -D pulse sset Master 3%-"
@@ -181,13 +181,10 @@ bindsym $mod+F6 exec "xbacklight -inc 10"
 ## alternative: echo 1000 > /sys/class/blacklight/intel_backlight/brightness
 
 # toggle the touchpad
-bindsym $mod+F12 exec "~/scripts/bash/toggle_touchpad.sh"
+bindsym $mod+F12 exec "~/git/configurations-and-scripts/i3/toggle_touchpad.sh"
 
-# background image
+# restore the default background image
 exec --no-startup-id nitrogen --restore
 
-# starting owncloud
-exec owncloud
-
-# transparency
+# transparent windows
 exec xcompmgr -c -n
