@@ -1,31 +1,29 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;Selbst
-;; all functions and macros starting with foreign- are copied from internet documentations and blog entries
-
-;; the screen of abyzou is not that big. Use just two spaces for
-;; indention
+;; Customization of the glorious Emacs
+;; The screen of abyzou (my Acer laptop) is not that big. Use just two
+;; spaces for indention
 (setq standard-indent 2)
 
 ;; loading personal scripts and functions from ~elisp
 (defvar elisp-path '("~/git/configurations-and-scripts/emacs/elisp/"))
 (mapcar #'(lambda(p) (add-to-list 'load-path p)) elisp-path)
 
-;; Automatical loading of octave files
-(autoload 'octave-mode "octave-mod" nil t)
-(setq auto-mode-alist (cons '(".m$" . octave-mode) auto-mode-alist))
-(add-hook 'octave-mode-hook
-	  (lambda ()
-	    (abbrev-mode 1)
-	    (auto-fill-mode 1)
-	    (if (eq window-system 'x)
-		(font-lock-mode 1))))
-
-;; activate on the fly spellchecking
+;; Activate on the fly spellchecking for all major modes I use on a
+;; regular basis
 (load-file "~/git/configurations-and-scripts/emacs/elisp/flyspell.el")
 (require 'flyspell2)
-(add-hook 'text-mode-hook
-	  (lambda() (flyspell-mode t)))
-;; add the german dictionary and the option of switching between languages
+(add-hook 'text-mode-hook (lambda() (flyspell-mode 1)))
+(add-hook 'LaTeX-mode-hook (lambda() (flyspell-mode 1)))
+(add-hook 'markdown-mode-hook (lambda() (flyspell-mode 1)))
+(add-hook 'org-mode-hook (lambda() (flyspell-mode 1)))
+(add-hook 'ess-mode-hook (lambda() (flyspell-prog-mode)))
+(add-hook 'python-mode-hook (lambda() (flyspell-prog-mode)))
+(add-hook 'web-mode-hook (lambda() (flyspell-prog-mode)))
+(add-hook 'emacs-lisp-mode-hook (lambda() (flyspell-prog-mode)))
+(add-hook 'lisp-mode-hook (lambda() (flyspell-prog-mode)))
+(add-hook 'c-mode-hook (lambda() (flyspell-prog-mode)))
+
+;; Add a german dictionary and the option of switching between
+;; languages
 (defun flyspell-switch-dictionary()
   (interactive)
   (let* ((dic ispell-current-dictionary)
@@ -52,9 +50,6 @@
 
 ;; use the GNU indentation style (2 whitespaces)
 (setq ess-default-style 'GNU)
-;; use a different spellchecking mode for ESS
-(add-hook 'ess-mode-hook
-	  (lambda() (flyspell-prog-mode)))
 (defun myindent-ess-hook ()
   (setq ess-indent-level 2))
 (add-hook 'ess-mode-hook 'myindent-ess-hook)
@@ -68,17 +63,6 @@
 (setq save-abbrevs nil)
 (load "~/git/configurations-and-scripts/emacs/.emacs.d/abbrev_defs.el")
 ;; this stupid thing just don't seems to work. Skeletons have to be inserted by hand.
-
-;; F5 for running code and generating pdf with knitr
-;; (fset 'macro-knitr-evaluation
-;;    [?\M-n ?s ?\M-n ?P return])
-;; (add-hook 'LaTeX-mode-hook
-;;  	  (lambda()
-;; 	    (local-set-key (kbd "<f5>") ('ess-swv-weave) ('ess-swv-PDF))))
-;; (add-hook 'ess-mode-hook
-;;  	  (lambda()
-;; 	    (local-set-key (kbd "<f5>") ('ess-swv-weave) ('ess-swv-PDF))))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org Mode
@@ -373,115 +357,6 @@
 (global-set-key (kbd "C-x r C-w")   'rm-kill-region)
 (global-set-key (kbd "C-x r M-W")   'rm-kill-ring-save)
 
-;; enabling hiding and showing of blocks
-(add-hook 'ess-mode-hook
-	  (lambda()
-	    (local-set-key (kbd "C-c <right>") 'hs-show-block)
-	    (local-set-key (kbd "C-c <left>")  'hs-hide-block)
-	    (local-set-key (kbd "C-c <up>")    'hs-hide-all)
-	    (local-set-key (kbd "C-c <down>")  'hs-show-all)
-	    (hs-minor-mode t)))
-
-;;  This does not seem to work to fold chapters and sections
-;; (add-hook 'LaTeX-mode-hook
-;;           (lambda()
-;;             (TeX-fold-mode 1)
-;; 	    (TeX-fold-buffer 1)
-;;             (local-set-key (kbd "C-c <right>") 'TeX-fold-clearout-item)
-;;             (local-set-key (kbd "C-c <left>")  'TeX-fold-dwim)
-;;             (local-set-key (kbd "C-c <up>")    'TeX-fold-buffer)
-;;             (local-set-key (kbd "C-c <down>")  'TeX-fold-clearout-buffer)
-;;             (auto-fill-mode 0)))
-;; alternative: Outline-minor-mode key map
-(outline-minor-mode 1)
-(add-hook 'LaTeX-mode-hook (lambda() (outline-minor-mode 1)))
-(define-prefix-command 'cm-map nil "Outline-")
- ; HIDE
- (define-key cm-map "q" 'hide-sublevels)    ; Hide everything but the top-level headings
- (define-key cm-map "t" 'hide-body)         ; Hide everything but headings (all body lines)
- (define-key cm-map "o" 'hide-other)        ; Hide other branches
- (define-key cm-map "c" 'hide-entry)        ; Hide this entry's body
- (define-key cm-map "l" 'hide-leaves)       ; Hide body lines in this entry and sub-entries
- (define-key cm-map "d" 'hide-subtree)      ; Hide everything in this entry and sub-entries
- ; SHOW
- (define-key cm-map "a" 'show-all)          ; Show (expand) everything
- (define-key cm-map "e" 'show-entry)        ; Show this heading's body
- (define-key cm-map "i" 'show-children)     ; Show this heading's immediate child sub-headings
- (define-key cm-map "k" 'show-branches)     ; Show all sub-headings under this heading
- (define-key cm-map "s" 'show-subtree)      ; Show (expand) everything in this heading & below
- ; MOVE
- (define-key cm-map "u" 'outline-up-heading)                ; Up
- (define-key cm-map "n" 'outline-next-visible-heading)      ; Next
- (define-key cm-map "p" 'outline-previous-visible-heading)  ; Previous
- (define-key cm-map "f" 'outline-forward-same-level)        ; Forward - same level
- (define-key cm-map "b" 'outline-backward-same-level)       ; Backward - same level
- (global-set-key "\M-o" cm-map)
-
-(defun outline-body-p ()
-  (save-excursion
-    (outline-back-to-heading)
-    (outline-end-of-heading)
-    (and (not (eobp))
-         (progn (forward-char 1)
-                (not (outline-on-heading-p))))))
-
-(defun outline-body-visible-p ()
-  (save-excursion
-    (outline-back-to-heading)
-    (outline-end-of-heading)
-    (not (outline-invisible-p))))
-
-(defun outline-subheadings-p ()
-  (save-excursion
-    (outline-back-to-heading)
-    (let ((level (funcall outline-level)))
-      (outline-next-heading)
-      (and (not (eobp))
-           (< level (funcall outline-level))))))
-
-(defun outline-subheadings-visible-p ()
-  (interactive)
-  (save-excursion
-    (outline-next-heading)
-    (not (outline-invisible-p))))
-
-(defun outline-hide-more ()
-  (interactive)
-  (when (outline-on-heading-p)
-    (cond ((and (outline-body-p)
-                (outline-body-visible-p))
-           (hide-entry)
-           (hide-leaves))
-          (t
-           (hide-subtree)))))
-
-(defun outline-show-more ()
-  (interactive)
-  (when (outline-on-heading-p)
-    (cond ((and (outline-subheadings-p)
-                (not (outline-subheadings-visible-p)))
-           (show-children))
-          ((and (not (outline-subheadings-p))
-                (not (outline-body-visible-p)))
-           (show-subtree))
-          ((and (outline-body-p)
-                (not (outline-body-visible-p)))
-           (show-entry))
-          (t
-           (show-subtree)))))
-
-(let ((map outline-mode-map))
-  (define-key map (kbd "C-c <left>") 'outline-hide-more)
-  (define-key map (kbd "C-c <right>") 'outline-show-more)
-  (define-key map (kbd "C-c <up>") 'outline-previous-visible-heading)
-  (define-key map (kbd "C-c <down>") 'outline-next-visible-heading))
-
-(let ((map outline-minor-mode-map)) 
-  (define-key map (kbd "C-c <left>") 'outline-hide-more)
-  (define-key map (kbd "C-c <right>") 'outline-show-more)
-  (define-key map (kbd "C-c <up>") 'outline-previous-visible-heading)
-  (define-key map (kbd "C-c <down>") 'outline-next-visible-heading))
-
 ;; folding R chuncks
 (load "folding" 'nomessage 'noerror)
 (folding-mode-add-find-file-hook)
@@ -705,7 +580,10 @@
 
 ;; colorful delimiters 
 (when (require 'rainbow-delimiters nil 'noerror)
-  (add-hook 'ess-mode-hook 'rainbow-delimiters-mode))
+  (lambda()
+    (add-hook 'ess-mode-hook 'rainbow-delimiters-mode)
+    (add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
+    (add-hook 'python-mode-hook 'rainbow-delimiters-mode)))
 (rainbow-delimiters-mode 1)
 
 ;; using multi-term to open more than one terminal in emacs
@@ -914,7 +792,6 @@
 ;; use flyspell
 (add-hook 'python-mode-hook
 	  (lambda()
-	    (flyspell-prog-mode)
 	    (local-set-key (kbd "<C-return>")
 			   (lambda ()
 			     (interactive)
@@ -932,7 +809,7 @@
 (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
-;; use flyspell within web-mode and set indentation to 2
+;; set indentation to 2
 (add-hook 'web-mode-hook
 	  (lambda()
 	    (local-set-key [M-tab] 'web-mode-fold-or-unfold)
@@ -940,8 +817,7 @@
 	    (setq web-mode-css-indent-offset 2)
 	    (setq web-mode-code-indent-offset 2)
 	    (local-set-key (kbd "M-;") 'windmove-right)
-	    (local-set-key (kbd "M-'") 'web-mode-comment-or-uncomment)
-	    (flyspell-prog-mode)))
+	    (local-set-key (kbd "M-'") 'web-mode-comment-or-uncomment)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -970,21 +846,6 @@
 (add-to-list 'auto-mode-alist '("\\.Snw" . poly-noweb+r-mode))
 (add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
 (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
-
-
-
-(add-hook 'markdown-mode-hook
-	  (lambda()
-	    (local-set-key (kbd "M-j") 'windmove-left)
-	    (local-set-key (kbd "M-k") 'windmove-up)
-	    (local-set-key (kbd "M-l") 'windmove-down)
-	    (local-set-key (kbd "M-;") 'windmove-right)))
-(add-hook 'ess-mode-hook
-	  (lambda()
-	    (local-set-key (kbd "M-j") 'windmove-left)
-	    (local-set-key (kbd "M-k") 'windmove-up)
-	    (local-set-key (kbd "M-l") 'windmove-down)
-	    (local-set-key (kbd "M-;") 'windmove-right)))
 
 ;; Arduino
 (add-to-list 'load-path "~/git/configurations-and-scripts/emacs/arduino-mode")
@@ -1085,39 +946,63 @@
 
 
 
-;; assigning new keybinding to windmove to ensure consistency with the navigation in i3wm
-(global-set-key (kbd "C-'") 'flyspell-auto-correct-previous-word)
-(global-set-key (kbd "M-'") 'comment-dwim)
-(global-set-key (kbd "M-S backspace") 'kill-sentence)
-(global-set-key (kbd "M-J") 'windmove-left)
-(global-set-key (kbd "M-K") 'windmove-up)
-(global-set-key (kbd "M-L") 'windmove-down)
-(global-set-key (kbd "M-:") 'windmove-right)
-(global-set-key (kbd "C-j") 'left-char)
-(global-set-key (kbd "C-l") 'next-line)
-(global-set-key (kbd "C-k") 'previous-line)
-(global-set-key (kbd "C-;") 'right-char)
-(global-set-key (kbd "M-j") 'left-word)
-(global-set-key (kbd "M-l") 'forward-paragraph)
-(global-set-key (kbd "M-k") 'backward-paragraph)
-(global-set-key (kbd "M-;") 'right-word)
-(global-set-key (kbd "C-J") 'move-beginning-of-line)
-(global-set-key (kbd "C-S-k") 'beginning-of-buffer)
-(global-set-key (kbd "C-S-l") 'end-of-buffer)
-(global-set-key (kbd "C-:") 'move-end-of-line)
-;; Faster access to killing commands
-(global-set-key (kbd "C-,") 'backward-kill-word)
-(global-set-key (kbd "C-.") 'kill-word)
-(global-set-key (kbd "C->") 'kill-line)
-(global-set-key (kbd "C-<") 'backward-kill-sentence)
-;; Binding something to Ctrl-m causes problems because Emacs does not
-;; destinguish between Ctrl-m and RET due to historical reasons
-;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
-(define-key input-decode-map [?\C-m] [C-m])
-(define-key input-decode-map [?\C-M] [C-M])
-(global-set-key (kbd "<C-m>") (lambda ()
-			     (interactive)
-			     (kill-word 1)
-			     (backward-kill-word 1)))
-(global-set-key (kbd "<C-M>j") 'kill-whole-line)
-		
+;; Customized keybindings for navigation, killing and various other
+;; useful things.
+;; In order to not consider any special cases and to not get annoyed by
+;; minor-mode key maps (especially flyspell), I will define my own
+;; minor-mode which enforces my custom key bindings on all the major
+;; modes. Whenever I want to switch back to the original key bindings,
+;; I just disable this minor-mode.
+(defvar custom-keys-minor-mode-map
+  (let ((map (make-sparse-keymap)))
+    ;; Comment and indent
+    (define-key map (kbd "M-'") 'comment-dwim)
+    (define-key map (kbd "C-'") 'indent-region)
+    ;; Navigation
+    (define-key map (kbd "M-S backspace") 'kill-sentence)
+    (define-key map (kbd "M-S-j") 'windmove-left)
+    (define-key map (kbd "M-J") 'windmove-left)
+    (define-key map (kbd "M-S-k") 'windmove-up)
+    (define-key map (kbd "M-K") 'windmove-up)
+    (define-key map (kbd "M-S-l") 'windmove-down)
+    (define-key map (kbd "M-L") 'windmove-down)
+    (define-key map (kbd "M-S-;") 'windmove-right)
+    (define-key map (kbd "M-:") 'windmove-right)
+    (define-key map (kbd "C-j") 'left-char)
+    (define-key map (kbd "C-l") 'next-line)
+    (define-key map (kbd "C-k") 'previous-line)
+    (define-key map (kbd "C-;") 'right-char)
+    (define-key map (kbd "M-j") 'left-word)
+    (define-key map (kbd "M-l") 'forward-paragraph)
+    (define-key map (kbd "M-k") 'backward-paragraph)
+    (define-key map (kbd "M-;") 'right-word)
+    (define-key map (kbd "C-M-j") 'move-beginning-of-line)
+    (define-key map (kbd "C-M-k") 'beginning-of-buffer)
+    (define-key map (kbd "C-M-l") 'end-of-buffer)
+    (define-key map (kbd "C-M-;") 'move-end-of-line)
+    ;; Killing
+    (define-key map (kbd "C-,") 'backward-kill-word)
+    (define-key map (kbd "C-.") 'kill-word)
+    (define-key map (kbd "C-M-.") 'kill-line)
+    (define-key map (kbd "C-M-,") 'backward-kill-sentence)
+    ;; Binding something to Ctrl-m causes problems because Emacs does not
+    ;; destinguish between Ctrl-m and RET due to historical reasons
+    ;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
+    (define-key input-decode-map [?\C-m] [C-m])
+    (define-key input-decode-map [?\C-\M-M] [C-M-m])
+    (define-key map (kbd "<C-m>") (lambda ()
+				    (interactive)
+				    (kill-word 1)
+				    (backward-kill-word 1)))
+    (define-key map (kbd "<C-M-m>") 'kill-whole-line)
+    ;; Newline for faster typing
+    (define-key map (kbd "C-n") 'newline-and-indent)
+    map)
+  "custom-keys-minor-mode keymap.")
+
+;; Activating the customized keybindings with every major mode.
+(define-minor-mode custom-keys-minor-mode
+  "Enforcing my customized keys on all major modes/"
+  :init-value t
+  :lighter " custom-keys")
+(custom-keys-minor-mode 1)
