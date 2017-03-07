@@ -909,11 +909,14 @@
 (add-to-list 'auto-mode-alist '("\\.pl" . perl-mode))
 
 ;; flycheck
-;; wdired
+;; wdired/ranger
 ;; tramp
 ;; font Consolas-12; Symbola
 ;; epa
 ;; whitespace mode
+;; ido
+;; magit
+;; helm/yedi
 
 ;; org-ref for handling citations. Requires the hydra, parsebib,
 ;; helm, helm-bibtex package
