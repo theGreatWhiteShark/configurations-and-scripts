@@ -984,8 +984,10 @@
     (define-key map (kbd "C-M-l") 'end-of-buffer)
     (define-key map (kbd "C-M-;") 'move-end-of-line)
     ;; Killing
-    (define-key map (kbd "C-,") 'backward-kill-word)
-    (define-key map (kbd "C-.") 'kill-word)
+    (define-key map (kbd "C-,") 'backward-delete-char-untabify)
+    (define-key map (kbd "C-.") 'delete-forward-char)
+    (define-key map (kbd "M-,") 'backward-kill-word)
+    (define-key map (kbd "M-.") 'kill-word)
     (define-key map (kbd "C-M-.") 'kill-line)
     (define-key map (kbd "C-M-,") 'backward-kill-sentence)
     ;; Binding something to Ctrl-m causes problems because Emacs does not
@@ -1000,6 +1002,7 @@
     (define-key map (kbd "<C-M-m>") 'kill-whole-line)
     ;; Newline for faster typing
     (define-key map (kbd "C-n") 'newline-and-indent)
+    (define-key map (kbd "M-n") 'newline-and-indent)
     map)
   "custom-keys-minor-mode keymap.")
 
