@@ -73,14 +73,14 @@ alias ogit='tempdir=$(pwd); cd $HOME/git/tsa; git commit -am "org"; git push; cp
 function pwd_prompt {
     pwd | sed "s/\/home\/$(echo $USER)/\~/" | awk 'BEGIN { FS = "/" };{ if ( NF > 3 ) print $1"/.../"$(NF-1)"/"$NF ; else print $0}'
 }
-if [ $(hostname) == "temeluchus" ]; then
+if [ $(hostname) == "temeluchus" ] || [ $(hostname) == "abyzou" ]; then
     if [ $HOME == "/root" ]; then
-	export PS1="\e[1;31m\]\h\e[0m\]: \[\e[0;36m\]\$(pwd_prompt) \[\e[1;31m\]$\[\e[0m\] ";
+	export PS1="\e[1;31m\]\h\e[0m\]: \[\e[1;34m\]\$(pwd_prompt) \[\e[1;31m\]$\[\e[0m\] ";
     else
-	export PS1="\h: \[\e[0;36m\]\$(pwd_prompt) \[\e[0;32m\]$\[\e[0m\] ";
+	export PS1="\h: \[\e[1;34m\]\$(pwd_prompt) \[\e[0;32m\]$\[\e[0m\] ";
     fi
 else ## tell me when I'm not on my local machine but in the Hubert's cluster
-    export PS1='\h: \[\e[1;34m\]\$(pwd_prompt) \[\e[0;32m\]$\[\e[0m\] ';
+    export PS1="\h: \[\e[0;36m\]\$(pwd_prompt) \[\e[0;32m\]$\[\e[0m\] ";
 fi
 # Configurations for setting up development environments
 export EDITOR=/usr/bin/emacs
