@@ -24,6 +24,8 @@ alias duh='du --max-depth=1 -h'
 alias s='sudo shutdown -P'
 alias sc='stop_clementine'
 alias pp='sudo shutdown -P now'
+# Link to the glorious JDownloader
+alias jdownloader='~/.jd2/JDownloader2'
 
 # Just execute this command whenever I am at a machine I configured myself
 if [ $USER == "phil" ];then
@@ -82,9 +84,15 @@ else ## tell me when I'm not on my local machine but in the Hubert's cluster
 fi
 # Configurations for setting up development environments
 export EDITOR=/usr/bin/emacs
-export AWKPATH="$HOME/scripts/awk"
+export AWKPATH="$HOME/git/configurations-and-scripts/awk"
 export ANDROID_HOME="$HOME/software/android-sdk-linux"
 export JAVA_HOME="$HOME/software/java/jdk1.8.0_121"
+# Perl configuration
+PATH="/home/phil/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/phil/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/phil/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/phil/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/phil/perl5"; export PERL_MM_OPT;
 
 ## handling of the batch job system at the institute
 source $HOME/git/configurations-and-scripts/bash/job.sh
