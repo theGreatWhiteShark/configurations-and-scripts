@@ -581,6 +581,7 @@
 ;; colorful delimiters 
 (when (require 'rainbow-delimiters nil 'noerror)
   (lambda()
+    (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
     (add-hook 'ess-mode-hook 'rainbow-delimiters-mode)
     (add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
     (add-hook 'python-mode-hook 'rainbow-delimiters-mode)))
@@ -1001,7 +1002,6 @@
 				    (backward-kill-word 1)))
     (define-key map (kbd "<C-M-m>") 'kill-whole-line)
     ;; Newline for faster typing
-    (define-key map (kbd "C-n") 'newline-and-indent)
     (define-key map (kbd "M-n") 'newline-and-indent)
     map)
   "custom-keys-minor-mode keymap.")
@@ -1012,3 +1012,22 @@
   :init-value t
   :lighter " custom-keys")
 (custom-keys-minor-mode 1)
+
+;; C-n is reserved for evaluating a region and thus has to assigned
+;; for each mode independently
+(add-hook 'ess-mode-hook
+	  (lambda()
+	    (local-set-key (kbd "C-n")
+			   'ess-eval-region-or-line-and-step)))
+(add-hook 'python-mode-hook
+	  (lambda()
+	    (local-set-key (kbd "<C-return>")
+			   (lambda ()
+			     (interactive)
+			     (py-execute-region)
+			     (py-switch-to-shell)))
+	    (local-set-key (kbd "C-n")
+			   (lambda ()
+			     (interactive)
+			     (py-execute-region)
+			     (py-switch-to-shell)))))
