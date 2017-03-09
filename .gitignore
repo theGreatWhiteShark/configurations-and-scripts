@@ -1,3 +1,18 @@
 *~
 $~
 emacs/*/cache
+
+# Ignoring the Emacs submodules (but I need to update)
+emacs/org-mode
+emacs/org-ref
+emacs/polymode
+emacs/python-mode
+emacs/yasnippet
+emacs/zenburn
+emacs/android-mode
+emacs/anything-config
+emacs/arduino-mode
+emacs/elscreen
+emacs/iedit
+emacs/markdown-mode
+emacs/minimal
