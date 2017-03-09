@@ -1018,7 +1018,9 @@
 (add-hook 'ess-mode-hook
 	  (lambda()
 	    (local-set-key (kbd "C-n")
-			   'ess-eval-region-or-line-and-step)))
+			   'ess-eval-region-or-line-and-step)
+	    ;; compile the whole file
+	    (local-set-key (kbd "C-M-n") 'ploymode-export)))
 (add-hook 'python-mode-hook
 	  (lambda()
 	    (local-set-key (kbd "<C-return>")
@@ -1030,4 +1032,5 @@
 			   (lambda ()
 			     (interactive)
 			     (py-execute-region)
-			     (py-switch-to-shell)))))
+			     (py-switch-to-shell)))
+	    (local-set-key (kbd "C-M-n") 'py-execute-buffer)))
