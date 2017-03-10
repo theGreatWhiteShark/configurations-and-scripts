@@ -45,7 +45,7 @@ cat >.job.sh <<EOF
 #$ -q juno
 
 ## OpenSuSe has a strange way of handling threading
-export OMP_NUM_THREADS="$NSLOTS"
+export OMP_NUM_THREADS=\$NSLOTS
 
 module load sge62
 
