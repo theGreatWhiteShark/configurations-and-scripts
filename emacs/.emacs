@@ -39,16 +39,23 @@
 (load "ess-site")
 (require 'ess-site)
 
+;; Specify the export options of polymode to accelerate the export of
+;; .Rmd files.
+(add-hook 'ess-mode-hook
+	  (lambda()
+	    (defvar pm--exporter-hist "Rmarkdown")
+	    (defvar pm--export:to-last "html document (html)")
+	    (defvar pm--export:to-hist "html document (html)")))
 ;; using Rutils
 (require 'ess-rutils)
 
-;; a comment is a comment. No matter how many dashes
+;; A comment is a comment. No matter how many dashes
 (setq ess-indent-with-fancy-comments nil)
 
-;; try to complete statements
+;; Try to complete statements
 (setq ess-tab-complete-in-script 1)
 
-;; use the GNU indentation style (2 whitespaces)
+;; Use the GNU indentation style (2 whitespaces)
 (setq ess-default-style 'GNU)
 (defun myindent-ess-hook ()
   (setq ess-indent-level 2))
@@ -706,7 +713,6 @@
  '(ansi-color-names-vector ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
  '(custom-safe-themes (quote ("6383295fb0c974d24c9dca1230c0489edf1cd5dd03d4b036aab290b6d3ceb50c" default)))
  '(delete-selection-mode nil)
- '(ess-swv-processor (quote knitr))
  '(fci-rule-color "#383838")
  '(inhibit-startup-screen t)
  '(mark-even-if-inactive t)
@@ -715,7 +721,9 @@
  '(transient-mark-mode 1)
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map (quote ((20 . "#BC8383") (40 . "#CC9393") (60 . "#DFAF8F") (80 . "#D0BF8F") (100 . "#E0CF9F") (120 . "#F0DFAF") (140 . "#5F7F5F") (160 . "#7F9F7F") (180 . "#8FB28F") (200 . "#9FC59F") (220 . "#AFD8AF") (240 . "#BFEBBF") (260 . "#93E0E3") (280 . "#6CA0A3") (300 . "#7CB8BB") (320 . "#8CD0D3") (340 . "#94BFF3") (360 . "#DC8CC3")))) ;
- '(vc-annotate-very-old-color "#DC8CC3"))
+ '(vc-annotate-very-old-color "#DC8CC3")
+ ;; But I'm a naughty boy and did edit it by hand.
+ '(polymode-exporter-output-file-format "%s"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -839,7 +847,7 @@
 
 ;; activating polymode
 (setq load-path
-      (append '("~/git/configurations-and-scripts/emacs/polymode/" "~/git/configurations-and-scripts/emacs/polymode/modes")
+      (append '("~/git/emacs-spass/my-polymode/" "~/git/emacs-spass/my-polymode/modes")
 	      load-path))
 (require 'poly-R)
 (require 'poly-markdown)
@@ -1020,7 +1028,10 @@
 	    (local-set-key (kbd "C-n")
 			   'ess-eval-region-or-line-and-step)
 	    ;; compile the whole file
-	    (local-set-key (kbd "C-M-n") 'ploymode-export)))
+	    (local-set-key (kbd "C-M-n")
+			   (lambda()
+			     (interactive)
+			     (polymode-export "Rmarkdown" "html")))))
 (add-hook 'python-mode-hook
 	  (lambda()
 	    (local-set-key (kbd "<C-return>")
