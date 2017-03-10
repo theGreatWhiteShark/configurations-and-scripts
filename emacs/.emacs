@@ -66,6 +66,17 @@
 ;; AUCTeX interface for Sweave
 (setq ess-swv-plug-into-AUCTeX-p t)
 
+;; activating polymode
+(setq load-path
+      (append '("~/git/configurations-and-scripts/emacs/polymode/" "~/git/configurations-and-scripts/emacs/polymode/modes")
+	      load-path))
+(require 'poly-R)
+(require 'poly-markdown)
+(add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.Snw" . poly-noweb+r-mode))
+(add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
+(add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
+
 ;; (setq default-abbrev-mode t)
 (setq save-abbrevs nil)
 (load "~/git/configurations-and-scripts/emacs/.emacs.d/abbrev_defs.el")
@@ -363,26 +374,6 @@
 (global-set-key (kbd "C-x r C-x")   'rm-exchange-point-and-mark)
 (global-set-key (kbd "C-x r C-w")   'rm-kill-region)
 (global-set-key (kbd "C-x r M-W")   'rm-kill-ring-save)
-
-;; folding R chuncks
-(load "folding" 'nomessage 'noerror)
-(folding-mode-add-find-file-hook)
-(add-hook 'ess-mode-hook 'folding-mode)
-(add-hook 'LaTeX-mode-hook 'folding-mode)
-;; (folding-add-to-marks-list 'ess-mode "##{{{" "##}}}" " ")
-;; (folding-add-to-marks-list 'ess-mode "%%{{{" "%%}}}" " ")
-;; (folding-add-to-marks-list 'LaTeX-mode "##{{{" "##}}}" " ")
-;; (folding-add-to-marks-list 'LaTeX-mode "%%{{{" "%%}}}" " ")
-(global-set-key (kbd "C-c f <left>")  'folding-hide-current-entry)
-(global-set-key (kbd "C-c f <right>") 'folding-toggle-show-hide)
-(global-set-key (kbd "C-c f <up>")    'folding-show-all)
-(global-set-key (kbd "C-c f <down>")  'folding-whole-buffer)
-
-;; Folding in .tex documents
-(folding-add-to-marks-list 'LaTeX-mode "\begin{section}" "\end{section}" " ")
-(folding-add-to-marks-list 'LaTeX-mode "\begin{chapter}" "\end{chapter}" " ")
-(folding-add-to-marks-list 'LaTeX-mode "\begin{itemize}" "\end{itemize}" " ")
-(folding-add-to-marks-list 'LaTeX-mode "\begin{subsection}" "\end{subsection}" " ")
 
 ;; ;; viewing register contents
 (require 'list-register)
@@ -845,16 +836,6 @@
 (setq auto-mode-alist (cons '(".cu$" . c-mode) auto-mode-alist))
 
 
-;; activating polymode
-(setq load-path
-      (append '("~/git/emacs-spass/my-polymode/" "~/git/emacs-spass/my-polymode/modes")
-	      load-path))
-(require 'poly-R)
-(require 'poly-markdown)
-(add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.Snw" . poly-noweb+r-mode))
-(add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
-(add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
 
 ;; Arduino
 (add-to-list 'load-path "~/git/configurations-and-scripts/emacs/arduino-mode")
@@ -1028,6 +1009,13 @@
 	    (local-set-key (kbd "C-n")
 			   'ess-eval-region-or-line-and-step)
 	    ;; compile the whole file
+	    (local-set-key (kbd "C-M-n")
+			   (lambda()
+			     (interactive)
+			     (polymode-export "Rmarkdown" "html")))))
+;; In order to work in the markdown part of ESS as well
+(add-hook 'markdown-mode-hook
+	  (lambda()
 	    (local-set-key (kbd "C-M-n")
 			   (lambda()
 			     (interactive)
