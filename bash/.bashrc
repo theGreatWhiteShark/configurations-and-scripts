@@ -80,7 +80,7 @@ if [ $(hostname) == "temeluchus" ] || [ $(hostname) == "abyzou" ]; then
 	export PS1="\h: \[\e[1;34m\]\$(pwd_prompt) \[\e[0;32m\]$\[\e[0m\] ";
     fi
 else ## tell me when I'm not on my local machine but in the Hubert's cluster
-    export PS1="\h: \[\e[1;32m\]\$(pwd_prompt) \[\e[0;32m\]$\[\e[0m\] ";
+    export PS1="\h: \[\e[0;33m\]\$(pwd_prompt) \[\e[0;32m\]$\[\e[0m\] ";
 fi
 # Configurations for setting up development environments
 export EDITOR=/usr/bin/emacs
