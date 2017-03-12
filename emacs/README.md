@@ -28,3 +28,11 @@ cd org-mode
 make
 make autoloads
 ```
+
+# python-mode
+
+Since this mode is lacking a proper documentation, I might write some lines about it.
+
+Per default **ipython3.5** will be called when running the whole Python script. If it is instead Python2.7 based, run **M-x py-choose-shell** *before* evaluating the script.
+
+The mode features a nice function **py-smart-indentation** which figures out the indentation width of a document. While this is quite handy for collaboration, I usually want to reindent the script before modifying it. Therefore this function is disabled and has to be activated using **M-x py-toggle-smart-indentation**.
