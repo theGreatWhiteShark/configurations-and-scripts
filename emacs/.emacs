@@ -2,6 +2,7 @@
 ;; The screen of abyzou (my Acer laptop) is not that big. Use just two
 ;; spaces for indention
 (setq standard-indent 2)
+(setq tab-width 2)
 
 ;; loading personal scripts and functions from ~elisp
 (defvar elisp-path '("~/git/configurations-and-scripts/emacs/elisp/"))
@@ -50,7 +51,7 @@
 (require 'ess-rutils)
 
 ;; Directory containing the binaries of the installed R version
-(setq R-binary-folder "/usr/local/R/3.3.2/bin/")
+(setq R-binary-folder "/home/phil/software/R/R-3.3.2/bin/")
 
 ;; A comment is a comment. No matter how many dashes
 (setq ess-indent-with-fancy-comments nil)
@@ -787,7 +788,11 @@
 ;; such a pain in the ass
 (setq py-keep-windows-configutation t)
 ;; try to automagically figure out indentation
-(setq py-smart-indentation t)
+(setq py-smart-indentation nil)
+;; Use just two spaces for indention
+(setq py-indent-offset 2)
+;; Use the TAB to call the py-indent-line function
+(setq py-tab-indent t)
 
 ;; load the python-mode for .bzl files since their Skylark language
 ;; resembles in some way the python syntax
@@ -796,11 +801,11 @@
 ;; use flyspell
 (add-hook 'python-mode-hook
 	  (lambda()
+	    (setq py-indent-offset 2)
 	    (local-set-key (kbd "<C-return>")
 			   (lambda ()
 			     (interactive)
-			     (py-execute-region)
-			     (py-switch-to-shell)))))
+			     (py-execute-region)))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -983,19 +988,20 @@
     (define-key map (kbd "M-,") 'backward-kill-word)
     (define-key map (kbd "M-.") 'kill-word)
     (define-key map (kbd "C-M-.") 'kill-line)
-    (define-key map (kbd "C-M-,") 'backward-kill-sentence)
+    (define-key map (kbd "C-M-,") 'kill-whole-line)
     ;; Binding something to Ctrl-m causes problems because Emacs does not
     ;; destinguish between Ctrl-m and RET due to historical reasons
     ;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
-    (define-key input-decode-map [?\C-m] [C-m])
     (define-key input-decode-map [?\C-\M-M] [C-M-m])
-    (define-key map (kbd "<C-m>") (lambda ()
+    (define-key map (kbd "M-m") (lambda ()
 				    (interactive)
-				    (kill-word 1)
-				    (backward-kill-word 1)))
-    (define-key map (kbd "<C-M-m>") 'kill-whole-line)
-    ;; Newline for faster typing
-    (define-key map (kbd "M-n") 'newline-and-indent)
+				    (move-end-of-line 1)
+				    (newline-and-indent)))
+    (define-key map (kbd "<C-M-m>") (lambda ()
+				      (interactive)
+				      (previous-line)
+				      (move-end-of-line 1)
+				      (newline-and-indent)))
     map)
   "custom-keys-minor-mode keymap.")
 
@@ -1012,6 +1018,10 @@
 	  (lambda()
 	    (local-set-key (kbd "C-n")
 			   'ess-eval-region-or-line-and-step)
+	    (local-set-key (kbd "M-n")
+			   (lambda()
+			     (interactive)
+			     (ess-eval-chunk)))
 	    ;; compile the whole file
 	    (local-set-key (kbd "C-M-n")
 			   (lambda()
@@ -1029,9 +1039,19 @@
 	    (local-set-key (kbd "<C-return>")
 			   (lambda ()
 			     (interactive)
-			     (py-execute-region)
+			     (py-execute-line)
 			     (py-switch-to-shell)))
 	    (local-set-key (kbd "C-n")
+			   (lambda ()
+			     (interactive)
+			     (py-execute-line)
+			     (py-switch-to-shell)))
+	    (local-set-key (kbd "<M-return>")
+			   (lambda ()
+			     (interactive)
+			     (py-execute-region)
+			     (py-switch-to-shell)))
+	    (local-set-key (kbd "M-n")
 			   (lambda ()
 			     (interactive)
 			     (py-execute-region)
