@@ -422,22 +422,6 @@
  ido-confirm-unique-completion t) ; wait for RET even with uniwue completion
 (setq confirm-nonexistent-file-or-buffer nil) ; when using ido, this is quite annoying
 
-;; make emacs transparent (which might be a little bit useless)
-(defun foreign-opacity-modify (&optional dec)
-  "modify the transparency of the emacs frame; if DEC is t, decrease the transparency, otherwise increase it in 10%-steps"
-  (let* ((alpha-or-nil (frame-parameter nil 'alpha)) ; nil before setting
-	 (oldalpha (if alpha-or-nil alpha-or-nil 100))
-	 (newalpha (if dec (- oldalpha 10) (+ oldalpha 10))))
-    (when (and (>= newalpha frame-alpha-lower-limit) (<= newalpha 100))
-      (modify-frame-parameters nil (list (cons 'alpha newalpha))))))
-
-;; C-8 increase opacity
-;; C-9 decrease opacity
-;; C-0 default
-(global-set-key (kbd "C-8") '(lambda()(interactive)(foreign-opacity-modify)))
-(global-set-key (kbd "C-9") '(lambda()(interactive)(foreign-opacity-modify t)))
-(global-set-key (kbd "C-0") '(lambda()(interactive)(modify-frame-parameters nil `((alpha . 100)))))
-
 ;; activating smex for 'ido' like search in the emacs commands
 (setq smex-save-file "~/git/configurations-and-scripts/emacs/.emacs.d/smex.save")
 (require 'smex)
