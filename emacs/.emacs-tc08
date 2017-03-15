@@ -2,6 +2,7 @@
 ;; The screen of abyzou (my Acer laptop) is not that big. Use just two
 ;; spaces for indention
 (setq standard-indent 2)
+(setq tab-width 2)
 
 ;; loading personal scripts and functions from ~elisp
 (defvar elisp-path '("~/git/configurations-and-scripts/emacs/elisp/"))
@@ -421,22 +422,6 @@
  ido-confirm-unique-completion t) ; wait for RET even with uniwue completion
 (setq confirm-nonexistent-file-or-buffer nil) ; when using ido, this is quite annoying
 
-;; make emacs transparent (which might be a little bit useless)
-(defun foreign-opacity-modify (&optional dec)
-  "modify the transparency of the emacs frame; if DEC is t, decrease the transparency, otherwise increase it in 10%-steps"
-  (let* ((alpha-or-nil (frame-parameter nil 'alpha)) ; nil before setting
-	 (oldalpha (if alpha-or-nil alpha-or-nil 100))
-	 (newalpha (if dec (- oldalpha 10) (+ oldalpha 10))))
-    (when (and (>= newalpha frame-alpha-lower-limit) (<= newalpha 100))
-      (modify-frame-parameters nil (list (cons 'alpha newalpha))))))
-
-;; C-8 increase opacity
-;; C-9 decrease opacity
-;; C-0 default
-(global-set-key (kbd "C-8") '(lambda()(interactive)(foreign-opacity-modify)))
-(global-set-key (kbd "C-9") '(lambda()(interactive)(foreign-opacity-modify t)))
-(global-set-key (kbd "C-0") '(lambda()(interactive)(modify-frame-parameters nil `((alpha . 100)))))
-
 ;; activating smex for 'ido' like search in the emacs commands
 (setq smex-save-file "~/git/configurations-and-scripts/emacs/.emacs.d/smex.save")
 (require 'smex)
@@ -788,19 +773,14 @@
 (setq py-keep-windows-configutation t)
 ;; try to automagically figure out indentation
 (setq py-smart-indentation t)
+;; Use just two spaces for indention
+(setq py-indent-offset 2)
+;; Use the TAB to call the py-indent-line function
+(setq py-tab-indent t)
 
 ;; load the python-mode for .bzl files since their Skylark language
 ;; resembles in some way the python syntax
 (setq auto-mode-alist (cons '(".bzl$" . python-mode) auto-mode-alist))
-
-;; use flyspell
-(add-hook 'python-mode-hook
-	  (lambda()
-	    (local-set-key (kbd "<C-return>")
-			   (lambda ()
-			     (interactive)
-			     (py-execute-region)
-			     (py-switch-to-shell)))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -983,19 +963,20 @@
     (define-key map (kbd "M-,") 'backward-kill-word)
     (define-key map (kbd "M-.") 'kill-word)
     (define-key map (kbd "C-M-.") 'kill-line)
-    (define-key map (kbd "C-M-,") 'backward-kill-sentence)
+    (define-key map (kbd "C-M-,") 'kill-whole-line)
     ;; Binding something to Ctrl-m causes problems because Emacs does not
     ;; destinguish between Ctrl-m and RET due to historical reasons
     ;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
-    (define-key input-decode-map [?\C-m] [C-m])
     (define-key input-decode-map [?\C-\M-M] [C-M-m])
-    (define-key map (kbd "<C-m>") (lambda ()
+    (define-key map (kbd "M-m") (lambda ()
 				    (interactive)
-				    (kill-word 1)
-				    (backward-kill-word 1)))
-    (define-key map (kbd "<C-M-m>") 'kill-whole-line)
-    ;; Newline for faster typing
-    (define-key map (kbd "M-n") 'newline-and-indent)
+				    (move-end-of-line 1)
+				    (newline-and-indent)))
+    (define-key map (kbd "<C-M-m>") (lambda()
+				      (interactive)
+				      (previous-line)
+				      (move-end-of-line 1)
+				      (newline-and-indent)))
     map)
   "custom-keys-minor-mode keymap.")
 
@@ -1012,6 +993,11 @@
 	  (lambda()
 	    (local-set-key (kbd "C-n")
 			   'ess-eval-region-or-line-and-step)
+	    (local-set-key (kbd "M-n")
+			   (lambda()
+			     (interactive)
+			     (ess-eval-chunk)
+			     (ess-switch-to-ESS)))
 	    ;; compile the whole file
 	    (local-set-key (kbd "C-M-n")
 			   (lambda()
@@ -1032,6 +1018,11 @@
 			     (py-execute-region)
 			     (py-switch-to-shell)))
 	    (local-set-key (kbd "C-n")
+			   (lambda ()
+			     (interactive)
+			     (py-execute-region)
+			     (py-switch-to-shell)))
+	    (local-set-key (kbd "M-n")
 			   (lambda ()
 			     (interactive)
 			     (py-execute-region)
