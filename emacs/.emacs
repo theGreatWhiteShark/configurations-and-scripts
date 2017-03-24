@@ -101,11 +101,6 @@
 (add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
 (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
 
-;; (setq default-abbrev-mode t)
-(setq save-abbrevs nil)
-(load "~/git/configurations-and-scripts/emacs/.emacs.d/abbrev_defs.el")
-;; this stupid thing just don't seems to work. Skeletons have to be inserted by hand.
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org Mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -257,34 +252,10 @@
 	 (plantuml . t)
 	 (latex . t))))
 
-
-;; skeletons
-(add-hook 'org-mode-hook (lambda () (abbrev-mode 1)))
-(define-skeleton skel-org-block
-  "Insert an org block, querying for type."
-  "Type: "
-  "#+begin_" str "\n"
-  _ - \n
-  "#+end_" str "\n")
-(define-abbrev org-mode-abbrev-table "sblk" "" 'skel-org-block)
-(define-skeleton skel-org-block-plantuml
-  "Insert a org plantuml block, querying for filename."
-  "File (no extension): "
-  "#+begin_src plantuml :file " str ".png :cache yes\n"
-  _ - \n
-  "#+end_src\n")
-(define-abbrev org-mode-abbrev-table "splantuml" "" 'skel-org-block-plantuml)
-
 ;; MobileOrg
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; org-mode
-
-;; abbreviations
-(setq 
- abbrev-file-name "~/git/configurations-and-scripts/emacs/.emacs.d/abbrev_defs.el"
- save-abbrevs t
-)
 
 ;; yasnippet
 (load-file "~/git/configurations-and-scripts/emacs/yasnippet/yasnippet.el")
@@ -546,8 +517,6 @@
 (when (require 'diminish nil 'noerror)
   (eval-after-load "company"
     '(diminish 'company-mode "Cmp"))
-  (eval-after-load "abbrev"
-    '(diminish 'abbrev-mode "Ab"))
   (eval-after-load "yasnippet"
     '(diminish 'yas-minor-mode " Y")))
 (add-hook 'emacs-lisp-mode-hook
