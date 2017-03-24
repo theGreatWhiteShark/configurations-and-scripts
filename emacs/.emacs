@@ -8,6 +8,9 @@
 (defvar elisp-path '("~/git/configurations-and-scripts/emacs/elisp/"))
 (mapcar #'(lambda(p) (add-to-list 'load-path p)) elisp-path)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;; spell checking ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Activate on the fly spellchecking for all major modes I use on a
 ;; regular basis
 (load-file "~/git/configurations-and-scripts/emacs/elisp/flyspell.el")
@@ -23,10 +26,26 @@
 (add-hook 'lisp-mode-hook (lambda() (flyspell-prog-mode)))
 (add-hook 'c-mode-hook (lambda() (flyspell-prog-mode)))
 
+;; The default dictionary to be used should be the English one
+(setq flyspell-default-dictionary "en")
+;; Use a central personal dictionary. (Via a symbolic link from the
+;; git repository)
+;; The personal dictionary has always to be of the same language as the
+;; current used one!
+(setq ispell-personal-dictionary "~/.emacs.d/.aspell.en.pws")
+
+;; Increase the speed (since we are using the more slower aspell instead
+;; of ispell)
+(setq ispell-extra-args '("--sug-mode=fast"))
+
 ;; Add a german dictionary and the option of switching between
 ;; languages
 (defun flyspell-switch-dictionary()
   (interactive)
+  ;; Change the default dictionary too
+  (if (string= ispell-current-dictionary "de")
+    (setq ispell-personal-dictionary "~/.eamcs.d/.aspell.en.pws")
+    (setq ispell-personal-dictionary "~/.eamcs.d/.aspell.de.pws"))
   (let* ((dic ispell-current-dictionary)
 	 (change (if (string= dic "de") "en" "de")))
     (ispell-change-dictionary change)
@@ -782,14 +801,6 @@
 ;; resembles in some way the python syntax
 (setq auto-mode-alist (cons '(".bzl$" . python-mode) auto-mode-alist))
 
-;; use flyspell
-(add-hook 'python-mode-hook
-	  (lambda()
-	    (setq py-indent-offset 2)
-	    (local-set-key (kbd "<C-return>")
-			   (lambda ()
-			     (interactive)
-			     (py-execute-region)))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1025,7 +1036,8 @@
 				     (region-beginning)
 				     (region-end))))
     ;; Indenting( line, paragraph, buffer )
-    (define-key map (kbd "C-i") 'indent-region)
+    ;; Don't bind this or the TAB won't work anymore
+    ;; (define-key map (kbd "C-i") 'indent-region)
     (define-key map (kbd "M-i") (lambda()
 				    (interactive)
 				    (backward-paragraph)
