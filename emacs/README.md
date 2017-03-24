@@ -16,7 +16,7 @@ Before using, be sure to initialize and update your submodules. This way all the
 ```
 # Recursively in order to get the code of the submodules of submodules
 # as well.
-git submodule update --init --recursive
+git submodule update --init --recursive --remote
 ```
 
 # Hints
