@@ -4,9 +4,6 @@
 [submodule "emacs/anything-config"]
 	path = emacs/anything-config
 	url = git://repo.or.cz/anything-config.git
-[submodule "emacs/elscreen"]
-	path = emacs/elscreen
-	url = https://github.com/emacs-jp/elscreen
 [submodule "emacs/arduino-mode"]
 	path = emacs/arduino-mode
 	url = https://github.com/bookest/arduino-mode.git
