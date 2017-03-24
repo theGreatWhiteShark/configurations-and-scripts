@@ -197,7 +197,6 @@
 	 (latex . t))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; org-mode
-
 ;; yasnippet
 (load-file "~/git/configurations-and-scripts/emacs/yasnippet/yasnippet.el")
 (require 'yasnippet)
@@ -218,45 +217,9 @@
 (add-hook 'Rnw-mode-hook
 	  (lambda() (yas-minor-mode 1)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; From emacs-fu.blogspot.de
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  
-;; Macro for using packages and functions only when they are available
-(defmacro require-maybe (feature &optional file)
-  "*Try to require FEATURE, but don't signal an error if 'require' fails. "
-  `(require, feature, file 'noerror))
-
-(defmacro when-available (func foo)
-  "*Do something if FUNCTION is available."
-  `(when (fboundp, func) ,foo))
-
-;; running external programs only if they exists
-(defun foreign-shell-command-maybe (exe &optional paramstr)
-  "run executable EXE with PARAMSTR, or warn if EXE's not available; eg. "
-  " (foreign-shell-command-mazbe \"ls\" \"-l -a\")"
-  (if (executable-find exe)
-      (shell-command (concat exe " " paramstr))
-    (message (concat "'" exe "' not found; please install"))))
-
-;; Zooming in or out in Emacs
-(defun foreign-zoom (n)
-  "with positive N, increase the font size, otherwise decrese it"
-  (set-face-attribute 'default (selected-frame) :height
-		      (+ (face-attribute 'default :height (* *if (> n 0) 1 -1) 10))))
-;; keybinding of the zoom function: Crtl-+ for zooming in, Crtl-- for zooming out
-(global-set-key (kbd "C-+")      '(lambda nil (interactive) (foreign-zoom 1)))
-(global-set-key [C-kp-add]       '(lambda nil (interactive) (foreign-zoom 1)))
-(global-set-key (kbd "C--")      '(lambda nil (interactive) (foreign-zoom -1)))
-(global-set-key [C-kp-substract] '(lambda nil (interactive) (foreign-zoom -1)))
-
-;; running emacs in full-screen mode
-(defun foreign-full-screen-toggle ()
-  "toggle full-screen mode"
-  (interactive)
-  (shell-command "wmctrl -r :ACTIVE: -btoggle,fullscreen"))
-(global-set-key (kbd "<f11>") 'foreign-full-screen-toggle)
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;; diverse ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; enable time stamp and automatic time stamp when saving data
 (setq
  time-stamp-active t
@@ -264,40 +227,23 @@
  time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S (%u)")
 (add-hook 'write-file-hooks 'time-stamp); update when saving
 
-;; show column numbers
-(column-number-mode t)
-
-;; show line numbers
+;; show line numbers ;; höhö, never actually used this one. But it's nice
 (autoload 'linum-mode "linum" "toggle line numbers on/off" t)
 (global-set-key (kbd "C-<f5>") 'linum-mode)
 (add-hook 'ess-mode-hook
 	  (lambda() 'linum-mode 1))
 
-;; highlight current line
-;; color is chosen which is not available on the console. so there is only line highlighting in the emacs GUI
-(defface hl-line '((t (:ba ckground "WhiteSmoke")));"LightSteelBlue1")))
-  "Face to use for 'hl-line-face'. " :group 'hl-line)
-(if (eq window-system 'x) 
-    (setq hl-line-face 'hl-line)
-  (global-hl-line-mode t))
+;; Provides the general editor behavior in Emacs:
+;; Highlighting a region and deleting it with DEL or just replace the
+;; text by typing in a different one.
+(delete-selection-mode t)
 
+;; remapping caps-lock to M-x
+(if (eq window-system 'x)
+   (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
+(global-set-key [f13] 'execute-extended-command)
 
-;; hightlighting "TODO" and "BUG" in ESS
-(add-hook 'ess-mode-hook
-	  (lambda ()
-	    (font-lock-add-keywords nil
-				    '(("\\<\\(TODO\\|BUG\\|UPDATE\\|NEW\\):" 1 font-lock-warning-face t)))))
-
-;; selection and cut-copy-paste like everywhere else 
-(transient-mark-mode t)   ; display current selection in a different color + windowsstyle region marking (shift)
-(delete-selection-mode t) ; delete selected area with a keypress
-
-;; bremapping caps-lock to M-x
-;;(if (eq window-system 'x)
-;;   (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
-;;(global-set-key [f13] 'execute-extended-command)
-
-;; bcycling hrough your buffers with Ctrl-Tab
+;; cycling through your buffers with Ctrl-Tab
 (global-set-key (kbd "<C-tab>") 'bury-buffer)
 
 ;; easier switchting between buffers (with alt key)
@@ -306,10 +252,10 @@
 
 ;; enable rectangle marking
 (require 'rect-mark)
-(global-set-key (kbd "C-x r C-SPC") 'rm-set-mark)
-(global-set-key (kbd "C-x r C-x")   'rm-exchange-point-and-mark)
-(global-set-key (kbd "C-x r C-w")   'rm-kill-region)
-(global-set-key (kbd "C-x r M-W")   'rm-kill-ring-save)
+(global-set-key (kbd "C-r SPC") 'rm-set-mark)
+(global-set-key (kbd "C-r C-x")   'rm-exchange-point-and-mark)
+(global-set-key (kbd "C-r C-w")   'rm-kill-region)
+(global-set-key (kbd "C-r M-W")   'rm-kill-ring-save)
 
 ;; ;; viewing register contents
 (require 'list-register)
