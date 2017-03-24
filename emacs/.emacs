@@ -252,29 +252,13 @@
 
 ;; enable rectangle marking
 (require 'rect-mark)
-(global-set-key (kbd "C-r SPC") 'rm-set-mark)
-(global-set-key (kbd "C-r C-x")   'rm-exchange-point-and-mark)
-(global-set-key (kbd "C-r C-w")   'rm-kill-region)
-(global-set-key (kbd "C-r M-W")   'rm-kill-ring-save)
 
 ;; ;; viewing register contents
 (require 'list-register)
 (global-set-key (kbd "C-x r v") 'list-register)
-
-;; counting words
-(defun foreign-count-words (&optional begin end)
-  "count words between BEGIN and END (region); if no region defined, count words in buffer"
-  (interactive "r")
-  (let ((b (if mark-active begin (point-min)))
-	(e (if mark-active end (point-max))))
-    (message "Word count: %s" (how-many "\\w+" b w ))))
-
-;; show mismatching parantheses (out of a sudden this seems to be invalid)
-;; (set-face-foreground 'show-paren-mismatch-face "red")
-;; (set-face-attribute 'show-paren-mismatch-face nil
-;;		    :weight 'bold :underline t :overline nil :slant 'normal)
-
-;; shows a list of possible matching entries while switching buffer or finding files
+ 
+;; shows a list of possible matching entries while switching buffer or
+;; finding files
 (require 'ido)
 (ido-mode 'both) ;; for buffers and files
 (setq
@@ -286,30 +270,30 @@
  ido-ignore-buffers ;;
  '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
 "^\*compilation" "^\*GTAGS" "^session\.*" "^\*")
- ido-work-directory-list '("~/" "~/Desktop" "~/Documents" "~src")
+ ido-work-directory-list '("~/" "~/git/climex/R" "~/git/tsa/org")
  ido-case-fold t ; case sensitive
  ido-enable-last-directory-history t ; remeber last used dirs
  ido-max-work-directory-list 30
  ido-max-work-file-list 50
  ido-use-filename-at-point nil
  ido-use-url-at-point nil
- 
  ido-enable-flex-matching nil ; don't try to be too smart
- ido-max-prospects 8 ; don't spam minibuffer
- ido-confirm-unique-completion t) ; wait for RET even with uniwue completion
+ ido-max-prospects 8) ; don't spam minibuffer
+ ;; wait for RET even with unique completion
+ ;; ido-confirm-unique-completion t) 
 (setq confirm-nonexistent-file-or-buffer nil) ; when using ido, this is quite annoying
 
 ;; activating smex for 'ido' like search in the emacs commands
 (setq smex-save-file "~/git/configurations-and-scripts/emacs/.emacs.d/smex.save")
 (require 'smex)
 (smex-initialize)
-(global-set-key (kbd "M-X") 'smex)
+(global-set-key (kbd "C-M-x") 'smex)
 
 ;; highlight changes in files under version control
 (global-highlight-changes-mode t)
 (setq highlight-changes-visibility-initial-state nil); initially hidden
 (global-set-key (kbd "<f6>") 'highlight-changes-visible-mode) ;; toggle visibility
-(global-set-key (kbd "S-<f6>") 'higlight-changes-remove-highlight)
+(global-set-key (kbd "S-<f6>") 'highlight-changes-remove-highlight)
 (set-face-foreground 'highlight-changes nil)
 (set-face-background 'highlight-changes "#382f2f")
 (set-face-foreground 'highlight-changes-delete nil)
@@ -322,14 +306,6 @@
 (global-set-key "\C-cy" '(lambda ()
 			   (interactive)
 			   (popup-menu 'yank-menu)))
-
-;; elscreen. Treats all buffers which are opened in elscreen-buffer as a logical unit. This eases the task of switching between various buffers at once
-(load "elscreen" "ElScreen")
-(global-set-key (kbd "<f9>") 'elscreen-create)
-(global-set-key (kbd "S-<f9>") 'elsceen-kill)
-;; windows key + PgUp/Down switches between elscreens
-(global-set-key (kbd "<s-prior>") 'elscreen-previous)
-(global-set-key (kbd "<s-next>") 'elscree-next)
 
 ;; change cursor color
 (defun foreign-set-cursor-according-to-mode ()
@@ -373,12 +349,13 @@
       (quote (("default"
 	       ("Org"
 		(mode . org-mode))
-	       ("Extremes"
+	       ("Calculations"
 		(filename . "~/calculations/"))
+	       ("Work"
+		(filename . "~/work/"))
 	       ("Configuration"
-		(or 
-		 (filename . "~/")
-		 (filename . "~/git/configurations-and-scripts/emacs/.emacs.d/")
+		(or
+		 (filename . "~/git/configurations-and-scripts/")
 		 (mode . emacs-lisp-mode)))
 	       ("Programming"
 		(or
@@ -406,20 +383,8 @@
     '(diminish 'company-mode "Cmp"))
   (eval-after-load "yasnippet"
     '(diminish 'yas-minor-mode " Y")))
-(add-hook 'emacs-lisp-mode-hook
+(add-hook 'emacs-lisp-mode-hook 
 	  (lambda() (setq mode-name "el")))
-
-;; browse through kill-ring (but also try M-y)
-(when (require 'browse-kill-ring nil 'noerror)
-  (browse-kill-ring-default-keybindings))
-(global-set-key "\C-cy" '(lambda()
-			   (interactive)
-			   (popup-menu 'yank-menu)))
-
-;; obsolete since a custom modeline is used
-;; displaing scrolling information in mode-bar
-;; (if (require 'sml-modeline nil 'noerror)
-;;     (progn (sml-modeline-mode 1))) ;; but this is also present in minimal-mode
 
 ;; kills buffers which are more than 3 days untouched
 (require 'midnight)
@@ -441,12 +406,11 @@
 
 
 ;; colorful delimiters 
-(when (require 'rainbow-delimiters nil 'noerror)
-  (lambda()
-    (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
-    (add-hook 'ess-mode-hook 'rainbow-delimiters-mode)
-    (add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
-    (add-hook 'python-mode-hook 'rainbow-delimiters-mode)))
+(require 'rainbow-delimiters)
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'ess-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'python-mode-hook 'rainbow-delimiters-mode)
 (rainbow-delimiters-mode 1)
 
 ;; using multi-term to open more than one terminal in emacs
@@ -456,14 +420,7 @@
 (global-set-key (kbd "C-c t") 'multi-term-next)
 (global-set-key (kbd "C-c T") 'multi-term)
 
-;; more packages
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-			 ("gnu" . "http://elpa.gnu.org/packages/")
-			 ;; ("marmalade" . "http://marmalade-repo.org/packages/")
-			 ;; seems not to work right now
-			 ))
-
-;; changing the style of the modline
+;; changing the style of the mode-line
 (setq-default mode-line-format
       (list
        ;; changes till last saving
@@ -546,18 +503,12 @@
 			  [term term-color-black term-color-red term-color-green term-color-yellow 
 				term-color-blue term-color-magenta term-color-cyan term-color-white])
 	    (put 'narrow-to-region 'disabled nil)))	    
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; emacs-fu
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;;; diverse
-
 ;; source the .emacs file after alteration while still running an active emacs session
 (defun reload ()
   (interactive)
   (load-file "~/.emacs"))
-(defun corg ()
-  (interactive)
-  (dired-at-point "~/git/tsa/org"))
 
 ;; dismissing the startup screen
 (custom-set-variables
@@ -656,7 +607,6 @@
 ;; load the python-mode for .bzl files since their Skylark language
 ;; resembles in some way the python syntax
 (setq auto-mode-alist (cons '(".bzl$" . python-mode) auto-mode-alist))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -678,7 +628,6 @@
 	    (setq web-mode-code-indent-offset 2)
 	    (local-set-key (kbd "M-;") 'windmove-right)
 	    (local-set-key (kbd "M-'") 'web-mode-comment-or-uncomment)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -686,15 +635,17 @@
 
 ;; using the MELPA repository
 (require 'package)
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
-(when (< emacs-major-version 24)
-  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.prg/packages/")))
+;; more packages
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
+			 ("gnu" . "http://elpa.gnu.org/packages/")
+			 ("melpa" . "https://melpa.org/packages/")
+			 ("marmalade" . "http://marmalade-repo.org/packages/")
+			 ;; seems not to work right now
+			 ))
 (package-initialize)
 
 ;; activating c-mode for CUDA files
 (setq auto-mode-alist (cons '(".cu$" . c-mode) auto-mode-alist))
-
 
 
 ;; Arduino
@@ -712,30 +663,6 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-;; (autoload 'gfm-mode "gfm-mode"
-;;    "Major mode for editing GitHub Flavored Markdown files" t)
-;; (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-;; (eval-after-load "markdown-mode"
-;;   '(defalias 'markdown-add-xhtml-header-and-footer 'as/markdown-add-xhtml-header-and-footer))
-
-(defun as/markdown-add-xhtml-header-and-footer (title)
-    "Wrap XHTML header and footer with given TITLE around current buffer."
-    (goto-char (point-min))
-    (insert "<!DOCTYPE html5>\n"
-	    "<html>\n"
-	    "<head>\n<title>")
-    (insert title)
-    (insert "</title>\n")
-    (insert "<meta charset=\"utf-8\" />\n")
-    (when (> (length markdown-css-paths) 0)
-      (insert (mapconcat 'markdown-stylesheet-link-string markdown-css-paths "\n")))
-    (insert "\n</head>\n\n"
-	    "<body>\n\n")
-    (goto-char (point-max))
-    (insert "\n"
-	    "</body>\n"
-	    "</html>\n"))
-
 ;; colors and human readable file size in dired
 (setq dired-listing-switches "-alh")
 
@@ -744,15 +671,6 @@
 (add-to-list 'default-frame-alist '(alpha . (77 . 50)))
  
 (set-face-attribute 'default nil :background "black")
-
-;; working with both html and javascript in one document
-;; (require 'multi-web-mode)
-;; (setq mweb-default-major-mode 'html-mode)
-;; (setq mweb-tags '((js-mode "<script[^>]*>" "</script>")
-;;                   (php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
-;;                   (css-mode "<style[^>]*>" "</style>")))
-;; (setq mweb-filename-extensions '("php" "htm" "html" "xhtml" "ctp" "phtml" "php4" "php5"))
-;; (multi-web-global-mode 1)
 
 ;; use perl-mode for perl scripts
 (add-to-list 'auto-mode-alist '("\\.plx" . perl-mode))
@@ -906,7 +824,11 @@
 				    (mark-whole-buffer)
 				    (indent-region
 				     (region-beginning)
-				     (region-end))))    
+				     (region-end))))
+    ;; Rectangle marking, cutting, pasting
+    (define-key map (kbd "C-u") 'rm-set-mark)
+    (define-key map (kbd "M-u") 'rm-kill-region)
+    (define-key map (kbd "C-M-u") 'rm-kill-ring-save)
     ;; Binding something to Ctrl-m causes problems because Emacs does not
     ;; destinguish between Ctrl-m and RET due to historical reasons
     ;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
