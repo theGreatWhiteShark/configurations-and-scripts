@@ -111,12 +111,7 @@
 (add-hook 'org-mode-hook 'turn-on-font-lock)
 (require 'org)
 
-(global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cb" 'org-iswitchb)
-;; specification for capturing and refiling
-(global-set-key (kbd "C-c c") 'org-capture)
 ;; Displayes the closed date whenever a TODO is marked as DONE
 (setq org-log-done t)
 ;; My private files containing all different kinds of notes
@@ -125,34 +120,17 @@
 			     "~/git/tsa/org/private.org"
 			     "~/git/tsa/org/software.org"
 			     "~/git/tsa/org/notes/papers.org"
-			     "~/git/tsa/org/refile.org"
 			     "~/git/tsa/org/notes/algorithms-computation.org"))
 
-(defun foreign-verify-refile-target ()
-  "Exclude todo keywords with a done state from refile targets"
-  (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 (setq 
  org-directory "~/git/tsa/org"
- org-default-notes-files "~/git/tsa/org/refile.org"
- org-capture-templates (quote (("t" "todo" entry
-				(file "~/git/tsa/org/refile.org")
-				"* TODO %? \n%U\n%a\n")
-			       ("n" "note" entry
-				(file "~/git/tsa/org/refile.org")
-				"* %? :NOTE:\n%U\n")))
- org-refile-targets (quote ((nil :maxlevel . 9)
-			    (org-agenda-files :maxlevel . 9 ))) ; current file and all contributing to agenda are refiling targets - up to 9 levels deep
- org-refile-use-outline-path t
  org-outline-path-complete-in-steps nil
- org-refile-allow-creating-parent-nodes (quote confirm) ; allow refile to create parent tasks with confirmation
- org-completion-use-ido t
  org-indirect-buffer-display 'current-window
- org-refile-target-verify-function 'foreign-verify-refile-target ; exclude DONE state
 )
 
 ;; customize agenda view
 (setq
- org-agenda-dim-blocked-tasts nil
+ org-agenda-dim-blocked-tasks nil
  org-agenda-compact-blocks t
  org-agenda-custom-commands
  (quote (("N" "Notes" tags "NOTE"
