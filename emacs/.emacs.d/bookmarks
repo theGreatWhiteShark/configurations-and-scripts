@@ -2,7 +2,7 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-((".Rprofile"
+(".Rprofile"
  (filename . "~/.Rprofile")
  (front-context-string . ".First <- functi")
  (rear-context-string)
@@ -22,11 +22,6 @@
  (front-context-string . "#+STARTUP: hides")
  (rear-context-string)
  (position . 1))
-(".ema"
- (filename . "~/pks_home/calculations/02_seasonality_methods_R/seasRcheck_V1.Rnw")
- (front-context-string . "\\begin{itemize}\n")
- (rear-context-string . "ection{Interna}\n")
- (position . 3680))
 ("config"
  (filename . "~/.i3/config")
  (front-context-string)
