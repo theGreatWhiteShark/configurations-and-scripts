@@ -1030,11 +1030,15 @@
 				    (interactive)
 				    (backward-paragraph)
 				    (mark-paragraph)
-				    (indent-region)))
+				    (indent-region
+				     (region-beginning)
+				     (region-end))))
     (define-key map (kbd "C-M-i") (lambda ()
 				    (interactive)
 				    (mark-whole-buffer)
-				    (indent-region)))    
+				    (indent-region
+				     (region-beginning)
+				     (region-end))))    
     ;; Binding something to Ctrl-m causes problems because Emacs does not
     ;; destinguish between Ctrl-m and RET due to historical reasons
     ;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
