@@ -107,17 +107,19 @@
 (setq load-path (cons "~/git/configurations-and-scripts/emacs/org-mode/lisp" load-path))
 (setq load-path (cons "~/git/configurations-and-scripts/emacs/org-mode/contrib/lisp" load-path))
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+;; use syntax highlighting
 (add-hook 'org-mode-hook 'turn-on-font-lock)
-
-;; (add-to-list 'load-path (expand-file-name "~/git/org-mode/lisp"))
-;; (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode ))
 (require 'org)
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-cb" 'org-iswitchb)
-(setq org-log-done t) ;; Displayes the closed date whenever a TODO is marked as DONE
+;; specification for capturing and refiling
+(global-set-key (kbd "C-c c") 'org-capture)
+;; Displayes the closed date whenever a TODO is marked as DONE
+(setq org-log-done t)
+;; My private files containing all different kinds of notes
 (setq org-agenda-files (list "~/git/tsa/org/work.org"
 			     "~/git/tsa/org/interest.org"
 			     "~/git/tsa/org/private.org"
@@ -126,17 +128,17 @@
 			     "~/git/tsa/org/refile.org"
 			     "~/git/tsa/org/notes/algorithms-computation.org"))
 
-;; specification for capturing and refiling
-(global-set-key (kbd "C-c c") 'org-capture)
 (defun foreign-verify-refile-target ()
   "Exclude todo keywords with a done state from refile targets"
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 (setq 
  org-directory "~/git/tsa/org"
  org-default-notes-files "~/git/tsa/org/refile.org"
- org-capture-templates (quote (("t" "todo" entry (file "~/git/tsa/org/refile.org")
+ org-capture-templates (quote (("t" "todo" entry
+				(file "~/git/tsa/org/refile.org")
 				"* TODO %? \n%U\n%a\n")
-			       ("n" "note" entry (file "~/git/tsa/org/refile.org")
+			       ("n" "note" entry
+				(file "~/git/tsa/org/refile.org")
 				"* %? :NOTE:\n%U\n")))
  org-refile-targets (quote ((nil :maxlevel . 9)
 			    (org-agenda-files :maxlevel . 9 ))) ; current file and all contributing to agenda are refiling targets - up to 9 levels deep
@@ -164,32 +166,8 @@
 	   nil))))
 )
 
-;; userspecific tags
-(setq 
- org-tag-alist (quote ((:startgroup)
-			    ("@WORK" . ?W)
-			    ("@HOME" . ?H)
-			    ("@BEHEMOTH" . ?B)
-			    ("@LEVIATHAN" . ?L)
-			    ("@ZYZ" .?Z)
-			    ("@ILMENAU" . ?I)
-			    ("@SANGERHAUSEN" . ?S)
-			    (:endgroup)
-			    ("work" . ?w)
-			    ("records" . ?r)
-			    ("paper" . ?p)
-			    ("visualization" . ?v)
-			    ("software" . ?s) ; new software to dig in
-			    ("material" . ?m) ; other sources than papers
-			    ("climate" . ?c)
-			    ("extremes" . ?e)
-			    ("buy" . ?b)
-			    ("lam" . ?l)
-			    ("formality" . ?f)))
- org-fast-tag-selection-single-key (quote expert)
- org-agenda-tags-todo-honor-ignore-options t
-)
-
+;; I havn't actually yet looked into this one (copied it from a blog
+;; some years ago). During a sleepless night I might have a look at it.
 ;; archive setup
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archived Tasks")
@@ -199,7 +177,7 @@
 	(widen)
 	;; consider only tasks with done todo headings
 	(let ((next-headline (save-excursion (or (outline-next-heading) (point-max))))
-	      (subtree-end (save-excursion (org-end-0of-subtree t))))
+	      (subtree-end (save-excursion (org-end-of-subtree t))))
 	  (if (member (org-get-todo-state) org-todo-keywords-1)
 	      (if (member (org-get-todo-state) org-done-keywords)
 		  (let* ((daynr (string-to-int (format-time-string "%d" (current-time))))
@@ -220,18 +198,13 @@
 (setq org-alphabetical-lists t)
 (require 'ox-html)
 (require 'ox-latex)
-(require 'ox-ascii)
 
 (defun foreign-display-inline-images ()
   (condition-case nil
       (org-display-inline-images)
     (error nil)))
 (add-hook 'org-babel-after-execute-hook 'foreign-display-inline-images 'append)
-(add-to-list 'org-src-lang-modes (quote ("plantuml" . fundamental)))
 (setq
- org-ditaa-jar-path "~/git/configurations-and-scripts/emacs/org-mode/contrib/scripts/ditaa.jar"
- org-plantuml-jar-path "~/scripts/java/plantuml.jar"
- org-babel-results-keyword "results" ; make babel results blocks lowercase
  org-confirm-babel-evaluate nil
  org-startup-with-inline-images nil ; cause it breaks when accessing via ssh
  org-babel-R-command (concatenate 'string R-binary-folder "R --no-save --slave")
@@ -239,21 +212,11 @@
 (org-babel-do-load-languages
  (quote org-babel-load-languages)
  (quote ((emacs-lisp . t)
-	 (dot . t)
-	 (ditaa . t)
 	 (R . t)
 	 (python . t)
-	 (ruby . t)
-	 (gnuplot . t)
-	 (clojure . t)
 	 (sh . t)
-	 (ledger . t)
 	 (org . t)
-	 (plantuml . t)
 	 (latex . t))))
-
-;; MobileOrg
-(setq org-mobile-directory "~/Dropbox/MobileOrg")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; org-mode
 
