@@ -252,38 +252,6 @@
 (require 'list-register)
 (global-set-key (kbd "C-x r v") 'list-register)
  
-;; shows a list of possible matching entries while switching buffer or
-;; finding files
-(require 'ido)
-(ido-mode 'both) ;; for buffers and files
-(setq
- ido-save-directory-list-file "~/git/configurations-and-scripts/emacs/.emacs.d/cache/ido.last"
- ido-everywhere t
- ido-max-directory-size 100000
- ido-default-file-method 'selected-window ; use current window when visiting files
- ido-default-buffer-method 'selected-window
- ido-ignore-buffers ;;
- '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
-"^\*compilation" "^\*GTAGS" "^session\.*" "^\*")
- ido-work-directory-list '("~/" "~/git/climex/R" "~/git/tsa/org")
- ido-case-fold t ; case sensitive
- ido-enable-last-directory-history t ; remeber last used dirs
- ido-max-work-directory-list 30
- ido-max-work-file-list 50
- ido-use-filename-at-point nil
- ido-use-url-at-point nil
- ido-enable-flex-matching nil ; don't try to be too smart
- ido-max-prospects 8) ; don't spam minibuffer
- ;; wait for RET even with unique completion
- ;; ido-confirm-unique-completion t) 
-(setq confirm-nonexistent-file-or-buffer nil) ; when using ido, this is quite annoying
-
-;; activating smex for 'ido' like search in the emacs commands
-(setq smex-save-file "~/git/configurations-and-scripts/emacs/.emacs.d/smex.save")
-(require 'smex)
-(smex-initialize)
-(global-set-key (kbd "C-M-x") 'smex)
-
 ;; highlight changes in files under version control
 (global-highlight-changes-mode t)
 (setq highlight-changes-visibility-initial-state nil); initially hidden
@@ -495,26 +463,50 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
- '(custom-safe-themes (quote ("6383295fb0c974d24c9dca1230c0489edf1cd5dd03d4b036aab290b6d3ceb50c" default)))
+ '(ansi-color-names-vector
+   ["#3F3F3F" "#CC93932" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
+ '(custom-safe-themes
+   (quote
+    ("6383295fb0c974d24c9dca1230c0489edf1cd5dd03d4b036aab290b6d3ceb50c" default)))
  '(delete-selection-mode nil)
  '(fci-rule-color "#383838")
  '(inhibit-startup-screen t)
  '(mark-even-if-inactive t)
- '(org-agenda-files (quote ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org" "~/git/tsa/org/refile.org")))
+ '(org-agenda-files
+   (quote
+    ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org" "~/git/tsa/org/refile.org")))
+ '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode (quote right))
  '(transient-mark-mode 1)
  '(vc-annotate-background "#2B2B2B")
- '(vc-annotate-color-map (quote ((20 . "#BC8383") (40 . "#CC9393") (60 . "#DFAF8F") (80 . "#D0BF8F") (100 . "#E0CF9F") (120 . "#F0DFAF") (140 . "#5F7F5F") (160 . "#7F9F7F") (180 . "#8FB28F") (200 . "#9FC59F") (220 . "#AFD8AF") (240 . "#BFEBBF") (260 . "#93E0E3") (280 . "#6CA0A3") (300 . "#7CB8BB") (320 . "#8CD0D3") (340 . "#94BFF3") (360 . "#DC8CC3")))) ;
- '(vc-annotate-very-old-color "#DC8CC3")
- ;; But I'm a naughty boy and did edit it by hand.
- '(polymode-exporter-output-file-format "%s"))
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#BC8383")
+     (40 . "#CC9393")
+     (60 . "#DFAF8F")
+     (80 . "#D0BF8F")
+     (100 . "#E0CF9F")
+     (120 . "#F0DFAF")
+     (140 . "#5F7F5F")
+     (160 . "#7F9F7F")
+     (180 . "#8FB28F")
+     (200 . "#9FC59F")
+     (220 . "#AFD8AF")
+     (240 . "#BFEBBF")
+     (260 . "#93E0E3")
+     (280 . "#6CA0A3")
+     (300 . "#7CB8BB")
+     (320 . "#8CD0D3")
+     (340 . "#94BFF3")
+     (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(helm-match ((t (:foreground "khaki" :underline t))))
+ '(helm-M-x-key ((t (:foreground "#CC9393")))))
 
 ;; Minimal mode. Removes some lines and bars from Emacs to make its appearance more appealing
 (require 'minimal)
@@ -656,10 +648,12 @@
 (add-to-list 'auto-mode-alist '("\\.pl" . perl-mode))
 
 ;; wdired: using C-x C-q the dired buffer becomes editable. Nice!
+;; Use magit for handling the interaction with git
+(global-set-key (kbd "C-x g") 'magit-status)
 
-;; magit
-;; helm/yedi
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; org-ref ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-ref for handling citations. Requires the hydra, parsebib,
 ;; helm, helm-bibtex package
 (add-to-list 'load-path "~/git/configurations-and-scripts/emacs/org-ref")
@@ -699,6 +693,7 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 (global-set-key (kbd "C-x rb") 'helm-bookmarks)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
 
 ;; Customized keybindings for navigation, killing and various other
 ;; useful things.
@@ -765,12 +760,7 @@
 				  (move-end-of-line 1)
 				  (newline-and-indent)
 				  (yank)))
-    (define-key map (kbd "C-M-o") (lambda()
-				    (interactive)
-				    (previous-line)
-				    (move-end-of-line 1)
-				    (newline-and-indent)
-				    (yank)))
+    (define-key map (kbd "C-M-o") 'helm-show-kill-ring)
     ;; Commenting (insert comment, comment line, paragraph)
     (define-key map (kbd "C-'") (lambda()
 				  (interactive)
