@@ -505,8 +505,24 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(helm-M-x-key ((t (:foreground "#CC9393"))))
+ '(helm-ff-directory ((t (:foreground "#93E0E3" :weight bold
+				      :background nil))))
+ '(helm-ff-dotted-directory ((t (:foreground "black" :background nil))))
+ '(helm-ff-dotted-symlink-directory ((t (:foreground "DarkOrange"
+						     :background nil))))
+ '(helm-ff-executable ((t (:foreground "#9FC59F" :weight normal
+				       :background nil))))
+ '(helm-ff-file ((t (:foreground "#DCDCCC" :weight normal
+				 :background nil))))
+ '(helm-ff-invalid-symlink ((t (:foreground "#CC9393" :weight bold
+					    :background nil))))
+ '(helm-ff-prefix ((t (:foreground "#3F3F3F" :weight normal
+				   :background nil))))
+ '(helm-ff-symlink ((t (:foreground "#F0DFAF" :weight bold
+				    :background nil))))
  '(helm-match ((t (:foreground "khaki" :underline t))))
- '(helm-M-x-key ((t (:foreground "#CC9393")))))
+ '(helm-match-item ((t (:foreground "khaki")))))
 
 ;; Minimal mode. Removes some lines and bars from Emacs to make its appearance more appealing
 (require 'minimal)
@@ -702,7 +718,7 @@
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 (global-set-key (kbd "C-x rb") 'helm-bookmarks)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-s") 'helm-swoop)
+(global-set-key (kbd "M-s") 'helm-swoop)
 
 ;; Using TAB for completion within the helm seach
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
