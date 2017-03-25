@@ -676,13 +676,8 @@
 (add-to-list 'auto-mode-alist '("\\.plx" . perl-mode))
 (add-to-list 'auto-mode-alist '("\\.pl" . perl-mode))
 
-;; flycheck
-;; wdired/ranger
-;; tramp
-;; font Consolas-12; Symbola
-;; epa
-;; whitespace mode
-;; ido
+;; wdired: using C-x C-q the dired buffer becomes editable. Nice!
+
 ;; magit
 ;; helm/yedi
 
