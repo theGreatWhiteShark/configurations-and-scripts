@@ -238,11 +238,6 @@
 ;; text by typing in a different one.
 (delete-selection-mode t)
 
-;; remapping caps-lock to M-x
-(if (eq window-system 'x)
-   (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
-(global-set-key [f13] 'execute-extended-command)
-
 ;; cycling through your buffers with Ctrl-Tab
 (global-set-key (kbd "<C-tab>") 'bury-buffer)
 
@@ -388,22 +383,6 @@
 
 ;; kills buffers which are more than 3 days untouched
 (require 'midnight)
-
-;; using anything to find things
-(add-to-list 'load-path "~/git/configurations-and-scripts/emacs/anything-config")
-(require 'anything-config)
-(global-set-key (kbd "C-x b")
-		(lambda() (interactive)
-		  (anything
-		   :prompt "Switch to: "
-		   :candidate-number-list 10
-		   :sources
-		   '( anything-c-source-buffers
-		      anything-c-source-recentf
-		      anything-c-source-bookmarks
-		      anything-c-source-files-in-current-dir+
-		      anything-c-source-locate))))
-
 
 ;; colorful delimiters 
 (require 'rainbow-delimiters)
@@ -710,7 +689,16 @@
 (require 'org-ref-pdf) ;; allows drag and drop of PDFs
 (require 'org-ref-url-utils) ;; drag and drop from the web browser
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;; using helm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; remapping caps-lock to M-x
+(if (eq window-system 'x)
+   (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
+(global-set-key [f13] 'helm-M-x)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
+(global-set-key (kbd "C-x rb") 'helm-bookmarks)
 
 ;; Customized keybindings for navigation, killing and various other
 ;; useful things.
