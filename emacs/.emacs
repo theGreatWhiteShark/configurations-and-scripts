@@ -508,7 +508,8 @@
  '(helm-M-x-key ((t (:foreground "#CC9393"))))
  '(helm-ff-directory ((t (:foreground "#93E0E3" :weight bold
 				      :background nil))))
- '(helm-ff-dotted-directory ((t (:foreground "blue" :background nil))))
+ '(helm-ff-dotted-directory ((t (:foreground "steel blue"
+					     :background nil))))
  '(helm-ff-dotted-symlink-directory ((t (:foreground "DarkOrange"
 						     :background nil))))
  '(helm-ff-executable ((t (:foreground "#9FC59F" :weight normal
