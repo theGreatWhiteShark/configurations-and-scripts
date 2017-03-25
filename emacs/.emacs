@@ -508,7 +508,7 @@
  '(helm-M-x-key ((t (:foreground "#CC9393"))))
  '(helm-ff-directory ((t (:foreground "#93E0E3" :weight bold
 				      :background nil))))
- '(helm-ff-dotted-directory ((t (:foreground "black" :background nil))))
+ '(helm-ff-dotted-directory ((t (:foreground "blue" :background nil))))
  '(helm-ff-dotted-symlink-directory ((t (:foreground "DarkOrange"
 						     :background nil))))
  '(helm-ff-executable ((t (:foreground "#9FC59F" :weight normal
@@ -588,9 +588,12 @@
 (setq py-smart-indentation nil)
 ;; Use just two spaces for indention
 (setq py-indent-offset 2)
+(add-hook 'python-mode-hook (lambda()
+			      (setq tab-width 2)
+			      (setq py-indent-offset 2)))
 ;; Use the TAB to call the py-indent-line function
 (setq py-tab-indent t)
-
+ 
 ;; Use jedi for autocompletion
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
