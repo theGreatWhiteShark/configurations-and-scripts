@@ -39,6 +39,26 @@ Per default **ipython3.5** will be called when running the whole Python script. 
 
 The mode features a nice function **py-smart-indentation** which figures out the indentation width of a document. While this is quite handy for collaboration, I usually want to reindent the script before modifying it. Therefore this function is disabled and has to be activated using **M-x py-toggle-smart-indentation**.
 
+## jedi
+
+In order to use the Python autocompletion tool **jedi** in combination with **Python3** and not the default Python2.7, I used the trick from [this](https://archive.zhimingwang.org/blog/2015-04-26-using-python-3-with-emacs-jedi.html) blog post.
+
+First one has to set up the virtual environment outside of Emacs
+```
+## Since I ignore the .python-environments folder in this repository
+## you have to create it first.
+mkdir -p ~/.emacs.d/.python-environments
+virtualenv -p /usr/bin/python3 ~/.emacs.d/.python-environments/jedi
+
+## Insert your correct version number in the next one
+~/.emacs.d/.python-environments/jedi/bin/pip install --upgrade ~/.emacs.d/elpa/jedi-core-20170121.610/
+```
+Afterwards one has to set the environment root folder to the one just created within the *.emacs*.
+
+```
+(setq jedi:environment-root "jedi")
+```
+
 ## aspell
 
 For spell checking I will use **flyspell** using an underlying **aspell** process. The default dictionary used is English one.

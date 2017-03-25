@@ -578,10 +578,8 @@
 ;; Use jedi for autocompletion
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
-;; Use Python3
-(setq jedi:environment-virtualenv
-      (append python-environment-virtualenv
-              '("--python" "/usr/bin/python3")))
+;; Use Python3 (Set up the virtual environment first outside of Emacs)
+(setq jedi:environment-root "jedi")
 
 ;; load the python-mode for .bzl files since their Skylark language
 ;; resembles in some way the python syntax
