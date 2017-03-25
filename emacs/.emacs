@@ -575,6 +575,10 @@
 ;; Use the TAB to call the py-indent-line function
 (setq py-tab-indent t)
 
+;; Use jedi for autocompletion
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)  
+
 ;; load the python-mode for .bzl files since their Skylark language
 ;; resembles in some way the python syntax
 (setq auto-mode-alist (cons '(".bzl$" . python-mode) auto-mode-alist))
@@ -686,6 +690,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; using helm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'helm)
+(require 'helm-config)
 ;; remapping caps-lock to M-x
 (if (eq window-system 'x)
    (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
@@ -694,6 +700,10 @@
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 (global-set-key (kbd "C-x rb") 'helm-bookmarks)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-s") 'helm-swoop)
+
+;; Using TAB for completion within the helm seach
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
 
 ;; Customized keybindings for navigation, killing and various other
 ;; useful things.
