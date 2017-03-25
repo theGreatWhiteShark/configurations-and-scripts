@@ -18,3 +18,5 @@ emacs/arduino-mode
 emacs/iedit
 emacs/markdown-mode
 emacs/minimal
+/emacs/.emacs.d/ac-comphist.dat
+emacs/.emacs.d/.python-environments/
