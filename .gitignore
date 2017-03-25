@@ -20,3 +20,6 @@ emacs/markdown-mode
 emacs/minimal
 /emacs/.emacs.d/ac-comphist.dat
 emacs/.emacs.d/.python-environments/
+
+# Ignoring all Python caches
+python/*/__pycache__
