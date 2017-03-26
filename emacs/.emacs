@@ -777,7 +777,11 @@
 				  (copy-region-as-kill
 				   (region-beginning)
 				   (region-end))))
-    (define-key map (kbd "M-p") "\C-a\C- \C-n\M-w")
+    (define-key map (kbd "M-p") (lambda()
+				  (interactive)
+				  (copy-region-as-kill
+				   (line-beginning-position)
+				   (line-end-position))))
     (define-key map (kbd "C-M-p") (lambda()
 				    (interactive)
 				    (backward-paragraph)
