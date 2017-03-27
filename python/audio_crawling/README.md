@@ -6,7 +6,7 @@ Since I have absolutely no interest in clicking on all those buttons in order to
 
 ### Download files
 
-For crawling the (freewavesamples.com)[freewavesamples.com] page and downloading all its .wav samples, run the following command.
+For crawling the [freewavesamples.com](freewavesamples.com) page and downloading all its .wav samples, run the following command.
 
 ```
 scrapy crawl freeWaveSamples -o freeWaveSamples.json
