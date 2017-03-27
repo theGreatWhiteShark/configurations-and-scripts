@@ -4,6 +4,7 @@ emacs/*/cache
 
 # Ignoring some of the Emacs cache
 emacs/.emacs.d/recentf
+emacs/.emacs.d/tramp # updated whenever a file is accessed remotely via ssh
 
 # Ignoring the Emacs submodules (but I need to update)
 emacs/org-mode
