@@ -8,6 +8,9 @@
 (defvar elisp-path '("~/git/configurations-and-scripts/emacs/elisp/"))
 (mapcar #'(lambda(p) (add-to-list 'load-path p)) elisp-path)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;; spell checking ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Activate on the fly spellchecking for all major modes I use on a
 ;; regular basis
 (load-file "~/git/configurations-and-scripts/emacs/elisp/flyspell.el")
@@ -23,10 +26,26 @@
 (add-hook 'lisp-mode-hook (lambda() (flyspell-prog-mode)))
 (add-hook 'c-mode-hook (lambda() (flyspell-prog-mode)))
 
+;; The default dictionary to be used should be the English one
+(setq flyspell-default-dictionary "en")
+;; Use a central personal dictionary. (Via a symbolic link from the
+;; git repository)
+;; The personal dictionary has always to be of the same language as the
+;; current used one!
+(setq ispell-personal-dictionary "~/.emacs.d/.aspell.en.pws")
+
+;; Increase the speed (since we are using the more slower aspell instead
+;; of ispell)
+(setq ispell-extra-args '("--sug-mode=fast"))
+
 ;; Add a german dictionary and the option of switching between
 ;; languages
 (defun flyspell-switch-dictionary()
   (interactive)
+  ;; Change the default dictionary too
+  (if (string= ispell-current-dictionary "de")
+    (setq ispell-personal-dictionary "~/.eamcs.d/.aspell.en.pws")
+    (setq ispell-personal-dictionary "~/.eamcs.d/.aspell.de.pws"))
   (let* ((dic ispell-current-dictionary)
 	 (change (if (string= dic "de") "en" "de")))
     (ispell-change-dictionary change)
@@ -82,61 +101,36 @@
 (add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
 (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
 
-;; (setq default-abbrev-mode t)
-(setq save-abbrevs nil)
-(load "~/git/configurations-and-scripts/emacs/.emacs.d/abbrev_defs.el")
-;; this stupid thing just don't seems to work. Skeletons have to be inserted by hand.
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org Mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq load-path (cons "~/git/configurations-and-scripts/emacs/org-mode/lisp" load-path))
 (setq load-path (cons "~/git/configurations-and-scripts/emacs/org-mode/contrib/lisp" load-path))
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+;; use syntax highlighting
 (add-hook 'org-mode-hook 'turn-on-font-lock)
-
-;; (add-to-list 'load-path (expand-file-name "~/git/org-mode/lisp"))
-;; (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode ))
 (require 'org)
 
-(global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cb" 'org-iswitchb)
-(setq org-log-done t) ;; Displayes the closed date whenever a TODO is marked as DONE
+;; Displayes the closed date whenever a TODO is marked as DONE
+(setq org-log-done t)
+;; My private files containing all different kinds of notes
 (setq org-agenda-files (list "~/git/tsa/org/work.org"
 			     "~/git/tsa/org/interest.org"
 			     "~/git/tsa/org/private.org"
 			     "~/git/tsa/org/software.org"
 			     "~/git/tsa/org/notes/papers.org"
-			     "~/git/tsa/org/refile.org"
 			     "~/git/tsa/org/notes/algorithms-computation.org"))
 
-;; specification for capturing and refiling
-(global-set-key (kbd "C-c c") 'org-capture)
-(defun foreign-verify-refile-target ()
-  "Exclude todo keywords with a done state from refile targets"
-  (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 (setq 
  org-directory "~/git/tsa/org"
- org-default-notes-files "~/git/tsa/org/refile.org"
- org-capture-templates (quote (("t" "todo" entry (file "~/git/tsa/org/refile.org")
-				"* TODO %? \n%U\n%a\n")
-			       ("n" "note" entry (file "~/git/tsa/org/refile.org")
-				"* %? :NOTE:\n%U\n")))
- org-refile-targets (quote ((nil :maxlevel . 9)
-			    (org-agenda-files :maxlevel . 9 ))) ; current file and all contributing to agenda are refiling targets - up to 9 levels deep
- org-refile-use-outline-path t
  org-outline-path-complete-in-steps nil
- org-refile-allow-creating-parent-nodes (quote confirm) ; allow refile to create parent tasks with confirmation
- org-completion-use-ido t
  org-indirect-buffer-display 'current-window
- org-refile-target-verify-function 'foreign-verify-refile-target ; exclude DONE state
 )
 
 ;; customize agenda view
 (setq
- org-agenda-dim-blocked-tasts nil
+ org-agenda-dim-blocked-tasks nil
  org-agenda-compact-blocks t
  org-agenda-custom-commands
  (quote (("N" "Notes" tags "NOTE"
@@ -150,32 +144,8 @@
 	   nil))))
 )
 
-;; userspecific tags
-(setq 
- org-tag-alist (quote ((:startgroup)
-			    ("@WORK" . ?W)
-			    ("@HOME" . ?H)
-			    ("@BEHEMOTH" . ?B)
-			    ("@LEVIATHAN" . ?L)
-			    ("@ZYZ" .?Z)
-			    ("@ILMENAU" . ?I)
-			    ("@SANGERHAUSEN" . ?S)
-			    (:endgroup)
-			    ("work" . ?w)
-			    ("records" . ?r)
-			    ("paper" . ?p)
-			    ("visualization" . ?v)
-			    ("software" . ?s) ; new software to dig in
-			    ("material" . ?m) ; other sources than papers
-			    ("climate" . ?c)
-			    ("extremes" . ?e)
-			    ("buy" . ?b)
-			    ("lam" . ?l)
-			    ("formality" . ?f)))
- org-fast-tag-selection-single-key (quote expert)
- org-agenda-tags-todo-honor-ignore-options t
-)
-
+;; I havn't actually yet looked into this one (copied it from a blog
+;; some years ago). During a sleepless night I might have a look at it.
 ;; archive setup
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archived Tasks")
@@ -185,7 +155,7 @@
 	(widen)
 	;; consider only tasks with done todo headings
 	(let ((next-headline (save-excursion (or (outline-next-heading) (point-max))))
-	      (subtree-end (save-excursion (org-end-0of-subtree t))))
+	      (subtree-end (save-excursion (org-end-of-subtree t))))
 	  (if (member (org-get-todo-state) org-todo-keywords-1)
 	      (if (member (org-get-todo-state) org-done-keywords)
 		  (let* ((daynr (string-to-int (format-time-string "%d" (current-time))))
@@ -206,18 +176,13 @@
 (setq org-alphabetical-lists t)
 (require 'ox-html)
 (require 'ox-latex)
-(require 'ox-ascii)
 
 (defun foreign-display-inline-images ()
   (condition-case nil
       (org-display-inline-images)
     (error nil)))
 (add-hook 'org-babel-after-execute-hook 'foreign-display-inline-images 'append)
-(add-to-list 'org-src-lang-modes (quote ("plantuml" . fundamental)))
 (setq
- org-ditaa-jar-path "~/git/configurations-and-scripts/emacs/org-mode/contrib/scripts/ditaa.jar"
- org-plantuml-jar-path "~/scripts/java/plantuml.jar"
- org-babel-results-keyword "results" ; make babel results blocks lowercase
  org-confirm-babel-evaluate nil
  org-startup-with-inline-images nil ; cause it breaks when accessing via ssh
  org-babel-R-command (concatenate 'string R-binary-folder "R --no-save --slave")
@@ -225,48 +190,13 @@
 (org-babel-do-load-languages
  (quote org-babel-load-languages)
  (quote ((emacs-lisp . t)
-	 (dot . t)
-	 (ditaa . t)
 	 (R . t)
 	 (python . t)
-	 (ruby . t)
-	 (gnuplot . t)
-	 (clojure . t)
 	 (sh . t)
-	 (ledger . t)
 	 (org . t)
-	 (plantuml . t)
 	 (latex . t))))
 
-
-;; skeletons
-(add-hook 'org-mode-hook (lambda () (abbrev-mode 1)))
-(define-skeleton skel-org-block
-  "Insert an org block, querying for type."
-  "Type: "
-  "#+begin_" str "\n"
-  _ - \n
-  "#+end_" str "\n")
-(define-abbrev org-mode-abbrev-table "sblk" "" 'skel-org-block)
-(define-skeleton skel-org-block-plantuml
-  "Insert a org plantuml block, querying for filename."
-  "File (no extension): "
-  "#+begin_src plantuml :file " str ".png :cache yes\n"
-  _ - \n
-  "#+end_src\n")
-(define-abbrev org-mode-abbrev-table "splantuml" "" 'skel-org-block-plantuml)
-
-;; MobileOrg
-(setq org-mobile-directory "~/Dropbox/MobileOrg")
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; org-mode
-
-;; abbreviations
-(setq 
- abbrev-file-name "~/git/configurations-and-scripts/emacs/.emacs.d/abbrev_defs.el"
- save-abbrevs t
-)
-
 ;; yasnippet
 (load-file "~/git/configurations-and-scripts/emacs/yasnippet/yasnippet.el")
 (require 'yasnippet)
@@ -287,45 +217,9 @@
 (add-hook 'Rnw-mode-hook
 	  (lambda() (yas-minor-mode 1)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; From emacs-fu.blogspot.de
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  
-;; Macro for using packages and functions only when they are available
-(defmacro require-maybe (feature &optional file)
-  "*Try to require FEATURE, but don't signal an error if 'require' fails. "
-  `(require, feature, file 'noerror))
-
-(defmacro when-available (func foo)
-  "*Do something if FUNCTION is available."
-  `(when (fboundp, func) ,foo))
-
-;; running external programs only if they exists
-(defun foreign-shell-command-maybe (exe &optional paramstr)
-  "run executable EXE with PARAMSTR, or warn if EXE's not available; eg. "
-  " (foreign-shell-command-mazbe \"ls\" \"-l -a\")"
-  (if (executable-find exe)
-      (shell-command (concat exe " " paramstr))
-    (message (concat "'" exe "' not found; please install"))))
-
-;; Zooming in or out in Emacs
-(defun foreign-zoom (n)
-  "with positive N, increase the font size, otherwise decrese it"
-  (set-face-attribute 'default (selected-frame) :height
-		      (+ (face-attribute 'default :height (* *if (> n 0) 1 -1) 10))))
-;; keybinding of the zoom function: Crtl-+ for zooming in, Crtl-- for zooming out
-(global-set-key (kbd "C-+")      '(lambda nil (interactive) (foreign-zoom 1)))
-(global-set-key [C-kp-add]       '(lambda nil (interactive) (foreign-zoom 1)))
-(global-set-key (kbd "C--")      '(lambda nil (interactive) (foreign-zoom -1)))
-(global-set-key [C-kp-substract] '(lambda nil (interactive) (foreign-zoom -1)))
-
-;; running emacs in full-screen mode
-(defun foreign-full-screen-toggle ()
-  "toggle full-screen mode"
-  (interactive)
-  (shell-command "wmctrl -r :ACTIVE: -btoggle,fullscreen"))
-(global-set-key (kbd "<f11>") 'foreign-full-screen-toggle)
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;; diverse ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; enable time stamp and automatic time stamp when saving data
 (setq
  time-stamp-active t
@@ -333,40 +227,18 @@
  time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S (%u)")
 (add-hook 'write-file-hooks 'time-stamp); update when saving
 
-;; show column numbers
-(column-number-mode t)
-
-;; show line numbers
+;; show line numbers ;; höhö, never actually used this one. But it's nice
 (autoload 'linum-mode "linum" "toggle line numbers on/off" t)
 (global-set-key (kbd "C-<f5>") 'linum-mode)
 (add-hook 'ess-mode-hook
 	  (lambda() 'linum-mode 1))
 
-;; highlight current line
-;; color is chosen which is not available on the console. so there is only line highlighting in the emacs GUI
-(defface hl-line '((t (:ba ckground "WhiteSmoke")));"LightSteelBlue1")))
-  "Face to use for 'hl-line-face'. " :group 'hl-line)
-(if (eq window-system 'x) 
-    (setq hl-line-face 'hl-line)
-  (global-hl-line-mode t))
+;; Provides the general editor behavior in Emacs:
+;; Highlighting a region and deleting it with DEL or just replace the
+;; text by typing in a different one.
+(delete-selection-mode t)
 
-
-;; hightlighting "TODO" and "BUG" in ESS
-(add-hook 'ess-mode-hook
-	  (lambda ()
-	    (font-lock-add-keywords nil
-				    '(("\\<\\(TODO\\|BUG\\|UPDATE\\|NEW\\):" 1 font-lock-warning-face t)))))
-
-;; selection and cut-copy-paste like everywhere else 
-(transient-mark-mode t)   ; display current selection in a different color + windowsstyle region marking (shift)
-(delete-selection-mode t) ; delete selected area with a keypress
-
-;; bremapping caps-lock to M-x
-;;(if (eq window-system 'x)
-;;   (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
-;;(global-set-key [f13] 'execute-extended-command)
-
-;; bcycling hrough your buffers with Ctrl-Tab
+;; cycling through your buffers with Ctrl-Tab
 (global-set-key (kbd "<C-tab>") 'bury-buffer)
 
 ;; easier switchting between buffers (with alt key)
@@ -375,64 +247,16 @@
 
 ;; enable rectangle marking
 (require 'rect-mark)
-(global-set-key (kbd "C-x r C-SPC") 'rm-set-mark)
-(global-set-key (kbd "C-x r C-x")   'rm-exchange-point-and-mark)
-(global-set-key (kbd "C-x r C-w")   'rm-kill-region)
-(global-set-key (kbd "C-x r M-W")   'rm-kill-ring-save)
 
 ;; ;; viewing register contents
 (require 'list-register)
 (global-set-key (kbd "C-x r v") 'list-register)
-
-;; counting words
-(defun foreign-count-words (&optional begin end)
-  "count words between BEGIN and END (region); if no region defined, count words in buffer"
-  (interactive "r")
-  (let ((b (if mark-active begin (point-min)))
-	(e (if mark-active end (point-max))))
-    (message "Word count: %s" (how-many "\\w+" b w ))))
-
-;; show mismatching parantheses (out of a sudden this seems to be invalid)
-;; (set-face-foreground 'show-paren-mismatch-face "red")
-;; (set-face-attribute 'show-paren-mismatch-face nil
-;;		    :weight 'bold :underline t :overline nil :slant 'normal)
-
-;; shows a list of possible matching entries while switching buffer or finding files
-(require 'ido)
-(ido-mode 'both) ;; for buffers and files
-(setq
- ido-save-directory-list-file "~/git/configurations-and-scripts/emacs/.emacs.d/cache/ido.last"
- ido-everywhere t
- ido-max-directory-size 100000
- ido-default-file-method 'selected-window ; use current window when visiting files
- ido-default-buffer-method 'selected-window
- ido-ignore-buffers ;;
- '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
-"^\*compilation" "^\*GTAGS" "^session\.*" "^\*")
- ido-work-directory-list '("~/" "~/Desktop" "~/Documents" "~src")
- ido-case-fold t ; case sensitive
- ido-enable-last-directory-history t ; remeber last used dirs
- ido-max-work-directory-list 30
- ido-max-work-file-list 50
- ido-use-filename-at-point nil
- ido-use-url-at-point nil
  
- ido-enable-flex-matching nil ; don't try to be too smart
- ido-max-prospects 8 ; don't spam minibuffer
- ido-confirm-unique-completion t) ; wait for RET even with uniwue completion
-(setq confirm-nonexistent-file-or-buffer nil) ; when using ido, this is quite annoying
-
-;; activating smex for 'ido' like search in the emacs commands
-(setq smex-save-file "~/git/configurations-and-scripts/emacs/.emacs.d/smex.save")
-(require 'smex)
-(smex-initialize)
-(global-set-key (kbd "M-X") 'smex)
-
 ;; highlight changes in files under version control
 (global-highlight-changes-mode t)
 (setq highlight-changes-visibility-initial-state nil); initially hidden
 (global-set-key (kbd "<f6>") 'highlight-changes-visible-mode) ;; toggle visibility
-(global-set-key (kbd "S-<f6>") 'higlight-changes-remove-highlight)
+(global-set-key (kbd "S-<f6>") 'highlight-changes-remove-highlight)
 (set-face-foreground 'highlight-changes nil)
 (set-face-background 'highlight-changes "#382f2f")
 (set-face-foreground 'highlight-changes-delete nil)
@@ -445,14 +269,6 @@
 (global-set-key "\C-cy" '(lambda ()
 			   (interactive)
 			   (popup-menu 'yank-menu)))
-
-;; elscreen. Treats all buffers which are opened in elscreen-buffer as a logical unit. This eases the task of switching between various buffers at once
-(load "elscreen" "ElScreen")
-(global-set-key (kbd "<f9>") 'elscreen-create)
-(global-set-key (kbd "S-<f9>") 'elsceen-kill)
-;; windows key + PgUp/Down switches between elscreens
-(global-set-key (kbd "<s-prior>") 'elscreen-previous)
-(global-set-key (kbd "<s-next>") 'elscree-next)
 
 ;; change cursor color
 (defun foreign-set-cursor-according-to-mode ()
@@ -496,12 +312,13 @@
       (quote (("default"
 	       ("Org"
 		(mode . org-mode))
-	       ("Extremes"
+	       ("Calculations"
 		(filename . "~/calculations/"))
+	       ("Work"
+		(filename . "~/work/"))
 	       ("Configuration"
-		(or 
-		 (filename . "~/")
-		 (filename . "~/git/configurations-and-scripts/emacs/.emacs.d/")
+		(or
+		 (filename . "~/git/configurations-and-scripts/")
 		 (mode . emacs-lisp-mode)))
 	       ("Programming"
 		(or
@@ -527,51 +344,20 @@
 (when (require 'diminish nil 'noerror)
   (eval-after-load "company"
     '(diminish 'company-mode "Cmp"))
-  (eval-after-load "abbrev"
-    '(diminish 'abbrev-mode "Ab"))
   (eval-after-load "yasnippet"
     '(diminish 'yas-minor-mode " Y")))
-(add-hook 'emacs-lisp-mode-hook
+(add-hook 'emacs-lisp-mode-hook 
 	  (lambda() (setq mode-name "el")))
-
-;; browse through kill-ring (but also try M-y)
-(when (require 'browse-kill-ring nil 'noerror)
-  (browse-kill-ring-default-keybindings))
-(global-set-key "\C-cy" '(lambda()
-			   (interactive)
-			   (popup-menu 'yank-menu)))
-
-;; obsolete since a custom modeline is used
-;; displaing scrolling information in mode-bar
-;; (if (require 'sml-modeline nil 'noerror)
-;;     (progn (sml-modeline-mode 1))) ;; but this is also present in minimal-mode
 
 ;; kills buffers which are more than 3 days untouched
 (require 'midnight)
 
-;; using anything to find things
-(add-to-list 'load-path "~/git/configurations-and-scripts/emacs/anything-config")
-(require 'anything-config)
-(global-set-key (kbd "C-x b")
-		(lambda() (interactive)
-		  (anything
-		   :prompt "Switch to: "
-		   :candidate-number-list 10
-		   :sources
-		   '( anything-c-source-buffers
-		      anything-c-source-recentf
-		      anything-c-source-bookmarks
-		      anything-c-source-files-in-current-dir+
-		      anything-c-source-locate))))
-
-
 ;; colorful delimiters 
-(when (require 'rainbow-delimiters nil 'noerror)
-  (lambda()
-    (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
-    (add-hook 'ess-mode-hook 'rainbow-delimiters-mode)
-    (add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
-    (add-hook 'python-mode-hook 'rainbow-delimiters-mode)))
+(require 'rainbow-delimiters)
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'ess-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'python-mode-hook 'rainbow-delimiters-mode)
 (rainbow-delimiters-mode 1)
 
 ;; using multi-term to open more than one terminal in emacs
@@ -581,14 +367,7 @@
 (global-set-key (kbd "C-c t") 'multi-term-next)
 (global-set-key (kbd "C-c T") 'multi-term)
 
-;; more packages
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-			 ("gnu" . "http://elpa.gnu.org/packages/")
-			 ;; ("marmalade" . "http://marmalade-repo.org/packages/")
-			 ;; seems not to work right now
-			 ))
-
-;; changing the style of the modline
+;; changing the style of the mode-line
 (setq-default mode-line-format
       (list
        ;; changes till last saving
@@ -671,18 +450,12 @@
 			  [term term-color-black term-color-red term-color-green term-color-yellow 
 				term-color-blue term-color-magenta term-color-cyan term-color-white])
 	    (put 'narrow-to-region 'disabled nil)))	    
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; emacs-fu
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;;; diverse
-
 ;; source the .emacs file after alteration while still running an active emacs session
 (defun reload ()
   (interactive)
   (load-file "~/.emacs"))
-(defun corg ()
-  (interactive)
-  (dired-at-point "~/git/tsa/org"))
 
 ;; dismissing the startup screen
 (custom-set-variables
@@ -690,26 +463,67 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
- '(custom-safe-themes (quote ("6383295fb0c974d24c9dca1230c0489edf1cd5dd03d4b036aab290b6d3ceb50c" default)))
+ '(ansi-color-names-vector
+   ["#3F3F3F" "#CC93932" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
+ '(custom-safe-themes
+   (quote
+    ("6383295fb0c974d24c9dca1230c0489edf1cd5dd03d4b036aab290b6d3ceb50c" default)))
  '(delete-selection-mode nil)
  '(fci-rule-color "#383838")
  '(inhibit-startup-screen t)
  '(mark-even-if-inactive t)
- '(org-agenda-files (quote ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org" "~/git/tsa/org/refile.org")))
+ '(org-agenda-files
+   (quote
+    ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org" "~/git/tsa/org/refile.org")))
+ '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode (quote right))
  '(transient-mark-mode 1)
  '(vc-annotate-background "#2B2B2B")
- '(vc-annotate-color-map (quote ((20 . "#BC8383") (40 . "#CC9393") (60 . "#DFAF8F") (80 . "#D0BF8F") (100 . "#E0CF9F") (120 . "#F0DFAF") (140 . "#5F7F5F") (160 . "#7F9F7F") (180 . "#8FB28F") (200 . "#9FC59F") (220 . "#AFD8AF") (240 . "#BFEBBF") (260 . "#93E0E3") (280 . "#6CA0A3") (300 . "#7CB8BB") (320 . "#8CD0D3") (340 . "#94BFF3") (360 . "#DC8CC3")))) ;
- '(vc-annotate-very-old-color "#DC8CC3")
- ;; But I'm a naughty boy and did edit it by hand.
- '(polymode-exporter-output-file-format "%s"))
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#BC8383")
+     (40 . "#CC9393")
+     (60 . "#DFAF8F")
+     (80 . "#D0BF8F")
+     (100 . "#E0CF9F")
+     (120 . "#F0DFAF")
+     (140 . "#5F7F5F")
+     (160 . "#7F9F7F")
+     (180 . "#8FB28F")
+     (200 . "#9FC59F")
+     (220 . "#AFD8AF")
+     (240 . "#BFEBBF")
+     (260 . "#93E0E3")
+     (280 . "#6CA0A3")
+     (300 . "#7CB8BB")
+     (320 . "#8CD0D3")
+     (340 . "#94BFF3")
+     (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(helm-M-x-key ((t (:foreground "#CC9393"))))
+ '(helm-ff-directory ((t (:foreground "#93E0E3" :weight bold
+				      :background nil))))
+ '(helm-ff-dotted-directory ((t (:foreground "steel blue"
+					     :background nil))))
+ '(helm-ff-dotted-symlink-directory ((t (:foreground "DarkOrange"
+						     :background nil))))
+ '(helm-ff-executable ((t (:foreground "#9FC59F" :weight normal
+				       :background nil))))
+ '(helm-ff-file ((t (:foreground "#DCDCCC" :weight normal
+				 :background nil))))
+ '(helm-ff-invalid-symlink ((t (:foreground "#CC9393" :weight bold
+					    :background nil))))
+ '(helm-ff-prefix ((t (:foreground "#3F3F3F" :weight normal
+				   :background nil))))
+ '(helm-ff-symlink ((t (:foreground "#F0DFAF" :weight bold
+				    :background nil))))
+ '(helm-match ((t (:foreground "khaki" :underline t))))
+ '(helm-match-item ((t (:foreground "khaki")))))
 
 ;; Minimal mode. Removes some lines and bars from Emacs to make its appearance more appealing
 (require 'minimal)
@@ -775,21 +589,21 @@
 (setq py-smart-indentation nil)
 ;; Use just two spaces for indention
 (setq py-indent-offset 2)
+(add-hook 'python-mode-hook (lambda()
+			      (setq tab-width 2)
+			      (setq py-indent-offset 2)))
 ;; Use the TAB to call the py-indent-line function
 (setq py-tab-indent t)
+ 
+;; Use jedi for autocompletion
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+;; Use Python3 (Set up the virtual environment first outside of Emacs)
+(setq jedi:environment-root "jedi")
 
 ;; load the python-mode for .bzl files since their Skylark language
 ;; resembles in some way the python syntax
 (setq auto-mode-alist (cons '(".bzl$" . python-mode) auto-mode-alist))
-
-;; use flyspell
-(add-hook 'python-mode-hook
-	  (lambda()
-	    (setq py-indent-offset 2)
-	    (local-set-key (kbd "<C-return>")
-			   (lambda ()
-			     (interactive)
-			     (py-execute-region)))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -811,7 +625,6 @@
 	    (setq web-mode-code-indent-offset 2)
 	    (local-set-key (kbd "M-;") 'windmove-right)
 	    (local-set-key (kbd "M-'") 'web-mode-comment-or-uncomment)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -819,15 +632,17 @@
 
 ;; using the MELPA repository
 (require 'package)
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
-(when (< emacs-major-version 24)
-  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.prg/packages/")))
+;; more packages
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
+			 ("gnu" . "http://elpa.gnu.org/packages/")
+			 ("melpa" . "https://melpa.org/packages/")
+			 ("marmalade" . "http://marmalade-repo.org/packages/")
+			 ;; seems not to work right now
+			 ))
 (package-initialize)
 
 ;; activating c-mode for CUDA files
 (setq auto-mode-alist (cons '(".cu$" . c-mode) auto-mode-alist))
-
 
 
 ;; Arduino
@@ -845,30 +660,6 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-;; (autoload 'gfm-mode "gfm-mode"
-;;    "Major mode for editing GitHub Flavored Markdown files" t)
-;; (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-;; (eval-after-load "markdown-mode"
-;;   '(defalias 'markdown-add-xhtml-header-and-footer 'as/markdown-add-xhtml-header-and-footer))
-
-(defun as/markdown-add-xhtml-header-and-footer (title)
-    "Wrap XHTML header and footer with given TITLE around current buffer."
-    (goto-char (point-min))
-    (insert "<!DOCTYPE html5>\n"
-	    "<html>\n"
-	    "<head>\n<title>")
-    (insert title)
-    (insert "</title>\n")
-    (insert "<meta charset=\"utf-8\" />\n")
-    (when (> (length markdown-css-paths) 0)
-      (insert (mapconcat 'markdown-stylesheet-link-string markdown-css-paths "\n")))
-    (insert "\n</head>\n\n"
-	    "<body>\n\n")
-    (goto-char (point-max))
-    (insert "\n"
-	    "</body>\n"
-	    "</html>\n"))
-
 ;; colors and human readable file size in dired
 (setq dired-listing-switches "-alh")
 
@@ -878,29 +669,17 @@
  
 (set-face-attribute 'default nil :background "black")
 
-;; working with both html and javascript in one document
-;; (require 'multi-web-mode)
-;; (setq mweb-default-major-mode 'html-mode)
-;; (setq mweb-tags '((js-mode "<script[^>]*>" "</script>")
-;;                   (php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
-;;                   (css-mode "<style[^>]*>" "</style>")))
-;; (setq mweb-filename-extensions '("php" "htm" "html" "xhtml" "ctp" "phtml" "php4" "php5"))
-;; (multi-web-global-mode 1)
-
 ;; use perl-mode for perl scripts
 (add-to-list 'auto-mode-alist '("\\.plx" . perl-mode))
 (add-to-list 'auto-mode-alist '("\\.pl" . perl-mode))
 
-;; flycheck
-;; wdired/ranger
-;; tramp
-;; font Consolas-12; Symbola
-;; epa
-;; whitespace mode
-;; ido
-;; magit
-;; helm/yedi
+;; wdired: using C-x C-q the dired buffer becomes editable. Nice!
+;; Use magit for handling the interaction with git
+(global-set-key (kbd "C-x g") 'magit-status)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; org-ref ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-ref for handling citations. Requires the hydra, parsebib,
 ;; helm, helm-bibtex package
 (add-to-list 'load-path "~/git/configurations-and-scripts/emacs/org-ref")
@@ -930,7 +709,23 @@
 (require 'org-ref-pdf) ;; allows drag and drop of PDFs
 (require 'org-ref-url-utils) ;; drag and drop from the web browser
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;; using helm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'helm)
+(require 'helm-config)
+;; remapping caps-lock to M-x
+(if (eq window-system 'x)
+   (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
+(global-set-key [f13] 'helm-M-x)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
+(global-set-key (kbd "C-x rb") 'helm-bookmarks)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "M-s") 'helm-swoop)
 
+;; Using TAB for completion within the helm seach
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
 
 ;; Customized keybindings for navigation, killing and various other
 ;; useful things.
@@ -941,9 +736,6 @@
 ;; I just disable this minor-mode.
 (defvar custom-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
-    ;; Comment and indent
-    (define-key map (kbd "M-'") 'comment-dwim)
-    (define-key map (kbd "C-'") 'indent-region)
     ;; Navigation
     (define-key map (kbd "M-S backspace") 'kill-sentence)
     (define-key map (kbd "M-S-j") 'windmove-left)
@@ -973,6 +765,79 @@
     (define-key map (kbd "M-.") 'kill-word)
     (define-key map (kbd "C-M-.") 'kill-line)
     (define-key map (kbd "C-M-,") 'kill-whole-line)
+    ;; Copying (it's not that convenient to have the copying and yanking
+    ;; in a row different than the one used for killing. But in order
+    ;; to avoid conflicts with the C-n behavior of the terminal I will
+    ;; go with this setting for now.
+    ;; (copy word, copy line, copy paragraph)
+    (define-key map (kbd "C-p") (lambda()
+				  (interactive)
+				  (left-word)
+				  (mark-word)
+				  (copy-region-as-kill
+				   (region-beginning)
+				   (region-end))))
+    (define-key map (kbd "M-p") (lambda()
+				  (interactive)
+				  (copy-region-as-kill
+				   (line-beginning-position)
+				   (line-end-position))))
+    (define-key map (kbd "C-M-p") (lambda()
+				    (interactive)
+				    (backward-paragraph)
+				    (mark-paragraph)
+				    (copy-region-as-kill
+				     (region-beginning)
+				     (region-end))))
+    ;; Yanking (at point, newline and yank, yank in previous line)
+    (define-key map (kbd "C-o") 'yank)
+    (define-key map (kbd "M-o") (lambda()
+				  (interactive)
+				  (move-end-of-line 1)
+				  (newline-and-indent)
+				  (yank)))
+    (define-key map (kbd "C-M-o") 'helm-show-kill-ring)
+    ;; Commenting (insert comment, comment line, paragraph)
+    (define-key map (kbd "C-'") (lambda()
+				  (interactive)
+				  (insert comment-start)
+				  (insert "  ")
+				  (insert comment-end)
+				  (left-char
+				   (+ (string-width comment-end) 1))))
+    (define-key map (kbd "M-'") (lambda()
+				    (interactive)
+				    (comment-or-uncomment-region
+				     (line-beginning-position)
+				     (line-end-position))))
+
+    (define-key map (kbd "C-M-'") (lambda()
+				    (interactive)
+				    (backward-paragraph)
+				    (mark-paragraph)
+				    (comment-or-uncomment-region
+				     (region-beginning)
+				     (region-end))))
+    ;; Indenting( line, paragraph, buffer )
+    ;; Don't bind this or the TAB won't work anymore
+    ;; (define-key map (kbd "C-i") 'indent-region)
+    (define-key map (kbd "M-i") (lambda()
+				    (interactive)
+				    (backward-paragraph)
+				    (mark-paragraph)
+				    (indent-region
+				     (region-beginning)
+				     (region-end))))
+    (define-key map (kbd "C-M-i") (lambda ()
+				    (interactive)
+				    (mark-whole-buffer)
+				    (indent-region
+				     (region-beginning)
+				     (region-end))))
+    ;; Rectangle marking, cutting, pasting
+    (define-key map (kbd "C-u") 'rm-set-mark)
+    (define-key map (kbd "M-u") 'rm-kill-region)
+    (define-key map (kbd "C-M-u") 'rm-kill-ring-save)
     ;; Binding something to Ctrl-m causes problems because Emacs does not
     ;; destinguish between Ctrl-m and RET due to historical reasons
     ;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
@@ -1024,11 +889,13 @@
 	    (local-set-key (kbd "<C-return>")
 			   (lambda ()
 			     (interactive)
-			     (py-execute-line)))
+			     (py-execute-line)
+			     (next-line)))
 	    (local-set-key (kbd "C-n")
 			   (lambda ()
 			     (interactive)
-			     (py-execute-line)))
+			     (py-execute-line)
+			     (next-line)))
 	    (local-set-key (kbd "<M-return>")
 			   (lambda ()
 			     (interactive)
