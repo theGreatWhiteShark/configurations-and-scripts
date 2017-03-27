@@ -2,44 +2,24 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-((".Rprofile"
- (filename . "~/.Rprofile")
- (front-context-string . ".First <- functi")
- (rear-context-string)
- (position . 1))
-("work.org"
- (filename . "~/git/tsa/org/work.org")
- (front-context-string . "#+STARTUP: hides")
- (rear-context-string)
- (position . 1))
-("software.org"
- (filename . "~/git/tsa/org/software.org")
- (front-context-string . "#+STARTUP: hides")
- (rear-context-string)
- (position . 1))
-("private.org"
- (filename . "~/git/tsa/org/private.org")
- (front-context-string . "#+STARTUP: hides")
- (rear-context-string)
- (position . 1))
-(".ema"
- (filename . "~/pks_home/calculations/02_seasonality_methods_R/seasRcheck_V1.Rnw")
- (front-context-string . "\\begin{itemize}\n")
- (rear-context-string . "ection{Interna}\n")
- (position . 3680))
-("config"
- (filename . "~/.i3/config")
- (front-context-string)
- (rear-context-string . "bindsym $mod+ESC")
- (position . 5336))
-(".emacs"
- (filename . "~/.emacs")
- (front-context-string . ";;;;;;;;;;;;;;;;")
+(("config-abyzou"
+ (filename . "~/git/configurations-and-scripts/i3/config-abyzou")
+ (front-context-string . "# This file has ")
  (rear-context-string)
  (position . 1))
 (".bashrc"
- (filename . "~/.bashrc")
- (front-context-string . "## Basics and na")
+ (filename . "~/git/configurations-and-scripts/bash/.bashrc")
+ (front-context-string . "## Basics, navig")
+ (rear-context-string)
+ (position . 1))
+(".emacs"
+ (filename . "~/git/configurations-and-scripts/emacs/.emacs")
+ (front-context-string . "\n\nFirst of all y")
+ (rear-context-string . "nimum.\n\n# Import")
+ (position . 855))
+(".Rprofile"
+ (filename . "~/.Rprofile")
+ (front-context-string . ".First <- functi")
  (rear-context-string)
  (position . 1))
 )

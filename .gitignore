@@ -2,6 +2,9 @@
 $~
 emacs/*/cache
 
+# Ignoring some of the Emacs cache
+emacs/.emacs.d/recentf
+
 # Ignoring the Emacs submodules (but I need to update)
 emacs/org-mode
 emacs/org-ref
@@ -12,7 +15,11 @@ emacs/zenburn
 emacs/android-mode
 emacs/anything-config
 emacs/arduino-mode
-emacs/elscreen
 emacs/iedit
 emacs/markdown-mode
 emacs/minimal
+/emacs/.emacs.d/ac-comphist.dat
+emacs/.emacs.d/.python-environments/
+
+# Ignoring all Python caches
+python/*/__pycache__
