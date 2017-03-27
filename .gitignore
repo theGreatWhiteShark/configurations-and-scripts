@@ -24,3 +24,6 @@ emacs/.emacs.d/.python-environments/
 
 # Ignoring all Python caches
 python/*/__pycache__
+
+# Ignoring all downloaded audio samples
+python/audio_crawling/samples
