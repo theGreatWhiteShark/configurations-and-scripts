@@ -44,7 +44,7 @@
   (interactive)
   ;; Change the default dictionary too
   (if (string= ispell-current-dictionary "de")
-    (setq ispell-personal-dictionary "~/.eamcs.d/.aspell.en.pws")
+      (setq ispell-personal-dictionary "~/.eamcs.d/.aspell.en.pws")
     (setq ispell-personal-dictionary "~/.eamcs.d/.aspell.de.pws"))
   (let* ((dic ispell-current-dictionary)
 	 (change (if (string= dic "de") "en" "de")))
@@ -126,7 +126,7 @@
  org-directory "~/git/tsa/org"
  org-outline-path-complete-in-steps nil
  org-indirect-buffer-display 'current-window
-)
+ )
 
 ;; customize agenda view
 (setq
@@ -142,7 +142,7 @@
 		 ((org-agenda-overriding-header "Tasks to Refile")
 		  (org-tags-match-list-sublevels nil)))
 	   nil))))
-)
+ )
 
 ;; I havn't actually yet looked into this one (copied it from a blog
 ;; some years ago). During a sleepless night I might have a look at it.
@@ -150,27 +150,27 @@
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archived Tasks")
 (defun foreign-skip-non-archivable-tasks ()
-      "Skip trees that are not available for archiving"
-      (save-restriction
-	(widen)
-	;; consider only tasks with done todo headings
-	(let ((next-headline (save-excursion (or (outline-next-heading) (point-max))))
-	      (subtree-end (save-excursion (org-end-of-subtree t))))
-	  (if (member (org-get-todo-state) org-todo-keywords-1)
-	      (if (member (org-get-todo-state) org-done-keywords)
-		  (let* ((daynr (string-to-int (format-time-string "%d" (current-time))))
-			 (a-month-ago (* 60 60 24 (+ daynr 1)))
-			 (last-month (format-time-string "%Y-%m-" (time-subtract (current-time) (seconds-to-time a-month-ago))))
-			 (this-month (format-time-string "%Y-%m-" (current-time)))
-			 (subtree-is-current (save-excursion
-					       (forward-line 1)
-					       (and (< (point) subtree-end)
-						    (re-search-forward (concat last-month "\\|" this-month) subtree-end t)))))
-		    (if subtree-is-current
-			subtree-end ; has a date in this or last month, skip it
-		      nil)) ; archive
-		(or subtree-end (point-max)))
-	    next-headline))))
+  "Skip trees that are not available for archiving"
+  (save-restriction
+    (widen)
+    ;; consider only tasks with done todo headings
+    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max))))
+	  (subtree-end (save-excursion (org-end-of-subtree t))))
+      (if (member (org-get-todo-state) org-todo-keywords-1)
+	  (if (member (org-get-todo-state) org-done-keywords)
+	      (let* ((daynr (string-to-int (format-time-string "%d" (current-time))))
+		     (a-month-ago (* 60 60 24 (+ daynr 1)))
+		     (last-month (format-time-string "%Y-%m-" (time-subtract (current-time) (seconds-to-time a-month-ago))))
+		     (this-month (format-time-string "%Y-%m-" (current-time)))
+		     (subtree-is-current (save-excursion
+					   (forward-line 1)
+					   (and (< (point) subtree-end)
+						(re-search-forward (concat last-month "\\|" this-month) subtree-end t)))))
+		(if subtree-is-current
+		    subtree-end ; has a date in this or last month, skip it
+		  nil)) ; archive
+	    (or subtree-end (point-max)))
+	next-headline))))
 
 ;; exporting
 (setq org-alphabetical-lists t)
@@ -186,7 +186,7 @@
  org-confirm-babel-evaluate nil
  org-startup-with-inline-images nil ; cause it breaks when accessing via ssh
  org-babel-R-command (concatenate 'string R-binary-folder "R --no-save --slave")
-)
+ )
 (org-babel-do-load-languages
  (quote org-babel-load-languages)
  (quote ((emacs-lisp . t)
@@ -251,7 +251,7 @@
 ;; ;; viewing register contents
 (require 'list-register)
 (global-set-key (kbd "C-x r v") 'list-register)
- 
+
 ;; highlight changes in files under version control
 (global-highlight-changes-mode t)
 (setq highlight-changes-visibility-initial-state nil); initially hidden
@@ -369,52 +369,52 @@
 
 ;; changing the style of the mode-line
 (setq-default mode-line-format
-      (list
-       ;; changes till last saving
-      '(:eval (when (buffer-modified-p)
-		(concat 
-		 (propertize "[" 
-			     'face 'font-lock-string-face)
-		 (propertize "Mod"
-			     'face 'font-lock-string-face
-			     'help-echo "Buffer has been modified")
-		 (propertize "] "
-			     'face 'font-lock-string-face))))
-       ;; buffer/file name
-       '(:eval (propertize "%b " 'face 'font-lock-keyword-face 
-			   'help-echo (buffer-file-name)))
-      ;; line and column
-      "(" 
-      (propertize "%02l" 'face 'font-lock-type-face)
-      ","
-      (propertize "%02c" 'face 'font-lock-type-face)
-      ") "
+	      (list
+	       ;; changes till last saving
+	       '(:eval (when (buffer-modified-p)
+			 (concat 
+			  (propertize "[" 
+				      'face 'font-lock-string-face)
+			  (propertize "Mod"
+				      'face 'font-lock-string-face
+				      'help-echo "Buffer has been modified")
+			  (propertize "] "
+				      'face 'font-lock-string-face))))
+	       ;; buffer/file name
+	       '(:eval (propertize "%b " 'face 'font-lock-keyword-face 
+				   'help-echo (buffer-file-name)))
+	       ;; line and column
+	       "(" 
+	       (propertize "%02l" 'face 'font-lock-type-face)
+	       ","
+	       (propertize "%02c" 'face 'font-lock-type-face)
+	       ") "
 
-      ;; relative position/ size of file
-      "["
-      (propertize "%p" 'face 'font-lock-type-face)
-      "/"
-      (propertize "%I" 'face 'font-lock-type-face)
-      "] "
-      ;; current major mode
-      '(:eval (propertize "%m " 'face 'font-lock-keyword-face
-			  'help-echo buffer-file-coding-system))
-      ;; readonly
-      '(:eval (when buffer-read-only
-		(concat " [" 
-			(propertize "readonly"
-				    'face 'font-lock-type-face
-				    'help-echo "Buffer is read-only")
-			"] ")))
-      ;; adding the time
-      '(:eval (propertize (format-time-string "%H:%M")
-			  'face 'font-lock-constant-face
-			  'help-echo
-			  (concat (format-time-string "%c; ") (emacs-uptime "Uptime: %hh"))))
-      " --"
-      ;; minor modes
-      minor-mode-alist
-))
+	       ;; relative position/ size of file
+	       "["
+	       (propertize "%p" 'face 'font-lock-type-face)
+	       "/"
+	       (propertize "%I" 'face 'font-lock-type-face)
+	       "] "
+	       ;; current major mode
+	       '(:eval (propertize "%m " 'face 'font-lock-keyword-face
+				   'help-echo buffer-file-coding-system))
+	       ;; readonly
+	       '(:eval (when buffer-read-only
+			 (concat " [" 
+				 (propertize "readonly"
+					     'face 'font-lock-type-face
+					     'help-echo "Buffer is read-only")
+				 "] ")))
+	       ;; adding the time
+	       '(:eval (propertize (format-time-string "%H:%M")
+				   'face 'font-lock-constant-face
+				   'help-echo
+				   (concat (format-time-string "%c; ") (emacs-uptime "Uptime: %hh"))))
+	       " --"
+	       ;; minor modes
+	       minor-mode-alist
+	       ))
 ;; setting of the term colors. Unfortunately this is necessary since using Emacs 24.3 and the zenburn theme
 (defface term-color-black 
   '((t (:foreground "#3f3f3f" :background "#272822"))) 
@@ -546,7 +546,7 @@
      (setq comint-scroll-to-botoom-on-output 'others)
      (setq comint-scroll-show-maximum-output t)
      (setq comint-scroll-to-bottom-on-input 'this)
-))
+     ))
 
 ;; turn of blinking cursor
 (blink-cursor-mode (- (*) (*) (*)))
@@ -594,7 +594,7 @@
 			      (setq py-indent-offset 2)))
 ;; Use the TAB to call the py-indent-line function
 (setq py-tab-indent t)
- 
+
 ;; Use jedi for autocompletion
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
@@ -656,7 +656,7 @@
 ;; Modifying markdown mode for correct displaying of German letters
 (add-to-list 'load-path "~/git/configurations-and-scripts/emacs/markdown-mode")
 (autoload 'markdown-mode "markdown-mode"
-   "Major mode for editing Markdown files" t)
+  "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
@@ -666,7 +666,7 @@
 ;; transparent background
 (set-frame-parameter (selected-frame) 'alpha '(77 . 50))
 (add-to-list 'default-frame-alist '(alpha . (77 . 50)))
- 
+
 (set-face-attribute 'default nil :background "black")
 
 ;; use perl-mode for perl scripts
@@ -689,13 +689,13 @@
 ;; is mounted.
 (if (file-exists-p "~/pks_home/material/collection.bib")
     (setq reftex-default-bibliography '("~/pks_home/material/collection.bib")
-	   org-ref-default-bibliography '("~/pks_home/material/collection.bib")
-	   bibtex-completion-bibliography "~/pks_home/material/collection.bib"
-	   org-ref-pdf-directory "~/pks_home/material/"
-	   bibtex-completion-library-path "~/pks_home/material/"
-	   ;; open the PDF using a PDF viewer
-	   bibtex-completion-pdf-open-function
-	   (lambda (fpath) (start-process "open" "*open*" "open" fpath))))
+	  org-ref-default-bibliography '("~/pks_home/material/collection.bib")
+	  bibtex-completion-bibliography "~/pks_home/material/collection.bib"
+	  org-ref-pdf-directory "~/pks_home/material/"
+	  bibtex-completion-library-path "~/pks_home/material/"
+	  ;; open the PDF using a PDF viewer
+	  bibtex-completion-pdf-open-function
+	  (lambda (fpath) (start-process "open" "*open*" "open" fpath))))
 ;; Assuring correct LaTeX exportation of org-ref commands
 (setq org-latex-pdf-process
       '("pdflatex -interaction nonstopmode -output-directory %o %f"
@@ -716,7 +716,7 @@
 (require 'helm-config)
 ;; remapping caps-lock to M-x
 (if (eq window-system 'x)
-   (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
+    (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
 (global-set-key [f13] 'helm-M-x)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
@@ -761,8 +761,20 @@
     ;; Killing
     (define-key map (kbd "C-,") 'backward-delete-char-untabify)
     (define-key map (kbd "C-.") 'delete-forward-char)
-    (define-key map (kbd "M-,") 'backward-kill-word)
-    (define-key map (kbd "M-.") 'kill-word)
+    (define-key map (kbd "M-,") (lambda()
+				  (interactive)
+				  (if mark-active
+				      (kill-region
+				       (region-beginning)
+				       (region-end))
+				    (backward-kill-word))))
+    (define-key map (kbd "M-.") (lambda()
+				  (interactive)
+				  (if mark-active
+				      (kill-region
+				       (region-beginning)
+				       (region-end))
+				    (kill-word))))
     (define-key map (kbd "C-M-.") 'kill-line)
     (define-key map (kbd "C-M-,") 'kill-whole-line)
     ;; Copying (it's not that convenient to have the copying and yanking
@@ -779,9 +791,13 @@
 				   (region-end))))
     (define-key map (kbd "M-p") (lambda()
 				  (interactive)
-				  (copy-region-as-kill
-				   (line-beginning-position)
-				   (line-end-position))))
+				  (if mark-active
+				      (copy-region-as-kill
+				       (region-beginning)
+				       (region-end))
+				    (copy-region-as-kill
+				     (line-beginning-position)
+				     (line-end-position)))))
     (define-key map (kbd "C-M-p") (lambda()
 				    (interactive)
 				    (backward-paragraph)
@@ -806,10 +822,14 @@
 				  (left-char
 				   (+ (string-width comment-end) 1))))
     (define-key map (kbd "M-'") (lambda()
-				    (interactive)
+				  (interactive)
+				  (if mark-active
+				      (comment-or-uncomment-region
+				       (region-beginning)
+				       (region-end))
 				    (comment-or-uncomment-region
 				     (line-beginning-position)
-				     (line-end-position))))
+				     (line-end-position)))))
 
     (define-key map (kbd "C-M-'") (lambda()
 				    (interactive)
@@ -822,12 +842,17 @@
     ;; Don't bind this or the TAB won't work anymore
     ;; (define-key map (kbd "C-i") 'indent-region)
     (define-key map (kbd "M-i") (lambda()
-				    (interactive)
-				    (backward-paragraph)
-				    (mark-paragraph)
-				    (indent-region
-				     (region-beginning)
-				     (region-end))))
+				  (interactive)
+				  (if mark-active
+				      (indent-region
+				       (region-beginning)
+				       (region-end))
+				    (progn
+				      (backward-paragraph)
+				      (mark-paragraph)
+				      (indent-region
+				       (region-beginning)
+				       (region-end))))))
     (define-key map (kbd "C-M-i") (lambda ()
 				    (interactive)
 				    (mark-whole-buffer)
@@ -843,9 +868,9 @@
     ;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
     (define-key input-decode-map [?\C-\M-M] [C-M-m])
     (define-key map (kbd "M-m") (lambda ()
-				    (interactive)
-				    (move-end-of-line 1)
-				    (newline-and-indent)))
+				  (interactive)
+				  (move-end-of-line 1)
+				  (newline-and-indent)))
     (define-key map (kbd "<C-M-m>") (lambda ()
 				      (interactive)
 				      (previous-line)
