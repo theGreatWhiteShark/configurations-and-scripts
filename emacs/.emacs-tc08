@@ -557,7 +557,8 @@
 ;; configuring default printer
 (setq printer-name "ps6")
 
-
+;; Edit the Emacs file at work in el mode
+(setq auto-mode-alist (cons '(".emacs-tc08" . emacs-lisp-mode) auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python
@@ -761,8 +762,20 @@
     ;; Killing
     (define-key map (kbd "C-,") 'backward-delete-char-untabify)
     (define-key map (kbd "C-.") 'delete-forward-char)
-    (define-key map (kbd "M-,") 'backward-kill-word)
-    (define-key map (kbd "M-.") 'kill-word)
+    (define-key map (kbd "M-,") (lambda()
+				  (interactive)
+				  (if mark-active
+				      (kill-region
+				       (region-beginning)
+				       (region-end))
+				   (backward-kill-word))))
+    (define-key map (kbd "M-.") (lambda()
+				  (interactive)
+				  (if mark-active
+				      (kill-region
+				       (region-beginning)
+				       (region-end))
+				   (kill-word))))
     (define-key map (kbd "C-M-.") 'kill-line)
     (define-key map (kbd "C-M-,") 'kill-whole-line)
     ;; Copying (it's not that convenient to have the copying and yanking
@@ -779,9 +792,13 @@
 				   (region-end))))
     (define-key map (kbd "M-p") (lambda()
 				  (interactive)
+				  (if mark-active
+				      (copy-region-as-kill
+				       (region-beginning)
+				       (region-end))
 				  (copy-region-as-kill
 				   (line-beginning-position)
-				   (line-end-position))))
+				   (line-end-position)))))
     (define-key map (kbd "C-M-p") (lambda()
 				    (interactive)
 				    (backward-paragraph)
@@ -806,10 +823,14 @@
 				  (left-char
 				   (+ (string-width comment-end) 1))))
     (define-key map (kbd "M-'") (lambda()
-				    (interactive)
+				  (interactive)
+				  (if mark-active
+				      (comment-or-uncomment-region
+				       (region-beginning)
+				       (region-end))
 				    (comment-or-uncomment-region
 				     (line-beginning-position)
-				     (line-end-position))))
+				     (line-end-position)))))
 
     (define-key map (kbd "C-M-'") (lambda()
 				    (interactive)
@@ -822,12 +843,17 @@
     ;; Don't bind this or the TAB won't work anymore
     ;; (define-key map (kbd "C-i") 'indent-region)
     (define-key map (kbd "M-i") (lambda()
-				    (interactive)
-				    (backward-paragraph)
-				    (mark-paragraph)
-				    (indent-region
-				     (region-beginning)
-				     (region-end))))
+				  (interactive)
+				  (if mark-active
+				      (indent-region
+				       (region-beginning)
+				       (region-end))
+				    (progn
+				      (backward-paragraph)
+				      (mark-paragraph)
+				      (indent-region
+				       (region-beginning)
+				       (region-end))))))
     (define-key map (kbd "C-M-i") (lambda ()
 				    (interactive)
 				    (mark-whole-buffer)
