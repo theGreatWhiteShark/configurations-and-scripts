@@ -6,6 +6,10 @@ emacs/*/cache
 emacs/.emacs.d/recentf
 emacs/.emacs.d/tramp # updated whenever a file is accessed remotely via ssh
 
+# Don't keep track of the bookmark, since different computers
+# use different configuration files
+emacs/.emacs.d/bookmarks
+
 # Ignoring the Emacs submodules (but I need to update)
 emacs/org-mode
 emacs/org-ref
@@ -14,7 +18,6 @@ emacs/python-mode
 emacs/yasnippet
 emacs/zenburn
 emacs/android-mode
-emacs/anything-config
 emacs/arduino-mode
 emacs/iedit
 emacs/markdown-mode
