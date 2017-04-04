@@ -767,14 +767,14 @@
 				      (kill-region
 				       (region-beginning)
 				       (region-end))
-				    (backward-kill-word))))
+				    (backward-kill-word 1))))
     (define-key map (kbd "M-.") (lambda()
 				  (interactive)
 				  (if mark-active
 				      (kill-region
 				       (region-beginning)
 				       (region-end))
-				    (kill-word))))
+				    (kill-word 1))))
     (define-key map (kbd "C-M-.") 'kill-line)
     (define-key map (kbd "C-M-,") 'kill-whole-line)
     ;; Copying (it's not that convenient to have the copying and yanking
