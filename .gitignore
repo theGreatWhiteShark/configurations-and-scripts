@@ -4,7 +4,8 @@ emacs/*/cache
 
 # Ignoring some of the Emacs cache
 emacs/.emacs.d/recentf
-emacs/.emacs.d/tramp # updated whenever a file is accessed remotely via ssh
+# updated whenever a file is accessed remotely via ssh
+emacs/.emacs.d/tramp 
 
 # Don't keep track of the bookmark, since different computers
 # use different configuration files
