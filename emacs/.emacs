@@ -890,6 +890,7 @@
 ;; for each mode independently
 (add-hook 'ess-mode-hook
 	  (lambda()
+	    (local-set-key (kbd "M-j") 'left-word)
 	    (local-set-key (kbd "C-n")
 			   'ess-eval-region-or-line-and-step)
 	    (local-set-key (kbd "M-n")
