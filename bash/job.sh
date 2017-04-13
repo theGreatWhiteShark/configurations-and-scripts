@@ -25,7 +25,7 @@ WorkingDir=$(pwd | sed 's/home/scratch/g')
 ## Generating a submission script
 cat >.job.sh <<EOF
 #!/bin/bash -i
-## http://www/closed/getting_started/queuing_system.html
+## http://arc.liv.ac.uk/SGE/htmlman/manuals.html
 ##
 ### Arguments passed to the queuing system
 ## default interpreter shell
