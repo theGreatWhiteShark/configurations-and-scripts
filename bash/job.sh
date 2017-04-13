@@ -31,7 +31,7 @@ cat >.job.sh <<EOF
 ## default interpreter shell
 #$ -S /bin/bash
 ## required hardware resources (default options. should be enough for the moment)
-#$ -l h_rss=2000M,h_fsize=10000M,h_cpu=20:00:00,hw=x86_64
+#$ -l h_rss=2000M,h_fsize=10000M,h_cpu=20:00:00,hw=x86_64,proc_surname=broadwell
 ## name of the job
 #$ -N $JobName
 ## starting directory for the job
@@ -41,8 +41,6 @@ cat >.job.sh <<EOF
 ## redirecting the standard output and error (something like a log file for the job)
 #$ -o $(echo "log_"$JobName".log")
 #$ -e $(echo "err_"$JobName".err")
-## Use the juno queue and do not spam algol
-#$ -q juno
 
 ## OpenSuSe has a strange way of handling threading
 export OMP_NUM_THREADS=\$NSLOTS
