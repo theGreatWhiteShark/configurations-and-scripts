@@ -1,14 +1,16 @@
-My bash configuration (*.bashrc*) and some bash scripts I find quite useful.
+My bash configuration [.bashrc](bash/.bashrc) and some bash scripts I find quite useful.
 
 ## Scripts
-#### git_remove.sh
+#### [git_remove.sh](bash/git_remove.sh)
 
 A function I picked up in the web some years ago. It provides a graphical interface in the command line listing the ten biggest files in the cache of a git repository and it enables you to remove several/all of these objects.
 This is quite handy when you end up with a very big cache of your repository after a while and want to clean is up.
 
-#### job.sh
+#### [job.sh](bash/job.sh)
 
-Shell script to handle the local queuing system at the institute I am working at. 
+Bash function to handle the local queuing system at the institute I am working at. 
+
+In case you are wondering why I define a function I never call, I will source this file in the [.bashrc](bash/.bashrc) and link it via an alias.
 
 It does the following things:
 
