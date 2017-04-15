@@ -900,16 +900,40 @@
 			     (ess-switch-to-ESS)))
 	    ;; compile the whole file
 	    (local-set-key (kbd "C-M-n")
-			   (lambda()
-			     (interactive)
-			     (polymode-export "Rmarkdown" "html")))))
+	     (lambda()
+	       (interactive)
+	       ;; Check whether this is a .R or .Rmd document
+	       (if (string= (subseq buffer-file-name
+				    (- (length buffer-file-name) 2))
+			    ".R")
+		   ;; It's a .R file. Evaluate the whole document.
+		   (progn
+		     (mark-whole-buffer)
+		     (ess-eval-region
+		      (region-beginning)
+		      (region-end)
+		      nil))
+		 ;; It's a .Rmd file. Export it to .html
+		 (polymode-export "Rmarkdown" "html"))))))
 ;; In order to work in the markdown part of ESS as well
 (add-hook 'markdown-mode-hook
 	  (lambda()
 	    (local-set-key (kbd "C-M-n")
-			   (lambda()
-			     (interactive)
-			     (polymode-export "Rmarkdown" "html")))))
+	     (lambda()
+	       (interactive)
+	       ;; Check whether this is a .R or .Rmd document
+	       (if (string= (subseq buffer-file-name
+				    (- (length buffer-file-name) 2))
+			    ".R")
+		   ;; It's a .R file. Evaluate the whole document.
+		   (progn
+		     (mark-whole-buffer)
+		     (ess-eval-region
+		      (region-beginning)
+		      (region-end)
+		      nil))
+		 ;; It's a .Rmd file. Export it to .html
+		 (polymode-export "Rmarkdown" "html"))))))
 (add-hook 'python-mode-hook
 	  (lambda()
 	    (local-set-key (kbd "<C-return>")
