@@ -872,11 +872,18 @@
 				    (interactive)
 				    (move-end-of-line 1)
 				    (newline-and-indent)))
-    (define-key map (kbd "<C-M-m>") (lambda ()
-				      (interactive)
-				      (previous-line)
-				      (move-end-of-line 1)
-				      (newline-and-indent)))
+    (define-key map (kbd "<C-M-m>")
+      (lambda ()
+	(interactive)
+	(if (string= (what-line) "Line 1")
+	    (progn
+	      (move-beginning-of-line 1)
+	      (newline-and-indent)
+	      (previous-line))
+	  (progn
+	    (previous-line)
+	    (move-end-of-line 1)
+	    (newline-and-indent)))))
     map)
   "custom-keys-minor-mode keymap.")
 ;; Activating the customized keybindings with every major mode.
