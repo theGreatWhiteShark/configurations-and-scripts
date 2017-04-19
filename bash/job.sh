@@ -47,9 +47,6 @@ export OMP_NUM_THREADS=\$NSLOTS
 
 module load sge62
 
-## Use the newest R version compiled for the queue's OS
-alias Rscript=/usr/local/R/3.3.2/bin/Rscript
-
 ## If there is already a visible log and error file -> hide them
 for ll in \$(ls $HomeDir | grep ^log);do
     if [ "\$ll" != $(echo "log_"$JobName".log") ];then
@@ -76,7 +73,7 @@ fi
 cd $WorkingDir
 
 ## Running the script
-Rscript $1
+/usr/local/R/3.3.2/bin/Rscript $1
 
 ## some output for a more detailed log file
 
