@@ -557,7 +557,8 @@
 ;; configuring default printer
 (setq printer-name "ps6")
 
-
+;; Edit the Emacs file at work in el mode
+(setq auto-mode-alist (cons '(".emacs-tc08" . emacs-lisp-mode) auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python
@@ -900,47 +901,43 @@
 	    (local-set-key (kbd "M-j") 'left-word)
 	    (local-set-key (kbd "C-n")
 			   'ess-eval-region-or-line-and-step)
-	    (local-set-key (kbd "M-n")
-			   (lambda()
-			     (interactive)
-			     (ess-eval-chunk)
-			     (ess-switch-to-ESS)))
+	    (local-set-key (kbd "M-n") 'ess-eval-paragraph-and-step)
 	    ;; compile the whole file
 	    (local-set-key (kbd "C-M-n")
-	     (lambda()
-	       (interactive)
-	       ;; Check whether this is a .R or .Rmd document
-	       (if (string= (subseq buffer-file-name
-				    (- (length buffer-file-name) 2))
-			    ".R")
-		   ;; It's a .R file. Evaluate the whole document.
-		   (progn
-		     (mark-whole-buffer)
-		     (ess-eval-region
-		      (region-beginning)
-		      (region-end)
-		      nil))
-		 ;; It's a .Rmd file. Export it to .html
-		 (polymode-export "Rmarkdown" "html"))))))
+			   (lambda()
+			     (interactive)
+			     ;; Check whether this is a .R or .Rmd document
+			     (if (string= (subseq buffer-file-name
+						  (- (length buffer-file-name) 2))
+					  ".R")
+				 ;; It's a .R file. Evaluate the whole document.
+				 (progn
+				   (mark-whole-buffer)
+				   (ess-eval-region
+				    (region-beginning)
+				    (region-end)
+				    nil))
+			       ;; It's a .Rmd file. Export it to .html
+			       (polymode-export "Rmarkdown" "html"))))))
 ;; In order to work in the markdown part of ESS as well
 (add-hook 'markdown-mode-hook
 	  (lambda()
 	    (local-set-key (kbd "C-M-n")
-	     (lambda()
-	       (interactive)
-	       ;; Check whether this is a .R or .Rmd document
-	       (if (string= (subseq buffer-file-name
-				    (- (length buffer-file-name) 2))
-			    ".R")
-		   ;; It's a .R file. Evaluate the whole document.
-		   (progn
-		     (mark-whole-buffer)
-		     (ess-eval-region
-		      (region-beginning)
-		      (region-end)
-		      nil))
-		 ;; It's a .Rmd file. Export it to .html
-		 (polymode-export "Rmarkdown" "html"))))))
+			   (lambda()
+			     (interactive)
+			     ;; Check whether this is a .R or .Rmd document
+			     (if (string= (subseq buffer-file-name
+						  (- (length buffer-file-name) 2))
+					  ".R")
+				 ;; It's a .R file. Evaluate the whole document.
+				 (progn
+				   (mark-whole-buffer)
+				   (ess-eval-region
+				    (region-beginning)
+				    (region-end)
+				    nil))
+			       ;; It's a .Rmd file. Export it to .html
+			       (polymode-export "Rmarkdown" "html"))))))
 (add-hook 'python-mode-hook
 	  (lambda()
 	    (local-set-key (kbd "<C-return>")
