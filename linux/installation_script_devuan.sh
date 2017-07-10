@@ -33,7 +33,7 @@ sudo mv ./nextcloud-client.list /etc/apt/sources.list.d/
 wget -q -O - http://download.opensuse.org/repositories/home:/ivaradi/Debian_8.0/Release.key > nextcloud.key
 sudo apt-key add ./nextcloud.key
 rm ./nextcloud.key
-sudo update
+sudo apt update
 
 
 ## Installation of required packages
