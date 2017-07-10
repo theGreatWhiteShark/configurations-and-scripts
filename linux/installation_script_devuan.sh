@@ -27,15 +27,17 @@ sudo mkdir /data
 sudo chmod a+xw /data
 mkdir pks_home
 
+## Include the Nextcloud repositories
+echo 'deb http://download.opensuse.org/repositories/home:/ivaradi/Debian_8.0/ /' > nextcloud-client.list
+sudo mv ./nextcloud-client.list /etc/apt/sources.list.d/
+wget -q -O - http://download.opensuse.org/repositories/home:/ivaradi/Debian_8.0/Release.key > nextcloud.key
+sudo apt-key add ./nextcloud.key
+rm ./nextcloud.key
+sudo update
+
+
 ## Installation of required packages
-
-# Autoaccept the licenses
-sudo apt-get -y install ttf-mscorefonts-installer --quiet
-echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
-preseed --owner ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula boolean true sshfs
- xcompmgr meld apt-file bzip2 libbz2-dev liblzma-dev libjpeg8-dev libtiff5-dev thunar unity-greeter-badges mate-terminal npm
-
-sudo apt -y install gfortran fort77 texlive xorg-dev texlive-fonts-extra texinfo default-jre default-jre-headless default-jdk texlive-latex-extra intltool emacs24 multitail libreadline6 libreadline6-dev libreadline6-dbg hunspell g++ emacs-goodies-el global sshfs apt-file libcairo2-dev libssh-dev libcurl4-gnutls-dev libxml2-dev i3 i3-wm at i3status i3lock nitrogen imagemagick pandoc scrot xinput xbacklight xcompmgr meld apt-file bzip2 libbz2-dev liblzma-dev libtiff5-dev mate-terminal npm lshw thunderbird owncloud-client
+sudo apt -y install gfortran fort77 texlive xorg-dev texlive-fonts-extra texinfo default-jre default-jre-headless default-jdk texlive-latex-extra intltool emacs24 multitail libreadline6 libreadline6-dev libreadline6-dbg hunspell g++ emacs-goodies-el global sshfs apt-file libcairo2-dev libssh-dev libcurl4-gnutls-dev libxml2-dev i3 i3-wm at i3status i3lock nitrogen imagemagick pandoc scrot xinput xbacklight xcompmgr meld apt-file bzip2 libbz2-dev liblzma-dev libtiff5-dev mate-terminal npm lshw thunderbird nextcloud-client sshfs thunar clementine
 
 
 ## Enabling all Emacs submodules
@@ -63,14 +65,8 @@ rm
 
 Rscript --no-init-file -e "options( repos = 'https://cran.uni-muenster.de/'); source( '~/git/configurations-and-scripts/R/package_installation.R' )"
 
-## other additional software
-sudo add-apt-repository -y ppa:me-davidsansome/clementine
-
-apt-file update
-sudo apt update
-sudo apt -y install clementine
-
+## Final update
 sudo apt -y upgrade
-sudo apt autoremove
+sudo apt-get autoremove
 sudo apt-file update
 exit
