@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+exec i3
 
 ## turn of the blank screen in i3
 xset dpms 0 0 0

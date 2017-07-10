@@ -24,6 +24,7 @@ alias duh='du --max-depth=1 -h'
 alias s='sudo shutdown -h'
 alias sc='stop_clementine'
 alias pp='sudo shutdown -h now'
+alias reboot='sudo /sbin/reboot'
 # Link to the glorious JDownloader
 alias jdownloader='~/.jd2/JDownloader2'
 
