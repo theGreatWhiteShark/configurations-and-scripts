@@ -21,6 +21,9 @@ ln -as $HOME/git/configurations-and-scripts/R/.Rprofile $HOME/.Rprofile
 ln -s $HOME/git/configurations-and-scripts/i3/.i3status.conf-temeluchus $HOME/.i3status.conf
 mkdir $HOME/.i3
 ln -s $HOME/git/configurations-and-scripts/i3/config-temeluchus $HOME/.i3/config
+# Terminator setting
+mkdir -p .config/terminator
+ln -s $HOME/git/configurations-and-scripts/linux/.config/terminator/config $HOME/.config/terminator/config
 
 ## Make directories required for mounting my institut's home via sshfs
 sudo mkdir /data
@@ -37,7 +40,7 @@ sudo apt update
 
 
 ## Installation of required packages
-sudo apt -y install gfortran fort77 texlive xorg-dev texlive-fonts-extra texinfo default-jre default-jre-headless default-jdk texlive-latex-extra intltool emacs24 multitail libreadline6 libreadline6-dev libreadline6-dbg hunspell g++ emacs-goodies-el global sshfs apt-file libcairo2-dev libssh-dev libcurl4-gnutls-dev libxml2-dev i3 i3-wm at i3status i3lock nitrogen imagemagick pandoc scrot xinput xbacklight xcompmgr meld apt-file bzip2 libbz2-dev liblzma-dev libtiff5-dev mate-terminal npm lshw thunderbird nextcloud-client sshfs thunar clementine
+sudo apt -y install gfortran fort77 texlive xorg-dev texlive-fonts-extra texinfo default-jre default-jre-headless default-jdk texlive-latex-extra intltool emacs24 multitail libreadline6 libreadline6-dev libreadline6-dbg hunspell g++ emacs-goodies-el global sshfs apt-file libcairo2-dev libssh-dev libcurl4-gnutls-dev libxml2-dev i3 i3-wm at i3status i3lock nitrogen imagemagick pandoc scrot xinput xbacklight xcompmgr meld apt-file bzip2 libbz2-dev liblzma-dev libtiff5-dev npm lshw thunderbird nextcloud-client sshfs thunar clementine kupfer terminator
 
 
 ## Enabling all Emacs submodules

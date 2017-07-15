@@ -27,15 +27,14 @@ font pango:DejaVu Sans Mono 8
 floating_modifier $mod
 
 # start a terminal
-#bindsym $mod+Return exec i3-sensible-terminal
-#bindsym $mod+Return exec /usr/bin/konsole
-bindsym $mod+Return exec mate-terminal
+# bindsym $mod+Return exec mate-terminal
+bindsym $mod+Return exec terminator
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+# start kupfer (a program launcher and document finder)
+bindsym $mod+d exec kupfer
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -183,8 +182,18 @@ bindsym $mod+F6 exec "xbacklight -inc 10"
 # toggle the touchpad
 bindsym $mod+F12 exec "~/git/configurations-and-scripts/i3/toggle_touchpad.sh"
 
+# background image
+exec --no-startup-id nitrogen --restore
+
+# starting Nextcloud
+exec nextcloud
+
 # restore the default background image
 exec --no-startup-id nitrogen --restore
 
 # transparent windows
 exec xcompmgr -c -n
+
+# applets
+exec volti
+exec wicd-gtk --tray

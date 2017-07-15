@@ -191,3 +191,7 @@ exec owncloud
 
 # transparency
 exec xcompmgr -c -n
+
+# applets
+exec volti
+exec wicd-gtk --tray
