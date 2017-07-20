@@ -195,5 +195,5 @@ exec --no-startup-id nitrogen --restore
 exec xcompmgr -c -n
 
 # applets
-exec volti
+exec pasystray
 exec wicd-gtk --tray
