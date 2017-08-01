@@ -28,7 +28,7 @@ ln -s $HOME/git/configurations-and-scripts/linux/.config/terminator/config $HOME
 ## Make directories required for mounting my institut's home via sshfs
 sudo mkdir /data
 sudo chmod a+xw /data
-mkdir pks_home
+mkdir ~/pks_home
 
 ## Include the Nextcloud repositories
 echo 'deb http://download.opensuse.org/repositories/home:/ivaradi/Debian_8.0/ /' > nextcloud-client.list
