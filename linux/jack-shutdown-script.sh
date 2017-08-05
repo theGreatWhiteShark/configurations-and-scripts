@@ -14,3 +14,8 @@ pulseaudio -k
 killall pulseaudio
 ## and restart it
 pulseaudio -D
+## Give the system time to settle down
+sleep 10
+## Restart the PulseAudio system tray (to update the changes)
+killall pasystray
+pasystray &
