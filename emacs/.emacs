@@ -25,6 +25,7 @@
 (add-hook 'emacs-lisp-mode-hook (lambda() (flyspell-prog-mode)))
 (add-hook 'lisp-mode-hook (lambda() (flyspell-prog-mode)))
 (add-hook 'c-mode-hook (lambda() (flyspell-prog-mode)))
+(add-hook 'conf-mode-hook (lambda() (flyspell-prog-mode)))
 
 ;; The default dictionary to be used should be the English one
 (setq flyspell-default-dictionary "en")
@@ -70,7 +71,7 @@
 (require 'ess-rutils)
 
 ;; Directory containing the binaries of the installed R version
-(setq R-binary-folder "/home/phil/software/R/R-3.3.2/bin/")
+(setq R-binary-folder "/home/phil/software/R/R-3.4.0/bin/")
 
 ;; A comment is a comment. No matter how many dashes
 (setq ess-indent-with-fancy-comments nil)
@@ -961,3 +962,10 @@
 			     (py-execute-region)
 			     (py-switch-to-shell)))
 	    (local-set-key (kbd "C-M-n") 'py-execute-buffer)))
+
+;; using conf-mode for frequently visited configuration scripts
+(add-to-list 'auto-mode-alist '(".asoundrc" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\config\\'" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\.conf\\'" . conf-mode))
+	     
+	     
