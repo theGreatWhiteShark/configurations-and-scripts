@@ -142,3 +142,6 @@ export SHINY_LOG_LEVEL=TRACE
 
 # my GPG key ID
 export GPGKEY=0BF476DA
+
+# Use raum as PulseAudio server
+export PULSE_SERVER=raum
