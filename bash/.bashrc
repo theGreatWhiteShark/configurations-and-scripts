@@ -15,15 +15,16 @@ alias eam='/usr/local/emacs25/bin/emacs -nw'
 # Emacs with super user permissions
 alias sema='sudo /usr/local/emacs25/bin/emacs -nw'
 # Convenient way to debug your .bashrc
-alias sbash='source $HOME/.bashrc; chmod +x -R $HOME/scripts/'
+alias sbash='source $HOME/.bashrc'
 alias bashrc='/usr/local/emacs25/bin/emacs -nw $HOME/.bashrc; source $HOME/.bashrc'
 # Display the size of all folders in a directory
 alias duh='du --max-depth=1 -h'
 # Shutdown/stop the audio with the least amount of characters.
 # This is especially useful when you are connected via ssh from your smartphone
-alias s='sudo shutdown -P'
+alias s='sudo shutdown -h'
 alias sc='stop_clementine'
-alias pp='sudo shutdown -P now'
+alias pp='sudo shutdown -h now'
+alias reboot='sudo /sbin/reboot'
 # Link to the glorious JDownloader
 alias jdownloader='~/.jd2/JDownloader2'
 
@@ -56,10 +57,10 @@ alias hydrogen='~/git/hydrogen/build/src/gui/hydrogen'
 alias drumgizmo='~/git/drumgizmo/drumgizmo/drumgizmo'
 
 ## R
-alias R='$HOME/software/R/R-3.3.2/bin/R --quiet --no-save'
-alias Rscript='$HOME/software/R/R-3.3.2/bin/Rscript'
+alias R='$HOME/software/R/R-3.4.0/bin/R --quiet --no-save'
+alias Rscript='$HOME/software/R/R-3.4.0/bin/Rscript'
 alias Rinit='source $HOME/scripts/bash/Rinit.sh' # installation of the packages for a newly installed R distribution 
-alias Sweave='$HOME/software/R/R-3.3.2/bin/Sweave'
+alias Sweave='$HOME/software/R/R-3.4.0/bin/Sweave'
 alias Rb='R --resave-data CMD build'
 alias Rc='R CMD check'
 alias Ri='R --no-init-file CMD INSTALL'
@@ -85,8 +86,8 @@ fi
 # Configurations for setting up development environments
 export EDITOR=/usr/bin/emacs
 export AWKPATH="$HOME/git/configurations-and-scripts/awk"
-export ANDROID_HOME="$HOME/software/android-sdk-linux"
-export JAVA_HOME="$HOME/software/java/jdk1.8.0_121"
+export ANDROID_HOME="$HOME/software/android-sdk"
+export JAVA_HOME="$HOME/software/java-jdk/jdk1.8.0_131"
 # Perl configuration
 PATH="/home/phil/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/phil/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
@@ -109,6 +110,9 @@ fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/bin/ {ck=1};END {print ck}') == 0 ];then
     PATH=$PATH:/usr/bin
 fi
+if [ $( echo $PATH | awk 'BEGIN {ck=0};/phil\/bin/ {ck=1};END {print ck}') == 0 ];then
+    PATH=$PATH:$HOME/bin
+fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/scripts\/bash/ {ck=1};END {print ck}') == 0 ];then
     PATH=$PATH:$HOME/git/configurations-and-scripts/bash
 fi
@@ -125,7 +129,7 @@ if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/sbin/ {ck=1};END {print ck}') == 0 
     PATH=$PATH:/usr/sbin
 fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/android/ {ck=1};END {print ck}') == 0 ];then
-    export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+    export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/25.0.2:$ANDROID_HOME/tools/bin
 fi
 # For working with at I need to define such function
 function stop_clementine {
