@@ -26,6 +26,15 @@ emacs/minimal
 /emacs/.emacs.d/ac-comphist.dat
 emacs/.emacs.d/.python-environments/
 
+# Ignoring the aspell dictionary (since I constantly causes
+# merge conflicts)
+emacs/.emacs.d/.aspell.de.pws
+emacs/.emacs.d/.aspell.en.pws
+
+# Ignoring changes in the installed package versions
+emacs/.emacs.d/elpa/*
+
+
 # Ignoring all Python caches
 python/**/__pycache__/
 

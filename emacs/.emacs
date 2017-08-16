@@ -873,6 +873,13 @@
 				  (interactive)
 				  (move-end-of-line 1)
 				  (newline-and-indent)))
+    ;; Including the shift for adding a comment at the beginning
+    ;; of the new line.
+    (define-key map (kbd "M-M") (lambda ()
+				    (interactive)
+				    (move-end-of-line 1)
+				    (comment-indent-new-line)
+				    (self-insert-command 1)))
     (define-key map (kbd "<C-M-m>")
       (lambda ()
 	(interactive)

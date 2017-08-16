@@ -70,7 +70,7 @@
 (require 'ess-rutils)
 
 ;; Directory containing the binaries of the installed R version
-(setq R-binary-folder "/usr/local/R/3.3.2/bin/")
+(setq R-binary-folder "~/software/R/R-3.4.0/bin/")
 
 ;; A comment is a comment. No matter how many dashes
 (setq ess-indent-with-fancy-comments nil)
@@ -471,6 +471,7 @@
  '(delete-selection-mode nil)
  '(fci-rule-color "#383838")
  '(inhibit-startup-screen t)
+ '(magit-diff-section-arguments (quote ("--no-ext-diff")))
  '(mark-even-if-inactive t)
  '(org-agenda-files
    (quote
@@ -867,6 +868,13 @@
 				    (interactive)
 				    (move-end-of-line 1)
 				    (newline-and-indent)))
+    ;; Including the shift for adding a comment at the beginning
+    ;; of the new line.
+    (define-key map (kbd "M-M") (lambda ()
+				    (interactive)
+				    (move-end-of-line 1)
+				    (comment-indent-new-line)
+				    (self-insert-command 1)))
     (define-key map (kbd "<C-M-m>")
       (lambda ()
 	(interactive)
