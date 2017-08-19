@@ -33,7 +33,7 @@ sudo iwlist [Interface name] scan
 Be sure to use *sudo* or you won't find anything!
 
 # Configuring the interface
-To configure your network, copy the [interfaces](raspberry2/interfaces) file into */etc/network/interfaces* and exchange my interface name for the one obtained in the previous step.
+To configure your network, copy the [interfaces](interfaces) file into */etc/network/interfaces* and exchange my interface name for the one obtained in the previous step.
 
 In my configuration I used a static setting. This way my Raspberry also obtains the same IP address. (Very convenient when you are using e.g. Clementine with a remote control via your smartphone).
 If you want a dynamic setting instead (your Raspberry will obtain different IPs), replace lines 11-14 by this one instead
