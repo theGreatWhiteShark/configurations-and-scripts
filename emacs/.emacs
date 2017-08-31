@@ -869,6 +869,7 @@
     ;; destinguish between Ctrl-m and RET due to historical reasons
     ;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
     (define-key input-decode-map [?\C-\M-M] [C-M-m])
+    (define-key input-decode-map [?\M-n] [M-n])
     (define-key map (kbd "M-m") (lambda ()
 				  (interactive)
 				  (move-end-of-line 1)
@@ -909,7 +910,18 @@
 	    (local-set-key (kbd "M-j") 'left-word)
 	    (local-set-key (kbd "C-n")
 			   'ess-eval-region-or-line-and-step)
-	    (local-set-key (kbd "M-n") 'ess-eval-paragraph-and-step)
+	    (local-set-key (kbd "<M-n>")
+			   (lambda()
+			     (interactive)
+			     ;; Check whether this is a .R or .Rmd document
+			     (if (string= (subseq buffer-file-name
+						  (- (length buffer-file-name) 2))
+					  ".R")
+				 (progn
+				   ;; It's a .R file. Evaluate the whole document.
+				   (ess-eval-paragraph-and-step))
+			       ;; It's a .Rmd file. Export it to .html
+				   (ess-eval-chunk 1))))
 	    ;; compile the whole file
 	    (local-set-key (kbd "C-M-n")
 			   (lambda()
