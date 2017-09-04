@@ -87,13 +87,13 @@ fi
 export EDITOR=/usr/bin/emacs
 export AWKPATH="$HOME/git/configurations-and-scripts/awk"
 export ANDROID_HOME="$HOME/software/android-sdk"
-export JAVA_HOME="$HOME/software/java-jdk/jdk1.8.0_131"
+# export JAVA_HOME="$HOME/software/java-jdk/jdk1.8.0_144"
 # Perl configuration
-PATH="/home/phil/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/phil/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/phil/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/phil/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/phil/perl5"; export PERL_MM_OPT;
+# PATH="/home/phil/perl5/bin${PATH:+:${PATH}}"; export PATH;
+# PERL5LIB="/home/phil/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+# PERL_LOCAL_LIB_ROOT="/home/phil/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+# PERL_MB_OPT="--install_base \"/home/phil/perl5\""; export PERL_MB_OPT;
+# PERL_MM_OPT="INSTALL_BASE=/home/phil/perl5"; export PERL_MM_OPT;
 
 ## handling of the batch job system at the institute
 source $HOME/git/configurations-and-scripts/bash/job.sh
@@ -129,7 +129,7 @@ if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/sbin/ {ck=1};END {print ck}') == 0 
     PATH=$PATH:/usr/sbin
 fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/android/ {ck=1};END {print ck}') == 0 ];then
-    export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/25.0.2:$ANDROID_HOME/tools/bin
+    export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/25.0.3:$ANDROID_HOME/tools/bin
 fi
 # For working with at I need to define such function
 function stop_clementine {
