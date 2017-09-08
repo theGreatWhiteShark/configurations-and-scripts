@@ -154,7 +154,7 @@ bar {
 }
 
 # open thunderbird, firefox and eamcs as default startup
-exec --no-startup-id i3-msg 'workspace 2; exec firefox; exec thunderbird; workspace 1; exec mate-terminal'
+exec --no-startup-id i3-msg 'workspace 2; exec firefox; exec thunderbird; workspace 1; exec terminator'
 # exec --no-startup-id i3-msg 'workspace 2; exec chromium-browser; '
 
 # enable a lock screen
@@ -186,7 +186,7 @@ bindsym $mod+F12 exec "~/git/configurations-and-scripts/i3/toggle_touchpad.sh"
 exec --no-startup-id nitrogen --restore
 
 # starting Nextcloud
-exec nextcloud
+# exec nextcloud
 
 # restore the default background image
 exec --no-startup-id nitrogen --restore
