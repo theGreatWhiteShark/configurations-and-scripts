@@ -34,7 +34,7 @@ sudo apt-get -y install ttf-mscorefonts-installer --quiet
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
 preseed --owner ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula boolean true sshfs
 
-sudo apt -y install gfortran fort77 texlive xorg-dev texlive-fonts-extra texinfo default-jre default-jre-headless default-jdk default-jdk-headless texlive-latex-extra intltool ^ubuntu-restricted-* emacs24 multitail libreadline6 libreadline6-dev libreadline6-dbg hunspell gnome-wallpaper-* ubuntu-wallpaper-* g++ vlc emacs-goodies-el global sshfs apt-file libcairo2-dev libssh-dev compiz-plugins libcurl4-gnutls-dev libxml2-dev i3 i3-wm at i3status i3lock nitrogen imagemagick pandoc scrot xinput xbacklight xcompmgr meld apt-file bzip2 libbz2-dev liblzma-dev libjpeg8-dev libtiff5-dev thunar unity-greeter-badges mate-terminal npm
+sudo apt -y install gfortran fort77 texlive xorg-dev texlive-fonts-extra texinfo default-jre default-jre-headless default-jdk default-jdk-headless texlive-latex-extra intltool ^ubuntu-restricted-* emacs24 multitail libreadline6 libreadline6-dev libreadline6-dbg hunspell gnome-wallpaper-* ubuntu-wallpaper-* g++ vlc emacs-goodies-el global sshfs apt-file libcairo2-dev libssh-dev compiz-plugins libcurl4-gnutls-dev libxml2-dev i3 i3-wm at i3status i3lock nitrogen imagemagick pandoc scrot xinput xbacklight xcompmgr meld apt-file bzip2 libbz2-dev liblzma-dev libjpeg8-dev libtiff5-dev thunar unity-greeter-badges mate-terminal npm libgtk2.0-dev
 
 ## Disabling the amazon-unity lens
 wget -q -O - https://fixubuntu.com/fixubuntu.sh | bash
