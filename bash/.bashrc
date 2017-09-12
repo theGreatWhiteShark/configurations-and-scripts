@@ -10,13 +10,13 @@ alias ...='cd ..; cd ..'
 alias ....='cd ..; cd ..; cd ..'
 alias .....='cd ..; cd ..; cd ..; cd ..'
 # Open Emacs in a shell
-alias ema='/usr/local/emacs25/bin/emacs -nw'
-alias eam='/usr/local/emacs25/bin/emacs -nw'
+alias ema='/usr/bin/emacs -nw'
+alias eam='/usr/bin/emacs -nw'
 # Emacs with super user permissions
-alias sema='sudo /usr/local/emacs25/bin/emacs -nw'
+alias sema='sudo /usr/bin/emacs -nw'
 # Convenient way to debug your .bashrc
 alias sbash='source $HOME/.bashrc'
-alias bashrc='/usr/local/emacs25/bin/emacs -nw $HOME/.bashrc; source $HOME/.bashrc'
+alias bashrc='/usr/bin/emacs -nw $HOME/.bashrc; source $HOME/.bashrc'
 # Display the size of all folders in a directory
 alias duh='du --max-depth=1 -h'
 # Shutdown/stop the audio with the least amount of characters.
