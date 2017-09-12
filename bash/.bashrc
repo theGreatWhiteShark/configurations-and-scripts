@@ -10,8 +10,8 @@ alias ...='cd ..; cd ..'
 alias ....='cd ..; cd ..; cd ..'
 alias .....='cd ..; cd ..; cd ..; cd ..'
 # Open Emacs in a shell
-alias ema='/usr/bin/emacs -nw'
-alias eam='/usr/bin/emacs -nw'
+alias ema='emacs -nw'
+alias eam='bin/emacs -nw'
 # Emacs with super user permissions
 alias sema='sudo /usr/bin/emacs -nw'
 # Convenient way to debug your .bashrc
