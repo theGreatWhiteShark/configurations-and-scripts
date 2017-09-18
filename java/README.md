@@ -1,0 +1,1 @@
+This folder could contain the fabulous [BFG](https://rtyley.github.io/bfg-repo-cleaner/) to clean up git repositories. Unfortunately it's quite big (15MB). So instead download it [directly]{http://repo1.maven.org/maven2/com/madgag/bfg/1.12.15/bfg-1.12.15.jar).
