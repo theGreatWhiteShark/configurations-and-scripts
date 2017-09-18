@@ -27,7 +27,7 @@ alias pp='sudo shutdown -h now'
 alias reboot='sudo /sbin/reboot'
 # Link to the glorious JDownloader
 alias jdownloader='~/.jd2/JDownloader2'
-
+alias bfg='java -jar $HOME/git/configurations-and-scripts/java/bfg-1.12.15.jar ';
 # Just execute this command whenever I am at a machine I configured myself
 if [ $USER == "phil" ];then
     ## activating alternative keymap
@@ -113,14 +113,8 @@ fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/phil\/bin/ {ck=1};END {print ck}') == 0 ];then
     PATH=$PATH:$HOME/bin
 fi
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/scripts\/bash/ {ck=1};END {print ck}') == 0 ];then
-    PATH=$PATH:$HOME/git/configurations-and-scripts/bash
-fi
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/scripts\/awk/ {ck=1};END {print ck}') == 0 ];then
-    PATH=$PATH:$HOME/git/configurations-and-scripts/awk
-fi
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/scripts\/python/ {ck=1};END {print ck}') == 0 ];then
-    PATH=$PATH:$HOME/git/configurations-and-scripts/python
+if [ $( echo $PATH | awk 'BEGIN {ck=0};/scripts/ {ck=1};END {print ck}') == 0 ];then
+    PATH=$PATH:$HOME/git/configurations-and-scripts/bash:$HOME/git/configurations-and-scripts/awk:$HOME/git/configurations-and-scripts/python:$HOME/git/configurations-and-scripts/java
 fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/^\/sbin/ {ck=1};END {print ck}') == 0 ];then
     PATH=$PATH:/sbin
