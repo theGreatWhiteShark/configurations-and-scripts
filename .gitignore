@@ -41,3 +41,6 @@ python/**/__pycache__/
 # Ignoring all downloaded audio samples
 python/audio_crawling/samples
 python/audio_crawling/*.json
+
+# Ignore large Java files
+java/bfg-1.12.15.jar
