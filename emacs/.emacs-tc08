@@ -196,6 +196,72 @@
 	 (org . t)
 	 (latex . t))))
 
+;; Create a custom LaTeX class for my PhD thesis in order to
+;; export it to LaTeX with the minimal pain in the ass.
+;; see http://www.draketo.de/english/emacs/writing-papers-in-org-mode-acpd
+;; (require 'org-latex)
+(setq org-latex-packages-alist (quote (("" "color" t)
+				       ("" "graphicx" t)
+				       ("sc" "mathpazo" t)
+				       ("T1" "fontenc" t)
+				       ("" "geometry" t)
+				       ("" "alltt" t)
+				       ("" "bm" t)
+				       ("" "epsfig" t)
+				       ("" "caption" t)
+				       ("" "subcaption" t)
+				       ("" "amssymb,amsmath" t)
+				       ("unicode=true,pdfusetitle,
+bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
+				       ("" "url" t)))
+      org-latex-pdf-process
+      (quote ( "pdflatex -interaction nonstopmode -shell-escape -output-directory latex/%o latex/%f"
+	       "bibtex latex/$basename %b)"
+	       "pdflatex -interaction nonstopmode -shell-escape -output-directory latex/%o latex/%f"
+	       "bibtex latex/$basename %b)"
+	       "pdflatex -interaction nonstopmode -shell-escape -output-directory latex/%o latex/%f")))
+(add-to-list 'org-latex-classes
+	     `("thesis"
+	       "\\documentclass{article}
+[NO-DEFAULT-PACKAGES]
+[PACKAGES]
+[EXTRA]"
+                ("\\section{%s}" . "\\section*{%s}")
+                ("\\subsection{%s}" "\\newpage" "\\subsection*{%s}" "\\newpage")
+                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+;; Use reftex to handle citations
+(require 'reftex-cite)
+(defun org-mode-reftex-setup ()
+  (interactive)
+  (and (buffer-file-name) (file-exists-p (buffer-file-name))
+       (progn
+        ; Reftex should use the org file as master file. See C-h v TeX-master for infos.
+        (setq TeX-master t)
+        (turn-on-reftex)
+        ; enable auto-revert-mode to update reftex when bibtex file changes on disk
+        (global-auto-revert-mode t) ; careful: this can kill the undo
+                                    ; history when you change the file
+                                    ; on-disk.
+        (reftex-parse-all)
+        ; add a custom reftex cite format to insert links
+        ; This also changes any call to org-citation!
+        (reftex-set-cite-format
+         '((?c . "\\citet{%l}") ; natbib inline text
+           (?i . "\\citep{%l}") ; natbib with parens
+           ))))
+  (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
+  (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search))
+
+(add-hook 'org-mode-hook 'org-mode-reftex-setup)
+	      
+				    
+      
+	      
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; org-mode
 ;; yasnippet
 (load-file "~/git/configurations-and-scripts/emacs/yasnippet/yasnippet.el")
