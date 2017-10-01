@@ -46,15 +46,15 @@ alias vesta='ssh phmu@vesta.mpipks-dresden.mpg.de'
 alias jolly='ssh phmu@jolly.mpipks-dresden.mpg.de'
 alias hermes='ssh phmu@hermes.mpipks-dresden.mpg.de'
 alias makalu='ssh phmu9775@makalu250.rz.tu-ilmenau.de'
-alias vpn='sudo vpnc /home/phil/.vpnc-extern.conf'
+alias vpn='sudo openvpn /home/phil/.vpn_mpipks.conf'
 alias visit='ssh -X newton "ssh -X makalu /usr/app-soft/visit/visit2_7_1.linux-x86_64/bin/visit"'
 alias fema='ssh -X feynman "emacs"';
 alias ps6=print_with_ps6;
 
 # Music
-alias lmms='~/git/lmms/build/lmms'
-alias hydrogen='~/git/hydrogen/build/src/gui/hydrogen'
-alias drumgizmo='~/git/drumgizmo/drumgizmo/drumgizmo'
+# alias lmms='~/git/lmms/build/lmms'
+# alias hydrogen='~/git/hydrogen/build/src/gui/hydrogen'
+# alias drumgizmo='~/git/drumgizmo/drumgizmo/drumgizmo'
 
 ## R
 alias R='$HOME/software/R/R-3.4.0/bin/R --quiet --no-save'
