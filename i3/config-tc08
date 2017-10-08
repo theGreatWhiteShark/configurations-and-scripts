@@ -180,6 +180,9 @@ bindsym $mod+F5 exec "xbacklight -dec 10"
 bindsym $mod+F6 exec "xbacklight -inc 10"
 ## alternative: echo 1000 > /sys/class/blacklight/intel_backlight/brightness
 
+# Make a Screenshot
+bindsym $mod+Print exec scrot
+
 # background image
 exec --no-startup-id nitrogen --restore
 

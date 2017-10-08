@@ -184,6 +184,9 @@ bindsym $mod+F6 exec "xbacklight -inc 10"
 # toggle the touchpad
 bindsym $mod+F12 exec "~/git/configurations-and-scripts/i3/toggle_touchpad.sh"
 
+# Make a Screenshot
+bindsym $mod+Print exec scrot
+
 # background image
 exec --no-startup-id nitrogen --restore
 
