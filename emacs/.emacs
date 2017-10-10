@@ -117,7 +117,6 @@
 (setq org-log-done t)
 ;; My private files containing all different kinds of notes
 (setq org-agenda-files (list "~/git/tsa/org/work.org"
-			     "~/git/tsa/org/interest.org"
 			     "~/git/tsa/org/private.org"
 			     "~/git/tsa/org/software.org"
 			     "~/git/tsa/org/notes/papers.org"
@@ -537,7 +536,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(mark-even-if-inactive t)
  '(org-agenda-files
    (quote
-    ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org" "~/git/tsa/org/refile.org")))
+    ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org")))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode (quote right))
  '(transient-mark-mode 1)

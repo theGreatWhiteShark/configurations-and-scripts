@@ -116,7 +116,6 @@
 (setq org-log-done t)
 ;; My private files containing all different kinds of notes
 (setq org-agenda-files (list "~/git/tsa/org/work.org"
-			     "~/git/tsa/org/interest.org"
 			     "~/git/tsa/org/private.org"
 			     "~/git/tsa/org/software.org"
 			     "~/git/tsa/org/notes/papers.org"
@@ -282,6 +281,9 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 	  (lambda() (local-set-key [tab] 'yas/expand)))
 (add-hook 'Rnw-mode-hook
 	  (lambda() (yas-minor-mode 1)))
+
+;; Highlight the inline LaTeX code/equation
+(setq org-highlight-latex-and-related '(latex))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; diverse ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -541,10 +543,10 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(mark-even-if-inactive t)
  '(org-agenda-files
    (quote
-    ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org" "~/git/tsa/org/refile.org")))
+    ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org")))
  '(package-selected-packages
    (quote
-    (web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools multi-web-mode meghanada magit lua-mode js2-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R elm-yasnippets elm-mode cask awk-it auctex)))
+    (neotree web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools multi-web-mode meghanada magit lua-mode js2-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R elm-yasnippets elm-mode cask awk-it auctex)))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode (quote right))
  '(transient-mark-mode 1)
