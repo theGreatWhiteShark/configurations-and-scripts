@@ -259,6 +259,24 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-hook 'org-mode-hook 'org-mode-reftex-setup)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; org-mode
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;; Narrowing ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Enable the narrowing	     
+(put 'narrow-to-region 'disabled nil)
+(defun narrowp ()
+  "Checks whether or not narrowing is activated in the current buffer"
+  (save-restriction
+    (let (line-number-buffer line-number-buffer-widen)
+      (setq line-number-buffer (count-lines (point-min) (point-max)))
+      (widen)
+      (setq line-number-buffer-widen
+	    (count-lines (point-min) (point-max)))
+      (if (> line-number-buffer-widen line-number-buffer)
+	  t
+	nil))))
+
 ;; yasnippet
 (load-file "~/git/configurations-and-scripts/emacs/yasnippet/yasnippet.el")
 (require 'yasnippet)
@@ -451,7 +469,10 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 	       ","
 	       (propertize "%02c" 'face 'font-lock-type-face)
 	       ") "
-
+	       ;; check whether or not the buffer was narrowed
+	       '(:eval (when (narrowp)
+			 (propertize "[narrow] " 'face
+				     'font-lock-string-face)))
 	       ;; relative position/ size of file
 	       "["
 	       (propertize "%p" 'face 'font-lock-type-face)
@@ -511,7 +532,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 	    (setq-default ansi-term-color-vector
 			  [term term-color-black term-color-red term-color-green term-color-yellow 
 				term-color-blue term-color-magenta term-color-cyan term-color-white])
-	    (put 'narrow-to-region 'disabled nil)))	    
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;;; diverse
 ;; source the .emacs file after alteration while still running an active emacs session
@@ -1089,5 +1109,4 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-to-list 'auto-mode-alist '(".asoundrc" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\config\\'" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.conf\\'" . conf-mode))
-	     
 	     
