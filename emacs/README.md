@@ -21,6 +21,16 @@ git submodule update --init --recursive --remote
 
 # Hints
 
+## General
+
+When customizing the **.emacs** file you can move to a closing bracket and evaluate its content using `C-x C-e` (displays the result in the bottom line/echo area) or `C-j` (inserts the result in the next line). In case there is a syntax error a new buffer called **Backtrace** will pop up. So no need to start a new Emacs instance every time you wrote some lines in your configuration file.
+
+As a very practical example you can use any Emacs buffer as a calculator by pressing `C-x C-e` after e.g.
+
+(log (+ 3 4 1 (* 3 20)))
+> 4.219507705176107
+
+
 ## Org-mode
 
 In order to run **org-mode**, you have to change to the submodule's folder after updating and compile its lisp code.
