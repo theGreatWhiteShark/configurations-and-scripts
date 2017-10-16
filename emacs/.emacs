@@ -532,6 +532,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 	    (setq-default ansi-term-color-vector
 			  [term term-color-black term-color-red term-color-green term-color-yellow 
 				term-color-blue term-color-magenta term-color-cyan term-color-white])
+	    (put 'narrow-to-region 'disabled nil)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;;; diverse
 ;; source the .emacs file after alteration while still running an active emacs session
