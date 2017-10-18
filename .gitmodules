@@ -37,3 +37,6 @@
 [submodule "emacs/lightning-keymap-mode"]
 	path = emacs/lightning-keymap-mode
 	url = git@github.com:theGreatWhiteShark/lightning-keymap-mode.git
+[submodule "emacs/bookdown-mode"]
+	path = emacs/bookdown-mode
+	url = git@github.com:theGreatWhiteShark/bookdown-mode.git

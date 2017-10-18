@@ -34,9 +34,9 @@
 ;; The personal dictionary has always to be of the same language as the
 ;; current used one!
 (setq ispell-personal-dictionary "~/.emacs.d/.aspell.en.pws"
-			;; Increase the speed (since we are using the more slower aspell
-			;; instead of ispell)
-			ispell-extra-args '("--sug-mode=fast"))
+      ;; Increase the speed (since we are using the more slower aspell
+      ;; instead of ispell)
+      ispell-extra-args '("--sug-mode=fast"))
 
 ;; Add a german dictionary and the option of switching between
 ;; languages
@@ -54,20 +54,20 @@
 
 ;; Activating Flyspell in the whole buffer.
 (dolist (hook '(text-mode-hook
-								LaTeX-mode-hook
-								markdown-mode-hook
-								fundamental-mode-hook
-								org-mode-hook) t)
-	(add-hook hook (lambda() (flyspell-mode 1))))
+		LaTeX-mode-hook
+		markdown-mode-hook
+		fundamental-mode-hook
+		org-mode-hook) t)
+  (add-hook hook (lambda() (flyspell-mode 1))))
 ;; Activate Flyspell in the comments only.
 (dolist (hook '(ess-mode-hook
-								python-mode-hook
-								web-mode-hook
-								lisp-mode-hook
-								emacs-lisp-mode-hook
-								conf-mode-hook
-								c-mode-hook) t)
-	(add-hook hook (lambda() (flyspell-prog-mode))))
+		python-mode-hook
+		web-mode-hook
+		lisp-mode-hook
+		emacs-lisp-mode-hook
+		conf-mode-hook
+		c-mode-hook) t)
+  (add-hook hook (lambda() (flyspell-prog-mode))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; using helm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -95,8 +95,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;; ESS and R ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'load-path
-						 "~/git/configurations-and-scripts/emacs/ESS/lisp"
-						 "~/git/configurations-and-scripts/emacs/ESS/etc")
+	     "~/git/configurations-and-scripts/emacs/ESS/lisp"
+	     "~/git/configurations-and-scripts/emacs/ESS/etc")
 (require 'ess-site)
 
 ;; Specify the export options of polymode to accelerate the export of
@@ -130,9 +130,9 @@
  ;; activating polymode
  load-path
  (append
-	'("~/git/configurations-and-scripts/emacs/polymode/"
-		"~/git/configurations-and-scripts/emacs/polymode/modes")
-	load-path))
+  '("~/git/configurations-and-scripts/emacs/polymode/"
+    "~/git/configurations-and-scripts/emacs/polymode/modes")
+  load-path))
 (require 'poly-R)
 (require 'poly-markdown)
 (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
@@ -145,9 +145,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; http://www.jesshamrick.com/2012/09/18/emacs-as-a-python-ide/
 (add-to-list 'load-path
-						 "~/git/configurations-and-scripts/emacs/python-mode")
+	     "~/git/configurations-and-scripts/emacs/python-mode")
 (setq py-install-directory
-			"~/git/configurations-and-scripts/emacs/python-mode")
+      "~/git/configurations-and-scripts/emacs/python-mode")
 (require 'python-mode)
 
 ;; If you want to use Python2.7 instead, you have to set the following
@@ -215,10 +215,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;; Org Mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq load-path
-			(cons "~/git/configurations-and-scripts/emacs/org-mode/lisp"
-						(cons
-						 "~/git/configurations-and-scripts/emacs/org-mode/contrib/lisp"
-						 load-path)))
+      (cons "~/git/configurations-and-scripts/emacs/org-mode/lisp"
+	    (cons
+	     "~/git/configurations-and-scripts/emacs/org-mode/contrib/lisp"
+	     load-path)))
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (require 'org)
 ;; Exporting Org files into various formats.
@@ -229,11 +229,11 @@
 (setq
  ;; My private files containing all different kinds of notes
  org-agenda-files (list
-									 "~/git/tsa/org/work.org"
-									 "~/git/tsa/org/private.org"
-									 "~/git/tsa/org/software.org"
-									 "~/git/tsa/org/notes/papers.org"
-									 "~/git/tsa/org/notes/algorithms-computation.org")
+		   "~/git/tsa/org/work.org"
+		   "~/git/tsa/org/private.org"
+		   "~/git/tsa/org/software.org"
+		   "~/git/tsa/org/notes/papers.org"
+		   "~/git/tsa/org/notes/algorithms-computation.org")
  org-directory "~/git/tsa/org"
  ;; Add a time stamp whenever a TODO item is marked as DONE
  org-log-done "time"
@@ -249,43 +249,43 @@
  ;; Which R process to use when evaluating R code blocks. But I would
  ;; highly recommend to use ESS/polymode with Rmarkdown instead!
  org-babel-R-command (concatenate 'string R-binary-folder
-																	"R --no-save --slave")
+				  "R --no-save --slave")
  ;; Which languages to evaluate in Org.
  org-babel-load-languages '((emacs-lisp . t)
-														(R . t)
-														(python . t)
-														(sh . t)
-														(org . t)
-														(latex . t))
+			    (R . t)
+			    (python . t)
+			    (sh . t)
+			    (org . t)
+			    (latex . t))
  ;; Create a custom LaTeX class in order to export proper LaTeX
  ;; articles
  ;; http://www.draketo.de/english/emacs/writing-papers-in-org-mode-acpd
  org-latex-packages-alist '(("" "color" t)
-														("" "graphicx" t)
-														("sc" "mathpazo" t)
-														("T1" "fontenc" t)
-														("" "geometry" t)
-														("" "alltt" t)
-														("" "bm" t)
-														("" "epsfig" t)
-														("" "caption" t)
-														("" "subcaption" t)
-														("" "amssymb,amsmath" t)
-														("unicode=true,pdfusetitle,
+			    ("" "graphicx" t)
+			    ("sc" "mathpazo" t)
+			    ("T1" "fontenc" t)
+			    ("" "geometry" t)
+			    ("" "alltt" t)
+			    ("" "bm" t)
+			    ("" "epsfig" t)
+			    ("" "caption" t)
+			    ("" "subcaption" t)
+			    ("" "amssymb,amsmath" t)
+			    ("unicode=true,pdfusetitle,
 bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
 breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
-														("" "url" t))
+			    ("" "url" t))
  ;; Define a customized LaTeX export workflow
  org-latex-pdf-process
  '("pdflatex -interaction nonstopmode -shell-escape -output-directory latex/%o latex/%f"
-	 "bibtex latex/$basename %b)"
-	 "pdflatex -interaction nonstopmode -shell-escape -output-directory latex/%o latex/%f"
-	 "bibtex latex/$basename %b)"
-	 "pdflatex -interaction nonstopmode -shell-escape -output-directory latex/%o latex/%f")
+   "bibtex latex/$basename %b)"
+   "pdflatex -interaction nonstopmode -shell-escape -output-directory latex/%o latex/%f"
+   "bibtex latex/$basename %b)"
+   "pdflatex -interaction nonstopmode -shell-escape -output-directory latex/%o latex/%f")
  )
 ;; The custom class 'thesis' binds it all together.
 (add-to-list 'org-latex-classes '("thesis"
-																	"\\documentclass{article}
+				  "\\documentclass{article}
 [NO-DEFAULT-PACKAGES]
 [PACKAGES]
 [EXTRA]"
@@ -301,20 +301,20 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
   (interactive)
   (and (buffer-file-name) (file-exists-p (buffer-file-name))
        (progn
-				 ;; Reftex should use the org file as master file. See C-h v
-				 ;;TeX-master for infos.
-				 (setq TeX-master t)
-				 (turn-on-reftex)
-				 ;; enable auto-revert-mode to update reftex when bibtex file
-				 ;; changes on disk
-        (global-auto-revert-mode t)
-        (reftex-parse-all)
-        ;; add a custom reftex cite format to insert links
-        ;; This also changes any call to org-citation!
-        (reftex-set-cite-format
-         '((?c . "\\citet{%l}") ; natbib inline text
-           (?i . "\\citep{%l}") ; natbib with parens
-           )))))
+	 ;; Reftex should use the org file as master file. See C-h v
+	 ;;TeX-master for infos.
+	 (setq TeX-master t)
+	 (turn-on-reftex)
+	 ;; enable auto-revert-mode to update reftex when bibtex file
+	 ;; changes on disk
+	 (global-auto-revert-mode t)
+	 (reftex-parse-all)
+	 ;; add a custom reftex cite format to insert links
+	 ;; This also changes any call to org-citation!
+	 (reftex-set-cite-format
+	  '((?c . "\\citet{%l}") ; natbib inline text
+	    (?i . "\\citep{%l}") ; natbib with parens
+	    )))))
 (add-hook 'org-mode-hook 'org-mode-reftex-setup)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; org-mode
 
@@ -324,7 +324,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; org-ref for handling citations. Requires the hydra, parsebib,
 ;; helm, helm-bibtex package
 (add-to-list 'load-path
-						 "~/git/configurations-and-scripts/emacs/org-ref")
+	     "~/git/configurations-and-scripts/emacs/org-ref")
 (require 'org-ref)
 
 ;; Local bibliography. This one is just available when the PKS home
@@ -369,7 +369,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
       (setq line-number-buffer-widen
 	    (count-lines (point-min) (point-max)))
       (if (> line-number-buffer-widen line-number-buffer) t
-				nil))))
+	nil))))
 
 ;; yasnippet
 (load-file
@@ -382,13 +382,13 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; but the prevents tab expansion in the terminal, so:
 (add-hook 'term-mode-hook (lambda()
-														(setq yas-dont-activate t)))
+			    (setq yas-dont-activate t)))
 ;; Activate the Yasnippets-minor-mode in diverse modes
 (dolist (hook '(ess-mode-hook
-								markdown-mode-hook
-								LaTeX-mode-hook
-								Rnw-mode-hook) t)
-	(add-hook hook (lambda() (yas-minor-mode 1))))
+		markdown-mode-hook
+		LaTeX-mode-hook
+		Rnw-mode-hook) t)
+  (add-hook hook (lambda() (yas-minor-mode 1))))
 ;; Be sure to bind the <Tab> in LaTeX-mode to Yasnippets
 (add-hook 'LaTeX-mode-hook
 	  (lambda() (local-set-key [tab] 'yas/expand)))
@@ -414,9 +414,9 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (defun set-cursor-according-to-mode ()
   "change cursor color to red if overwrite is activated"
   (cond (overwrite-mode
-				 (set-cursor-color "red"))
-				(t
-				 (set-cursor-color "#dcdccc"))))
+	 (set-cursor-color "red"))
+	(t
+	 (set-cursor-color "#dcdccc"))))
 (add-hook 'post-command-hook 'set-cursor-according-to-mode)
 
 ;; Making buffer names unique
@@ -428,33 +428,33 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (require 'ibuffer)
 (setq ibuffer-saved-filter-groups
       '(("default"
-	       ("Org"
-					(mode . org-mode))
-	       ("Git"
-					(filename . "~/git/"))
-	       ("Phd"
-					(filename . "~/phd/"))
-	       ("Configuration"
-					(or
-					 (filename . "~/git/configurations-and-scripts/")
-					 (mode . conf-mode)))
-				 ("Emacs"
-					(mode . emacs-lisp-mode))
-				 ("Interpreter"
-					(or
-					 (name . "^\\*terminal*")
-					 (name . "\\*ESS*")))
-	       ("Programming"
-					(or
-					 (mode . ess-mode)
-					 (mode . LaTeX-mode)
-					 (mode . c-mode)
-					 (mode . lua-mode)
-					 (mode . python-mode)
-					 (mode . sh-mode)
-					 (mode . awk-mode))))))
+	 ("Org"
+	  (mode . org-mode))
+	 ("Git"
+	  (filename . "~/git/"))
+	 ("Phd"
+	  (filename . "~/phd/"))
+	 ("Configuration"
+	  (or
+	   (filename . "~/git/configurations-and-scripts/")
+	   (mode . conf-mode)))
+	 ("Emacs"
+	  (mode . emacs-lisp-mode))
+	 ("Interpreter"
+	  (or
+	   (name . "^\\*terminal*")
+	   (name . "\\*ESS*")))
+	 ("Programming"
+	  (or
+	   (mode . ess-mode)
+	   (mode . LaTeX-mode)
+	   (mode . c-mode)
+	   (mode . lua-mode)
+	   (mode . python-mode)
+	   (mode . sh-mode)
+	   (mode . awk-mode))))))
 (add-hook 'ibuffer-mode-hook
-					(lambda() (ibuffer-switch-to-saved-filter-groups "default")))
+	  (lambda() (ibuffer-switch-to-saved-filter-groups "default")))
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Uses abbreviations for the modes in the mode-line to shrink it down.
@@ -467,12 +467,12 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; Colorful delimiters 
 (require 'rainbow-delimiters)
 (dolist (hook '(emacs-lisp-mode-hook
-								ess-mode-hook
-								lisp-mode-hook
-								python-mode-hook
-								markdown-mode-hook
-								web-mode-hook) t)
-	(add-hook hook 'rainbow-delimiters-mode))
+		ess-mode-hook
+		lisp-mode-hook
+		python-mode-hook
+		markdown-mode-hook
+		web-mode-hook) t)
+  (add-hook hook 'rainbow-delimiters-mode))
 
 ;; Using multi-term to open more than one terminal in emacs
 (autoload 'multi-term "multi-term" nil t)
@@ -528,7 +528,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 				   'face 'font-lock-constant-face
 				   'help-echo
 				   (concat (format-time-string "%c; ")
-									 (emacs-uptime "Uptime: %hh"))))
+					   (emacs-uptime "Uptime: %hh"))))
 	       " --"
 	       ;; minor modes
 	       minor-mode-alist
@@ -566,10 +566,10 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-hook 'term-mode-hook
 	  (lambda()
 	    (setq-default ansi-term-color-vector
-										[term term-color-black term-color-red
-													term-color-green term-color-yellow 
-													term-color-blue term-color-magenta
-													term-color-cyan term-color-white])
+			  [term term-color-black term-color-red
+				term-color-green term-color-yellow 
+				term-color-blue term-color-magenta
+				term-color-cyan term-color-white])
 	    (put 'narrow-to-region 'disabled nil)))
 ;; Reload the Emacs configuration file.
 (defun reload ()
@@ -583,7 +583,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#3F3F3F" "#CC93932" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3"
-		"#93E0E3" "#DCDCCC"])
+    "#93E0E3" "#DCDCCC"])
  '(custom-safe-themes
    (quote
     ("6383295fb0c974d24c9dca1230c0489edf1cd5dd03d4b036aab290b6d3ceb50c" default)))
@@ -594,7 +594,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(org-agenda-files
    (quote
     ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org"
-		 "~/git/tsa/org/software.org")))
+     "~/git/tsa/org/software.org")))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode (quote right))
  '(transient-mark-mode 1)
@@ -627,21 +627,21 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  ;; If there is more than one, they won't work right.
  '(helm-M-x-key ((t (:foreground "#CC9393"))))
  '(helm-ff-directory ((t (:foreground "#93E0E3" :weight bold
-																			:background nil))))
+				      :background nil))))
  '(helm-ff-dotted-directory ((t (:foreground "steel blue"
-																						 :background nil))))
+					     :background nil))))
  '(helm-ff-dotted-symlink-directory ((t (:foreground "DarkOrange"
-																										 :background nil))))
+						     :background nil))))
  '(helm-ff-executable ((t (:foreground "#9FC59F" :weight normal
-																			 :background nil))))
+				       :background nil))))
  '(helm-ff-file ((t (:foreground "#DCDCCC" :weight normal
-																 :background nil))))
+				 :background nil))))
  '(helm-ff-invalid-symlink ((t (:foreground "#CC9393" :weight bold
-																						:background nil))))
+					    :background nil))))
  '(helm-ff-prefix ((t (:foreground "#3F3F3F" :weight normal
-																	 :background nil))))
+				   :background nil))))
  '(helm-ff-symlink ((t (:foreground "#F0DFAF" :weight bold
-																		:background nil))))
+				    :background nil))))
  '(helm-match ((t (:foreground "khaki" :underline t))))
  '(helm-match-item ((t (:foreground "khaki")))))
 
@@ -655,7 +655,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; Another Zenburn theme (from the git repository)
 (add-to-list 'custom-theme-load-path
-						 "~/git/configurations-and-scripts/emacs/.emacs.d/themes/")
+	     "~/git/configurations-and-scripts/emacs/.emacs.d/themes/")
 (load-theme 'zenburn t)		       
 
 ;; Turn of blinking cursor (maybe the most important line in this file)
@@ -704,14 +704,20 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; Use magit for handling the interaction with git
 (global-set-key (kbd "C-x g") 'magit-status)
 
-;; Loading and installing the thunderbolt-mode keymap
+;; Use iedit
+(add-to-list 'load-path "~/git/configurations-and-scripts/emacs/iedit")
+(require 'iedit)
+
+;; Use Windmove in addition to my own keymap.
+(require 'windmove)
+(windmove-default-keybindings 'meta)
+
+;; Loading and installing the lightning-keymap-mode keymap
 (add-to-list
  'load-path
  "~/git/configurations-and-scripts/emacs/lightning-keymap-mode")
-(autoload 'lightning-keymap-mode "lightning-keymap-mode"
-  "Minor mode for lighting-fast navigation and typing" t)
-;; (load "~/git/emacs/lightning-keymap-mode/ESS/lightning-ess")
-;; (load "~/git/emacs/lightning-keymap-mode/python/lightning-python")
+(require 'lightning-keymap-mode)
+(lightning-keymap-mode 1)
 
 ;; using conf-mode for frequently visited configuration scripts
 (add-to-list 'auto-mode-alist '(".asoundrc" . conf-mode))
