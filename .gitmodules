@@ -34,3 +34,6 @@
 [submodule "emacs/zenburn-emacs"]
 	path = emacs/zenburn-emacs
 	url = https://github.com/bbatsov/zenburn-emacs.git
+[submodule "emacs/lightning-keymap-mode"]
+	path = emacs/lightning-keymap-mode
+	url = git@github.com:theGreatWhiteShark/lightning-keymap-mode.git

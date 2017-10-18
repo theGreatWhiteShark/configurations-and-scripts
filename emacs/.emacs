@@ -705,9 +705,13 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (global-set-key (kbd "C-x g") 'magit-status)
 
 ;; Loading and installing the thunderbolt-mode keymap
-(load "~/git/emacs/lightning-keymap-mode/lightning-keymap-mode")
-(load "~/git/emacs/lightning-keymap-mode/ESS/lightning-ess")
-(load "~/git/emacs/lightning-keymap-mode/python/lightning-python")
+(add-to-list
+ 'load-path
+ "~/git/configurations-and-scripts/emacs/lightning-keymap-mode")
+(autoload 'lightning-keymap-mode "lightning-keymap-mode"
+  "Minor mode for lighting-fast navigation and typing" t)
+;; (load "~/git/emacs/lightning-keymap-mode/ESS/lightning-ess")
+;; (load "~/git/emacs/lightning-keymap-mode/python/lightning-python")
 
 ;; using conf-mode for frequently visited configuration scripts
 (add-to-list 'auto-mode-alist '(".asoundrc" . conf-mode))
