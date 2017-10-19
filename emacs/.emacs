@@ -111,7 +111,7 @@
 
 ;; Directory containing the binaries of the installed R version
 (setq
- R-binary-folder "/home/phil/software/R/R-3.4.0/bin/"
+ R-binary-folder "~/software/R/R-3.4.0/bin/"
  ;; A comment is a comment. No matter how many dashes
  ess-indent-with-fancy-comments nil
  ;; Try to complete statements
