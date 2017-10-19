@@ -127,18 +127,20 @@
  (concatenate 'string R-binary-folder "R")
  ;; AUCTeX interface for Sweave
  ess-swv-plug-into-AUCTeX-p t
- ;; activating polymode
+ ;; activating polymode and bookdown-mode
  load-path
  (append
   '("~/git/configurations-and-scripts/emacs/polymode/"
-    "~/git/configurations-and-scripts/emacs/polymode/modes")
+    "~/git/configurations-and-scripts/emacs/polymode/modes"
+    "~/git/configurations-and-scripts/emacs/bookdown-mode/")
   load-path))
+(require 'bookdown-mode)
 (require 'poly-R)
-(require 'poly-markdown)
-(add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
+(require 'poly-bookdown)
+(add-to-list 'auto-mode-alist '("\\.md" . poly-bookdown-mode))
 (add-to-list 'auto-mode-alist '("\\.Snw" . poly-noweb+r-mode))
 (add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
-(add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
+(add-to-list 'auto-mode-alist '("\\.Rmd" . poly-bookdown+r-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; Python ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -721,7 +723,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; using conf-mode for frequently visited configuration scripts
 (add-to-list 'auto-mode-alist '(".asoundrc" . conf-mode))
-(add-to-list 'auto-mode-alist '("\\config\\'" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\config\\*'" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.conf\\'" . conf-mode))
 
 ;; Customize the grep command
@@ -730,3 +732,10 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; ‘-H’   Print the filename for each match.
 ;; ‘-e’   Protect patterns beginning with a hyphen character, ‘-’ 
 (setq grep-command "grep -i -nH -e ")
+
+;; GitHub Flavored Markdown-mode for all README.md files
+;; (part of markdown-mode)
+(add-to-list 'auto-mode-alist '("README.md" . gfm-mode))
+
+;; Open dired, even when I'm typing C-x C-d by mistake
+(global-set-key (kbd "C-x C-d") 'dired)
