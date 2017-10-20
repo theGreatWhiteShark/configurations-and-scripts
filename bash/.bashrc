@@ -111,7 +111,7 @@ if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/bin/ {ck=1};END {print ck}') == 0 ]
     PATH=$PATH:/usr/bin
 fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/phil\/bin/ {ck=1};END {print ck}') == 0 ];then
-    PATH=$PATH:$HOME/bin
+    PATH=$HOME/bin:$PATH
 fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/scripts/ {ck=1};END {print ck}') == 0 ];then
     PATH=$PATH:$HOME/git/configurations-and-scripts/bash:$HOME/git/configurations-and-scripts/awk:$HOME/git/configurations-and-scripts/python:$HOME/git/configurations-and-scripts/java
