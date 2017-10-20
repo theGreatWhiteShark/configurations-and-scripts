@@ -723,7 +723,9 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; using conf-mode for frequently visited configuration scripts
 (add-to-list 'auto-mode-alist '(".asoundrc" . conf-mode))
-(add-to-list 'auto-mode-alist '("config[^\\.]*" . conf-mode))
+;; This one seems to cause some harm. Therefore I won't add it to the
+;; front of the auto-most-alist but append it.
+(add-to-list 'auto-mode-alist '("config\\([^\\.]\\)*" . conf-mode) t)
 (add-to-list 'auto-mode-alist '("\\.conf" . conf-mode))
 
 ;; Customize the grep command
