@@ -32,6 +32,15 @@ alias bfg='java -jar $HOME/git/configurations-and-scripts/java/bfg-1.12.15.jar '
 if [ $USER == "phil" ];then
     ## activating alternative keymap
     xmodmap ~/.xmodmap
+    # Source my custom X11 configuration. But only if the screens are
+    # not in their preferred output mode.
+    # This is necessary since i3 doesn't source the .xprofile itself
+    # (and we don't want to source it every time we are opening a shell)
+    if [ $(xrandr --current | grep *+ | wc -l) == 0 ];then
+       source ~/.xprofile
+       i3 restart
+       source ~/.xprofile
+    fi
 fi
 
 ## Networks and servers

@@ -116,6 +116,8 @@ bindsym $mod+Shift+0 move container to workspace 10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
+# source a script handling the adding or removing of additional displays
+bindsym $mod+Shift+t exec "~/git/configurations-and-scripts/i3/toggle-display.sh"
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -153,10 +155,6 @@ bar {
         status_command i3status
 }
 
-# open thunderbird, firefox and eamcs as default startup
-exec --no-startup-id i3-msg 'workspace 2; exec firefox; exec thunderbird; workspace 1; exec terminator'
-# exec --no-startup-id i3-msg 'workspace 2; exec chromium-browser; '
-
 # enable a lock screen
 bindsym $mod+m exec "~/git/configurations-and-scripts/i3/i3lock_screenshot.sh"
 exec xautolock -time 45 -locker '~/git/configurations-and-scripts/i3/i3lock_screenshot.sh'
@@ -171,8 +169,8 @@ bindsym $mod+Ctrl+e exec "emacs"
 bindsym $mod+Ctrl+d exec "thunar"
 
 # rotate the external monitor by 90 degrees
-bindsym $mod+o exec "xrandr --output VGA1 --rotate left"
-bindsym $mod+Shift+o exec "xrandr --output VGA1 --rotate normal"
+bindsym $mod+o exec "xrandr --output HDMI1 --rotate left"
+bindsym $mod+Shift+o exec "xrandr --output HDMI1 --rotate normal"
 
 # increase and decrease the brightness of the screen by 10 percent
 bindsym $mod+F5 exec "xbacklight -dec 10"
@@ -191,12 +189,14 @@ exec --no-startup-id nitrogen --restore
 # starting Nextcloud
 # exec nextcloud
 
-# restore the default background image
-exec --no-startup-id nitrogen --restore
-
 # transparent windows
 exec xcompmgr -c -n
 
 # applets
 exec pasystray
 exec wicd-gtk --tray
+
+# open thunderbird, firefox and eamcs as default startup
+exec --no-startup-id i3-msg 'workspace 2; exec firefox; exec thunderbird; workspace 1; exec terminator'
+# exec --no-startup-id i3-msg 'workspace 2; exec chromium-browser; '
+
