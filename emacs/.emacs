@@ -723,8 +723,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; using conf-mode for frequently visited configuration scripts
 (add-to-list 'auto-mode-alist '(".asoundrc" . conf-mode))
-(add-to-list 'auto-mode-alist '("\\config\\*'" . conf-mode))
-(add-to-list 'auto-mode-alist '("\\.conf\\'" . conf-mode))
+(add-to-list 'auto-mode-alist '("config[^\\.]*" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\.conf" . conf-mode))
 
 ;; Customize the grep command
 ;; ‘-i’   Ignore case distinctions
