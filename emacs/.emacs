@@ -621,7 +621,9 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
      (320 . "#8CD0D3")
      (340 . "#94BFF3")
      (360 . "#DC8CC3"))))
- '(vc-annotate-very-old-color "#DC8CC3"))
+ '(vc-annotate-very-old-color "#DC8CC3")
+ ;; Highlight inline LaTeX-style equations
+ '(markdown-enable-math t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
