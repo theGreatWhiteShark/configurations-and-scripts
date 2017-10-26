@@ -8,7 +8,7 @@ Since I have absolutely no interest in clicking on all those buttons in order to
 
 For crawling the [freewavesamples.com](freewavesamples.com) page and downloading all its .wav samples, run the following command.
 
-```
+``` bash
 scrapy crawl freeWaveSamples -o freeWaveSamples.json
 ```
 Note: If the file *freeWaveSamples.json* already exists, this will result in a broken file. So be sure to delete it instead.
@@ -21,11 +21,11 @@ As already mentioned, the checksums of the files are not at all descriptive name
 
 The files will be copied to the *sample_folder* directory. Be sure to edit this one, since I used an absolute path in here (Python didn't like the relative one at all).
 
-```
+``` bash
 cd scripts
 python3 export_samples.py -i ../freeWaveSamples.json
 ```
 
 For each sample having an instrument description field a new folder in *sample_folder* will be created carrying the fields content and the sample will be placed in there. If it doesn't contain any instrument information it will be placed in the 'sample_folder/diverse' directory instead.
 
-In order to preserve some information about the source of the sample, the basename of the .json file ('freeWaveSamples') will be concatenated as well. This will become handy when you pay your tribute to the creative common licence ;)
+In order to preserve some information about the source of the sample, the basename of the .json file ('freeWaveSamples') will be concatenated as well. This will become handy when you pay your tribute to the creative common licence :wink:

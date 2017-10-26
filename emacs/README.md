@@ -2,7 +2,7 @@ All configuration files concerning Emacs.
 
 **Tip**: Just link your *.emacs* file in your using a symbolic link to the one in a Git repository. This way it's very easy to have your latest configurations on all the computers your are working at.
 
-```
+``` bash
 # In the root of the repository
 ln -s emacs/.emacs ~/.emacs
 ```
@@ -13,7 +13,7 @@ It is especially useful to introduce of the Emacs packages you use via Github in
 
 Before using, be sure to initialize and update your submodules. This way all the required code will be downloaded on your computer.
 
-```
+``` bash
 # Recursively in order to get the code of the submodules of submodules
 # as well.
 git submodule update --init --recursive --remote
@@ -27,7 +27,9 @@ When customizing the **.emacs** file you can move to a closing bracket and evalu
 
 As a very practical example you can use any Emacs buffer as a calculator by pressing `C-x C-e` after e.g.
 
+``` lisp
 (log (+ 3 4 1 (* 3 20)))
+```
 > 4.219507705176107
 
 
@@ -35,7 +37,7 @@ As a very practical example you can use any Emacs buffer as a calculator by pres
 
 In order to run **org-mode**, you have to change to the submodule's folder after updating and compile its lisp code.
 
-```
+``` bash
 cd org-mode
 make
 make autoloads
@@ -54,7 +56,7 @@ The mode features a nice function **py-smart-indentation** which figures out the
 In order to use the Python autocompletion tool **jedi** in combination with **Python3** and not the default Python2.7, I used the trick from [this](https://archive.zhimingwang.org/blog/2015-04-26-using-python-3-with-emacs-jedi.html) blog post.
 
 First one has to set up the virtual environment outside of Emacs
-```
+``` bash
 ## Since I ignore the .python-environments folder in this repository
 ## you have to create it first.
 mkdir -p ~/.emacs.d/.python-environments
@@ -65,7 +67,7 @@ virtualenv -p /usr/bin/python3 ~/.emacs.d/.python-environments/jedi
 ```
 Afterwards one has to set the environment root folder to the one just created within the *.emacs*.
 
-```
+``` lisp
 (setq jedi:environment-root "jedi")
 ```
 
@@ -75,7 +77,7 @@ For spell checking I will use **flyspell** using an underlying **aspell** proces
 
 I also define a function to change the current dictionary to the German one using the shortcut *F8*. In order for this one to work, you have to install the corresponding German dictionary first.
 
-```
+``` bash
 sudo apt install aspell-de
 ```
 

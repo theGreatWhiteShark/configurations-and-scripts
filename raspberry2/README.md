@@ -5,11 +5,11 @@ As for the latest Raspbian image *2017-08-16-raspbian-stretch* I tried my WIFI d
 ## Obtaining the wireless interface
 
 The following command gives a list of all wireless interfaces.
-```{bash}
+``` bash
 iwconfig
 ```
 If you don't see any interface at all, remove your dongle, plug it in again, and run
-```{bash}
+``` bash
 dmesg | tail -30
 ```
 This reports all the actions your system took in order to recognize and associate your WIFI dongle. It also tells you about which driver was used and whether an error occurred. 
@@ -19,7 +19,7 @@ Now note down the name of your wireless interface and let's set up things using 
 ## Configuring the network access
 First we will set up the network access via the **wpa** suite. We will tell it which network to use via a SSID and which password is associated with it. So it basically works like one of those graphical interfaces you use when selecting your network.
 
-```{bash}
+``` bash 
 # temporally get superuser rights
 sudo -i
 wpa_passphrase [Network SSID] [Network password] >> /etc/wpa_supplicant/wpa_supplicant.conf
@@ -29,7 +29,7 @@ exit
 
 If you are not sure about the SSID of your network or if the dongle actually sees any of the available ones, run this command.
 
-```{bash}
+``` bash 
 sudo iwlist [Interface name] scan
 ```
 Be sure to use *sudo* or you won't find anything!
@@ -40,12 +40,12 @@ To configure your network, copy the [interfaces](interfaces) file into */etc/net
 In my configuration I used a static setting. This way my Raspberry also obtains the same IP address. (Very convenient when you are using e.g. Clementine with a remote control via your smartphone).
 If you want a dynamic setting instead (your Raspberry will obtain different IPs), replace lines 11-14 by this one instead
 
-```
+``` bash
 iface [Interface name] inet dhcp
 ```
 
 To start up your newly configured interface, run
-```{bash}
+``` bash 
 sudo ifup [Interface name]
 ```
 
@@ -55,7 +55,7 @@ You are laying in your bed and want to fall asleep to the music you choose via y
 
 A better way to handle this is to connect to your Raspberry2 via ssh using [ConnectBot](https://f-droid.org/packages/org.connectbot/) and tell Clementine to stop in X minutes. This trick is done by the function *stop_clementine* in the [.bashrc](raspberry2/.bashrc) aliased with an *s* and calling the [at_clementine.sh](bash/at_clementine.sh) script. In order tell Clementine to pause the playback in 30 minutes, just type
 
-```{bash}
+``` bash
 s 30
 ```
 
@@ -63,7 +63,7 @@ into the bash opened via ConnectBot.
 
 In order to connect to your Raspberry2 via ssh you have to active its *ssh daemon*.
 
-```{bash}
+``` bash
 sudo service ssh start
 ```
 

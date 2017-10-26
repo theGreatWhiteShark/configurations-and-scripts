@@ -21,13 +21,13 @@ It does the following things:
 
 In order to use the script with other languages than *R*, just apply the following changes
 
-```
+``` bash
 cat job.sh | sed 's/.R/<EXTENSION OF THE SCRIPT TYPE YOU ARE USING>/g' > job.sh
 cat job.sh | sed 's/RScript/<THE TERMINAL COMMAND TO EXECUTE YOUR SCRIPT>/g' > job.sh
 ```
 
 e.g. when you use Matlab
-```
+``` bash
 cat job.sh | sed 's/.R/.m/g' > job.sh
 cat job.sh | sed 's/matlab -nodisplay -nodesktop -nosplash/<THE TERMINAL COMMAND TO EXECUTE YOUR SCRIPT>/g' > job.sh
 ```

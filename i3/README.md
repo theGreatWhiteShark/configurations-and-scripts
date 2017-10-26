@@ -4,7 +4,7 @@ In this folder I provide two different versions of the overall i3 configuration 
 
 To use those files, create a symbolic link to them in your home.
 
-```
+``` bash
 # In the repository's home
 mkdir ~/.i3
 ln -s i3/config-abyzou ~/.i3/config
