@@ -155,7 +155,7 @@ bar {
 }
 
 # open thunderbird, firefox and eamcs as default startup
-exec --no-startup-id i3-msg 'workspace 2; exec firefox; exec thunderbird; workspace 1; exec mate-terminal'
+exec --no-startup-id i3-msg 'workspace 2; exec firefox; exec thunderbird; workspace 1; exec terminator'
 # exec --no-startup-id i3-msg 'workspace 2; exec chromium-browser; '
 
 # enable a lock screen
@@ -177,8 +177,8 @@ bindsym $mod+o exec "xrandr --output VGA1 --rotate left"
 bindsym $mod+Shift+o exec "xrandr --output VGA1 --rotate normal"
 
 # increase and decrease the brightness of the screen by 10 percent
-bindsym $mod+F5 exec "xbacklight -dec 10"
-bindsym $mod+F6 exec "xbacklight -inc 10"
+bindsym $mod+F5 exec "xrandr --output eDP-1 --brightness 0.6"
+bindsym $mod+F6 exec "xrandr --output eDP-1 --brightness 1.0"
 ## alternative: echo 1000 > /sys/class/blacklight/intel_backlight/brightness
 
 # toggle the touchpad
@@ -191,7 +191,7 @@ bindsym $mod+Print exec scrot
 exec --no-startup-id nitrogen --restore
 
 # starting owncloud
-exec owncloud
+exec nextcloud
 
 # transparency
 exec xcompmgr -c -n
