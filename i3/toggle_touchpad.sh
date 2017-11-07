@@ -1,13 +1,16 @@
 #!/bin/bash
 ### En- or disables the touchpad
 
-## Current status of the touchpad: 0 - disabled, 1 - enabled
-statusTouchpad=$(xinput --list-props 12 | awk '/Device Enabled/ {print $4}')
+## Detect the xinput number which is assigned to the touchpad.
+touchpadXinputNumber=$(xinput --list | awk '/TouchPad/{print $6}' | awk -F "=" '{print $2}')
 
-if [ $statusTouchpad == "1" ]; then
+## Current status of the touchpad: 0 - disabled, 1 - enabled
+touchpadStatus=$(xinput --list-props $touchpadXinputNumber | awk '/Device Enabled/ {print $4}')
+
+if [ $touchpadStatus == "1" ]; then
     ## Turn it off
-    xinput --set-prop 12 "Device Enabled" 0
+    xinput --set-prop $touchpadXinputNumber "Device Enabled" 0
 else
     ## Turn it on
-    xinput --set-prop 12 "Device Enabled" 1
+    xinput --set-prop $touchpadXinputNumber "Device Enabled" 1
 fi
