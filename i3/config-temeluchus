@@ -173,8 +173,8 @@ bindsym $mod+Ctrl+e exec "emacs"
 bindsym $mod+Ctrl+d exec "thunar"
 
 # rotate the external monitor by 90 degrees
-bindsym $mod+o exec "xrandr --output VGA1 --rotate left"
-bindsym $mod+Shift+o exec "xrandr --output VGA1 --rotate normal"
+bindsym $mod+o exec "xrandr --output HDMI1 --rotate left"
+bindsym $mod+Shift+o exec "xrandr --output HDMI1 --rotate normal"
 
 # increase and decrease the brightness of the screen by 10 percent
 bindsym $mod+F5 exec "xbacklight -dec 10"
