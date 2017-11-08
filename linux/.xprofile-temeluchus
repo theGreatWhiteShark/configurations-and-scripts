@@ -1,0 +1,2 @@
+## Works with my Lenovo Thinkpad and an additional display above it connected via VGA
+xrandr --output VGA-1 --auto --above eDP-1
