@@ -76,8 +76,8 @@ alias Ri='R --no-init-file CMD INSTALL'
 
 ## Git - some bad practice shortcut for my org-files collecting all sorts of information
 alias cgit='cd $HOME/git/tsa'
-alias pgit='tempdir=$(pwd); cd $HOME/git/tsa; git pull; if [ $(stat -c %Y ~/Dropbox/MobileOrg/smartphone.org) -gt $(stat -c %Y ./org/smartphone.org) ]; then cp $HOME/Dropbox/MobileOrg/smartphone.org $HOME/git/tsa/org/; fi; cd $tempdir'
-alias ogit='tempdir=$(pwd); cd $HOME/git/tsa; git commit -am "org"; git push; cp org/private.org org/work.org org/software.org org/notes/algorithms-computation.org org/notes/papers.org ~/Dropbox/MobileOrg/; cd $tempdir'
+alias pgit='tempdir=$(pwd); cd $HOME/git/tsa; git pull; cd $tempdir'
+alias ogit='tempdir=$(pwd); cd $HOME/git/tsa; git commit -am "org"; git push; cd $tempdir'
 
 ## reduce prompt to the two latest folders if there are more than three folders displayed
 function pwd_prompt {
