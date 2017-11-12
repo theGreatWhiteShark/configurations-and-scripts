@@ -671,8 +671,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; Edit the Emacs file at work in el mode
 (add-to-list 'auto-mode-alist '(".emacs-tc08" . emacs-lisp-mode))
 
-
-
 ;; Activating c-mode for CUDA files
 (setq auto-mode-alist (cons '(".cu$" . c-mode) auto-mode-alist))
 
@@ -743,3 +741,12 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; Open dired, even when I'm typing C-x C-d by mistake
 (global-set-key (kbd "C-x C-d") 'dired)
+
+;; Use auto-fill-mode in various modes
+(dolist (hook '(text-mode-hook
+		LaTeX-mode-hook
+		markdown-mode-hook
+		fundamental-mode-hook
+		ess-mode-hook
+		org-mode-hook) t)
+  (add-hook hook (lambda() (auto-fill-mode 1))))
