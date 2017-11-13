@@ -134,6 +134,10 @@ fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/android/ {ck=1};END {print ck}') == 0 ];then
     export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/25.0.3:$ANDROID_HOME/tools/bin
 fi
+## Binaries installed using Cabal
+if [ $( echo $PATH | awk 'BEGIN {ck=0};/cabal/ {ck=1};END {print ck}') == 0 ];then
+    export PATH=$PATH:$HOME/.cabal/bin
+fi
 # For working with at I need to define such function
 function stop_clementine {
     at now + $1 minutes -f ~/scripts/bash/at_clementine.sh
