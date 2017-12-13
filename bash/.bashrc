@@ -81,6 +81,8 @@ alias ogit='tempdir=$(pwd); cd $HOME/git/tsa; git commit -am "org"; git push; cd
 
 ## Go
 export GOPATH="$HOME/.go"
+export GOROOT="$HOME/.go1.9.2"
+export GOROOT_BOOTSTRAP="$HOME/.go1.4"
 
 ## reduce prompt to the two latest folders if there are more than three folders displayed
 function pwd_prompt {
@@ -100,6 +102,7 @@ export EDITOR=/usr/bin/emacs
 export AWKPATH="$HOME/git/configurations-and-scripts/awk"
 export ANDROID_HOME="$HOME/software/android-sdk"
 # export JAVA_HOME="$HOME/software/java-jdk/jdk1.8.0_144"
+
 # Perl configuration
 # PATH="/home/phil/perl5/bin${PATH:+:${PATH}}"; export PATH;
 # PERL5LIB="/home/phil/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
@@ -113,20 +116,17 @@ alias qjob=function_qjob
 alias qs='qsub ./.job.sh'
 
 ## Only append those paths if they arn't already present
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/bin\/local/ {ck=1};END {print ck}') == 0 ];then
-    PATH=$PATH:/usr/bin/local
-fi
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/local/ {ck=1};END {print ck}') == 0 ];then
-    PATH=$PATH:/usr/local
-fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/bin/ {ck=1};END {print ck}') == 0 ];then
     PATH=$PATH:/usr/bin
+fi
+if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/bin\/local/ {ck=1};END {print ck}') == 0 ];then
+    PATH=/usr/local/bin:$PATH
 fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/phil\/bin/ {ck=1};END {print ck}') == 0 ];then
     PATH=$HOME/bin:$PATH
 fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/scripts/ {ck=1};END {print ck}') == 0 ];then
-    PATH=$PATH:$HOME/git/configurations-and-scripts/bash:$HOME/git/configurations-and-scripts/awk:$HOME/git/configurations-and-scripts/python:$HOME/git/configurations-and-scripts/java
+    PATH=$HOME/git/configurations-and-scripts/bash:$HOME/git/configurations-and-scripts/awk:$HOME/git/configurations-and-scripts/python:$HOME/git/configurations-and-scripts/java:$PATH
 fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/^\/sbin/ {ck=1};END {print ck}') == 0 ];then
     PATH=$PATH:/sbin
@@ -139,8 +139,13 @@ if [ $( echo $PATH | awk 'BEGIN {ck=0};/android/ {ck=1};END {print ck}') == 0 ];
 fi
 ## Binaries installed using Cabal
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/cabal/ {ck=1};END {print ck}') == 0 ];then
-    export PATH=$PATH:$HOME/.cabal/bin
+    export PATH=$HOME/.cabal/bin:$PATH
 fi
+## Binaries installed using Go
+if [ $( echo $PATH | awk 'BEGIN {ck=0};/go\/bin/ {ck=1};END {print ck}') == 0 ];then
+    export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+fi
+
 # For working with at I need to define such function
 function stop_clementine {
     at now + $1 minutes -f ~/scripts/bash/at_clementine.sh
