@@ -751,6 +751,10 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 		LaTeX-mode-hook
 		markdown-mode-hook
 		fundamental-mode-hook
+		lisp-interaction-mode-hook
 		ess-mode-hook
 		org-mode-hook) t)
   (add-hook hook (lambda() (auto-fill-mode 1))))
+
+;; Elisp debugging
+(global-set-key (kbd "C-M-e") 'eval-print-last-sexp)
