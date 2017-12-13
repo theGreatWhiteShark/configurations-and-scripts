@@ -79,6 +79,9 @@ alias cgit='cd $HOME/git/tsa'
 alias pgit='tempdir=$(pwd); cd $HOME/git/tsa; git pull; cd $tempdir'
 alias ogit='tempdir=$(pwd); cd $HOME/git/tsa; git commit -am "org"; git push; cd $tempdir'
 
+## Go
+export GOPATH="$HOME/.go"
+
 ## reduce prompt to the two latest folders if there are more than three folders displayed
 function pwd_prompt {
     pwd | sed "s/\/home\/$(echo $USER)/\~/" | awk 'BEGIN { FS = "/" };{ if ( NF > 3 ) print $1"/.../"$(NF-1)"/"$NF ; else print $0}'
