@@ -742,6 +742,10 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; Open dired, even when I'm typing C-x C-d by mistake
 (global-set-key (kbd "C-x C-d") 'dired)
 
+;; Easy evaluate lisp expressions even if `lightning-keymap-mode' is
+;; activated. (Mapped to C-j in default Emacs).
+(global-set-key (kbd "C-M-e") 'eval-print-last-sexp)
+
 ;; Use auto-fill-mode in various modes
 (dolist (hook '(text-mode-hook
 		LaTeX-mode-hook
