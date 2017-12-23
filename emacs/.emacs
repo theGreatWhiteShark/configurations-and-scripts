@@ -720,6 +720,11 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  "~/git/configurations-and-scripts/emacs/lightning-keymap-mode")
 (require 'lightning-keymap-mode)
 (lightning-keymap-mode 1)
+;; Define a key to toggle the debugging of lightning-keymap-mode
+(global-set-key (kbd "C-<f5>")
+		(lambda () (interactive) 	 
+		  (setq lightning-debugging t)))
+
 
 ;; using conf-mode for frequently visited configuration scripts
 (add-to-list 'auto-mode-alist '(".asoundrc" . conf-mode))
