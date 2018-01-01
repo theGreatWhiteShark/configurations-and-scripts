@@ -7,4 +7,9 @@ if [ $(xrandr --current | grep "HDMI1 connected" | wc -m) > 0 ];then
     xrandr --output HDMI1 --rotate left
     xrandr --output HDMI1 --above LVDS1
     xrandr --output HDMI1 --auto
+    ## restore the background image
+    nitrogen --restore &
+else
+    ## restore the background image
+    nitrogen --restore &
 fi

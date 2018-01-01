@@ -184,7 +184,7 @@ bindsym $mod+F12 exec "~/git/configurations-and-scripts/i3/toggle_touchpad.sh"
 bindsym $mod+Print exec scrot
 
 # background image
-exec --no-startup-id nitrogen --restore
+# exec --no-startup-id nitrogen --restore
 
 # starting Nextcloud
 # exec nextcloud
@@ -199,4 +199,3 @@ exec wicd-gtk --tray
 # open thunderbird, firefox and eamcs as default startup
 exec --no-startup-id i3-msg 'workspace 2; exec firefox; exec thunderbird; workspace 1; exec terminator'
 # exec --no-startup-id i3-msg 'workspace 2; exec chromium-browser; '
-
