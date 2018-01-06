@@ -160,3 +160,6 @@ export GPGKEY=0BF476DA
 
 # Use raum as PulseAudio server
 export PULSE_SERVER=raum
+
+# added by travis gem
+[ -f /home/phil/.travis/travis.sh ] && source /home/phil/.travis/travis.sh
