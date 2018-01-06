@@ -758,6 +758,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 		markdown-mode-hook
 		fundamental-mode-hook
 		lisp-interaction-mode-hook
+		emacs-lisp-mode-hook
 		ess-mode-hook
 		c-mode-hook
 		c++-mode-hook
