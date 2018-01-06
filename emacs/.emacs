@@ -78,8 +78,7 @@
 ;; remapping caps-lock to M-x
 (if (eq window-system 'x)
     (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
-(global-set-key [f13] 'helm-M-x)
-(global-unset-key (kbd "M-x"))
+(define-key key-translation-map [f13] (kbd "M-x"))
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-unset-key (kbd "C-x b"))
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
