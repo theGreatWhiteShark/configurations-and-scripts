@@ -179,6 +179,10 @@ bindsym $mod+Shift+o exec "xrandr --output VGA1 --rotate normal"
 bindsym $mod+F5 exec "xbacklight -dec 10"
 bindsym $mod+F6 exec "xbacklight -inc 10"
 ## alternative: echo 1000 > /sys/class/blacklight/intel_backlight/brightness
+# Use a Python3 script to decrease and increase the brightness of all
+# screens by 10 percent simultaneously
+bindsym $mod+Shift+F5 exec "~/git/configurations-ans-scripts/i3/adjust_brightness.py -0.1"
+bindsym $mod+Shift+F6 exec "~/git/configurations-ans-scripts/i3/adjust_brightness.py 0.1"
 
 # Make a Screenshot
 bindsym $mod+Print exec scrot
