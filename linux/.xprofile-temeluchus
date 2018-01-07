@@ -1,2 +1,7 @@
 ## Works with my Lenovo Thinkpad and an additional display above it connected via VGA
 xrandr --output VGA-1 --auto --above eDP-1
+
+# Reset the brightness adjustment of the previous session
+if [ -f "~/.i3/brightness" ];then
+   rm ~/.i3/brightness
+done
