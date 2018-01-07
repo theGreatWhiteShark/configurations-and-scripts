@@ -66,6 +66,7 @@
 		lisp-mode-hook
 		emacs-lisp-mode-hook
 		conf-mode-hook
+		sh-mode-hook
 		c-mode-hook
 		c++-mode-hook) t)
   (add-hook hook (lambda() (flyspell-prog-mode))))
@@ -761,5 +762,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 		ess-mode-hook
 		c-mode-hook
 		c++-mode-hook
+		sh-mode-hook
 		org-mode-hook) t)
   (add-hook hook (lambda() (auto-fill-mode 1))))
