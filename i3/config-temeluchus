@@ -183,12 +183,12 @@ bindsym $mod+Shift+o exec "xrandr --output VGA-1 --rotate normal"
 # xbacklight is not working with this laptop.
 # Use a Python3 script to decrease and increase the brightness of all
 # screens by 10 percent simultaneously
-bindsym $mod+F5 exec "~/git/configurations-ans-scripts/i3/adjust_brightness.py -0.1"
-bindsym $mod+F6 exec "~/git/configurations-ans-scripts/i3/adjust_brightness.py 0.1"
+bindsym $mod+F5 exec "~/git/configurations-and-scripts/i3/adjust_brightness.py -0.05"
+bindsym $mod+F6 exec "~/git/configurations-and-scripts/i3/adjust_brightness.py 0.05"
 # Use a Python3 script to decrease and increase the brightness of all
 # screens by 10 percent simultaneously
-bindsym $mod+Shift+F5 exec "~/git/configurations-ans-scripts/i3/adjust_brightness.py -0.1"
-bindsym $mod+Shift+F6 exec "~/git/configurations-ans-scripts/i3/adjust_brightness.py 0.1"
+bindsym $mod+Shift+F5 exec "~/git/configurations-and-scripts/i3/adjust_brightness.py -0.05"
+bindsym $mod+Shift+F6 exec "~/git/configurations-and-scripts/i3/adjust_brightness.py 0.05"
 
 # Make a Screenshot
 bindsym $mod+Print exec scrot
