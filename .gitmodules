@@ -24,7 +24,7 @@
 	url = git@github.com:theGreatWhiteShark/polymode.git
 [submodule "emacs/org-mode"]
 	path = emacs/org-mode
-	url = git://orgmode.org/org-mode.git
+	url = https://code.orgmode.org/bzg/org-mode.git
 [submodule "emacs/org-ref"]
 	path = emacs/org-ref
 	url = https://github.com/jkitchin/org-ref.git
