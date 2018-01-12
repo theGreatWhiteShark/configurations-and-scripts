@@ -17,4 +17,4 @@ fi
 # Reset the brightness adjustment of the previous session
 if [ -f "~/.i3/brightness" ];then
    rm ~/.i3/brightness
-done
+fi
