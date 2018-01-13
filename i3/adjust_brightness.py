@@ -41,7 +41,7 @@ globalBrightness += float( sys.argv[ 1 ] )
 
 # Round the results, since Python is not able calculate properly.
 # 0.9-0.1-0.1=0.7000000000000001 ????
-globalBrightness = round( globalBrightness, 1 )
+globalBrightness = round( globalBrightness, 2 )
 
 # Sanity checks. The global brightness has to be bound by 0 and 1
 if globalBrightness > 1:
