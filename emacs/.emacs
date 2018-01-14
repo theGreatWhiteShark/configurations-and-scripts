@@ -723,9 +723,9 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (lightning-keymap-mode 1)
 ;; Define a key to toggle the debugging of lightning-keymap-mode
 (global-set-key (kbd "C-<f5>")
-		(lambda () (interactive) 	 
-		  (setq lightning-debugging t)))
-
+		(lambda()
+		  (interactive)
+		  (lightning-keymap-toggle-debugging)))
 
 ;; using conf-mode for frequently visited configuration scripts
 (add-to-list 'auto-mode-alist '(".asoundrc" . conf-mode))
