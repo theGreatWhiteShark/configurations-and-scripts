@@ -1,0 +1,40 @@
+# AmbDec configuration
+# Written by AmbDec-0.5.1 at Fri Jan 26 00:02:47 2018
+
+/description      Stereo output from any order
+
+/version          3
+
+/dec/chan_mask    b
+/dec/freq_bands   1
+/dec/speakers     6
+/dec/coeff_scale  fuma
+
+/opt/input_scale  fuma
+/opt/nfeff_comp   input
+/opt/delay_comp   off
+/opt/level_comp   off
+/opt/xover_freq    600
+/opt/xover_ratio   0.0
+
+/speakers/{
+add_spkr   L-1     0.850     41.0      0.0    system:playback_1
+add_spkr   R-1     0.850    -41.0      0.0    system:playback_2
+add_spkr   L-2     1.500     55.0      0.0    system:playback_3
+add_spkr   R-2     1.500    -55.0      0.0    system:playback_4
+add_spkr   L-3     1.500     55.0      0.0    system:playback_5
+add_spkr   R-3     1.500    -55.0      0.0    system:playback_6
+/}
+
+/matrix/{
+order_gain     1.00000  3.00000  1.00000  1.00000
+add_row     0.000000  0.234740  0.234740
+add_row     0.000000 -0.234740  0.234740
+add_row     0.565690  0.124510  0.078560
+add_row     0.565690 -0.124510  0.078560
+add_row     0.292270  0.219730  0.138640
+add_row     0.292270 -0.219730  0.138640
+/}
+
+
+/end
