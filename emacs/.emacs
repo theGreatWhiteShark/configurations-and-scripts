@@ -585,8 +585,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
-   ["#3F3F3F" "#CC93932" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3"
-    "#93E0E3" "#DCDCCC"])
+   ["#3F3F3F" "#CC93932" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
  '(custom-safe-themes
    (quote
     ("6383295fb0c974d24c9dca1230c0489edf1cd5dd03d4b036aab290b6d3ceb50c" default)))
@@ -594,10 +593,13 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(fci-rule-color "#383838")
  '(inhibit-startup-screen t)
  '(mark-even-if-inactive t)
+ '(markdown-enable-math t)
  '(org-agenda-files
    (quote
-    ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org"
-     "~/git/tsa/org/software.org")))
+    ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org")))
+ '(package-selected-packages
+   (quote
+    (yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode js2-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex)))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode (quote right))
  '(transient-mark-mode 1)
@@ -622,31 +624,21 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
      (320 . "#8CD0D3")
      (340 . "#94BFF3")
      (360 . "#DC8CC3"))))
- '(vc-annotate-very-old-color "#DC8CC3")
- ;; Highlight inline LaTeX-style equations
- '(markdown-enable-math t))
+ '(vc-annotate-very-old-color "#DC8CC3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(helm-M-x-key ((t (:foreground "#CC9393"))))
- '(helm-ff-directory ((t (:foreground "#93E0E3" :weight bold
-				      :background nil))))
- '(helm-ff-dotted-directory ((t (:foreground "steel blue"
-					     :background nil))))
- '(helm-ff-dotted-symlink-directory ((t (:foreground "DarkOrange"
-						     :background nil))))
- '(helm-ff-executable ((t (:foreground "#9FC59F" :weight normal
-				       :background nil))))
- '(helm-ff-file ((t (:foreground "#DCDCCC" :weight normal
-				 :background nil))))
- '(helm-ff-invalid-symlink ((t (:foreground "#CC9393" :weight bold
-					    :background nil))))
- '(helm-ff-prefix ((t (:foreground "#3F3F3F" :weight normal
-				   :background nil))))
- '(helm-ff-symlink ((t (:foreground "#F0DFAF" :weight bold
-				    :background nil))))
+ '(helm-ff-directory ((t (:foreground "#93E0E3" :weight bold :background nil))))
+ '(helm-ff-dotted-directory ((t (:foreground "steel blue" :background nil))))
+ '(helm-ff-dotted-symlink-directory ((t (:foreground "DarkOrange" :background nil))))
+ '(helm-ff-executable ((t (:foreground "#9FC59F" :weight normal :background nil))))
+ '(helm-ff-file ((t (:foreground "#DCDCCC" :weight normal :background nil))))
+ '(helm-ff-invalid-symlink ((t (:foreground "#CC9393" :weight bold :background nil))))
+ '(helm-ff-prefix ((t (:foreground "#3F3F3F" :weight normal :background nil))))
+ '(helm-ff-symlink ((t (:foreground "#F0DFAF" :weight bold :background nil))))
  '(helm-match ((t (:foreground "khaki" :underline t))))
  '(helm-match-item ((t (:foreground "khaki")))))
 
