@@ -599,7 +599,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
     ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org")))
  '(package-selected-packages
    (quote
-    (yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode js2-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex)))
+    (noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode js2-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex)))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode (quote right))
  '(transient-mark-mode 1)
@@ -681,8 +681,13 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 	     "~/git/configurations-and-scripts/emacs/markdown-mode")
 (autoload 'markdown-mode "markdown-mode"
   "Major mode for editing Markdown files" t)
+(autoload 'gfm-mode "markdown-mode"
+  "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+;; GitHub Flavored Markdown-mode for all README.md files
+;; (part of markdown-mode)
+(add-to-list 'auto-mode-alist '("README.md" . gfm-mode))
 
 ;; Colors and human readable file size in dired
 (setq dired-listing-switches "-alh")
@@ -732,10 +737,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; ‘-H’   Print the filename for each match.
 ;; ‘-e’   Protect patterns beginning with a hyphen character, ‘-’ 
 (setq grep-command "grep -i -nH -e ")
-
-;; GitHub Flavored Markdown-mode for all README.md files
-;; (part of markdown-mode)
-(add-to-list 'auto-mode-alist '("README.md" . gfm-mode))
 
 ;; Open dired, even when I'm typing C-x C-d by mistake
 (global-set-key (kbd "C-x C-d") 'dired)
