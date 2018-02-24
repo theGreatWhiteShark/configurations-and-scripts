@@ -18,8 +18,8 @@
 /opt/xover_ratio   0.0
 
 /speakers/{
-add_spkr   L-1     0.850     41.0      0.0    system:playback_1
-add_spkr   R-1     0.850    -41.0      0.0    system:playback_2
+add_spkr   L-1     0.850     41.0      0.0    Non-Mixer.nSAFA/Master:in-1
+add_spkr   R-1     0.850    -41.0      0.0    Non-Mixer.nSAFA/Master:in-2
 add_spkr   L-2     1.500     55.0      0.0    system:playback_3
 add_spkr   R-2     1.500    -55.0      0.0    system:playback_4
 add_spkr   L-3     1.500     55.0      0.0    system:playback_5
