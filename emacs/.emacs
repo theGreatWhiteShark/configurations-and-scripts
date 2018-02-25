@@ -758,3 +758,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 		sh-mode-hook
 		org-mode-hook) t)
   (add-hook hook (lambda() (auto-fill-mode 1))))
+
+;; Load some custom functions to edit Hydrogen files
+(load "~/git/configurations-and-scripts/emacs/elisp/hydrogen.el")

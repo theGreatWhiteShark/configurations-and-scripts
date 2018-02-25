@@ -19,6 +19,12 @@ Before using, be sure to initialize and update your submodules. This way all the
 git submodule update --init --recursive --remote
 ```
 
+# Hydrogen
+
+In the *elisp/hydrogen.el* file I wrote some functions that help with
+migrating from one drum kit to another in the
+[Hydrogen](https://github.com/hydrogen-music/hydrogen) drum machine.
+
 # Hints
 
 ## General
