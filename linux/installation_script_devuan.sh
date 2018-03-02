@@ -40,7 +40,17 @@ sudo apt update
 
 
 ## Installation of required packages
-sudo apt -y install gfortran fort77 texlive xorg-dev texlive-fonts-extra texinfo default-jre default-jre-headless default-jdk texlive-latex-extra intltool emacs24 multitail libreadline6 libreadline6-dev libreadline6-dbg hunspell g++ emacs-goodies-el global sshfs apt-file libcairo2-dev libssh-dev libcurl4-gnutls-dev libxml2-dev i3 i3-wm at i3status i3lock nitrogen imagemagick pandoc scrot xinput xbacklight xcompmgr meld apt-file bzip2 libbz2-dev liblzma-dev libtiff5-dev npm lshw thunderbird nextcloud-client sshfs thunar clementine kupfer terminator wicd-gtk gstreamer1.0-pulseaudio pasystray pavucontrol libgtk2.0-dev
+sudo apt -y install gfortran fort77 texlive xorg-dev
+texlive-fonts-extra texinfo default-jre default-jre-headless
+default-jdk texlive-latex-extra intltool emacs24 multitail
+libreadline6 libreadline6-dev libreadline6-dbg hunspell g++
+emacs-goodies-el global sshfs apt-file libcairo2-dev libssh-dev
+libcurl4-gnutls-dev libxml2-dev i3 i3-wm at i3status i3lock nitrogen
+imagemagick pandoc scrot xinput xbacklight xcompmgr meld apt-file
+bzip2 libbz2-dev liblzma-dev libtiff5-dev npm lshw thunderbird
+nextcloud-client sshfs thunar clementine kupfer terminator wicd-gtk
+gstreamer1.0-pulseaudio pasystray pavucontrol libgtk2.0-dev ispell
+ingerman wngerman aspell-de
 
 
 ## Enabling all Emacs submodules

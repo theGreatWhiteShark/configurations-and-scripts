@@ -39,13 +39,16 @@
       ispell-extra-args '("--sug-mode=fast"))
 
 ;; Add a german dictionary and the option of switching between
-;; languages
+;; languages.
 (defun flyspell-switch-dictionary()
   (interactive)
-  ;; Change the default dictionary too
+  ;; Change the default dictionary too.
+  ;; Well, the functions have a `ispell' prefix. But in the background
+  ;; the spell checking is using aspell instead. Be aware of this when
+  ;; installing additional software packages.
   (if (string= ispell-current-dictionary "de")
-      (setq ispell-personal-dictionary "~/.eamcs.d/.aspell.en.pws")
-    (setq ispell-personal-dictionary "~/.eamcs.d/.aspell.de.pws"))
+      (setq ispell-personal-dictionary "~/.emacs.d/.aspell.en.pws")
+    (setq ispell-personal-dictionary "~/.emacs.d/.aspell.de.pws"))
   (let* ((dic ispell-current-dictionary)
 	 (change (if (string= dic "de") "en" "de")))
     (ispell-change-dictionary change)
