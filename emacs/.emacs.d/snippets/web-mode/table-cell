@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: table-cell
+# key: td
+# --
+<td>$1</td>$0

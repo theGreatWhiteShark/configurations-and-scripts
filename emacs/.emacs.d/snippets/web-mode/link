@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: link
+# key: link
+# --
+<link rel="$1" href="$2" />
+$0

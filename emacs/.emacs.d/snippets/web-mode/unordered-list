@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: unordered-list
+# key: ul
+# --
+<ul>
+  <li>$0</li>
+</ul>

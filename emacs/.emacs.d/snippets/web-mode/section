@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: section 
+# key: sec
+# --
+<section id="$1">
+  $0
+</section>

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: right-round-bracket
+# expand-env: ((yas-indent-line 'fixed))
+# key: )
+# --
+\right) $0

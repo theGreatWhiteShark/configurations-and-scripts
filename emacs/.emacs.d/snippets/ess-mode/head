@@ -1,0 +1,12 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Rmarkdown-header
+# key: head
+# binding: direct-keybinding
+# --
+---
+title: $1
+author: Philipp Müller
+date: "`r Sys.Date()`"
+output: rmarkdown::md_document
+---
+$0

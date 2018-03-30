@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: reveal-notes
+# key: note
+# --
+<aside class="notes">
+  <p>
+    $0
+  </p>
+</aside>

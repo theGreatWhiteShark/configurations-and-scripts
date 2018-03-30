@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: ordered-list
+# key: ol
+# --
+<ol>
+  <li>$0</li>
+</ol>

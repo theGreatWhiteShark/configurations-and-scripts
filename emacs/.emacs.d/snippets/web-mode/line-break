@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: line-break
+# key: br
+# --
+<br/>
+$0

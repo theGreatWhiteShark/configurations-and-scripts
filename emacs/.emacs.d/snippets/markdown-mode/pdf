@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: probability distribution function
+# expand-env: ((yas-indent-line 'fixed))
+# key: pdf
+# --
+probability distribution function $0

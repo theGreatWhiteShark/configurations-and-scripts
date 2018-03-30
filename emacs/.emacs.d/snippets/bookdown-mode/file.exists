@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: file.exists
+# key: file.exists
+# --
+
+if ( !file.exists( $1 ) ){
+  $0
+  save( file = $2 )
+} else {
+  load( $3 )
+}

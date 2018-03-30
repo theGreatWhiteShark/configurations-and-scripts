@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: list-element
+# key: li
+# --
+<li>$1</li>$0

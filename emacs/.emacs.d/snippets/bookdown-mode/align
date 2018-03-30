@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: align
+# expand-env: ((yas-indent-line 'fixed))
+# key: align
+# --
+\begin{align}
+  $1
+  (\#eq:$2)
+\end{align}
+$0

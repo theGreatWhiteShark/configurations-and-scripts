@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: headline3
+# key: h3
+# --
+<h3>$1</h3>
+$0

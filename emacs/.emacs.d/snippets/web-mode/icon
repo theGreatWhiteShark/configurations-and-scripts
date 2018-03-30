@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: icon
+# key: icon
+# --
+<i class="fa fa-$1" style="color: ${2:auto}"></i>$0

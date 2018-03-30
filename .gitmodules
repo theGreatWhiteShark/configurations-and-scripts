@@ -16,9 +16,6 @@
 [submodule "emacs/minimal"]
 	path = emacs/minimal
 	url = https://github.com/dandavison/minimal.git
-[submodule "emacs/yasnippet"]
-	path = emacs/yasnippet
-	url = git@github.com:theGreatWhiteShark/yasnippet.git
 [submodule "emacs/polymode"]
 	path = emacs/polymode
 	url = git@github.com:theGreatWhiteShark/polymode.git

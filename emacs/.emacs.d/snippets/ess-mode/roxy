@@ -4,9 +4,11 @@
 # binding: direct-keybinding
 # --
 ##' @title $1
-##' @details $2
+##' @description $2
+##' @details $3
 ##'
-##' @param $3
+##' @param $4
 ##'
-##' @return $4
-##' @author Philipp Mueller $0
+##' @return $5
+##' @author Philipp Mueller
+$0

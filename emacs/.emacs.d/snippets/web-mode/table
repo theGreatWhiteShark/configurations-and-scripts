@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: table
+# key: table
+# --
+<table id="$1">
+  <tr>
+    $0
+  </tr>
+</table>

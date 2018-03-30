@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: reveal-code
+# key: code
+# --
+<pre><code>
+  $1
+</code></pre>
+$0

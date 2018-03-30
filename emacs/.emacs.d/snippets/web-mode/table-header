@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: table-header
+# key: th
+# --
+<th>$1</th>$0

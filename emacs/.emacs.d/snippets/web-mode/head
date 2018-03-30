@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: head
+# key: head
+# --
+<head>
+  $0
+</head>

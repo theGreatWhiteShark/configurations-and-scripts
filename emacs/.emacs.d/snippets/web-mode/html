@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: html
+# key: html
+# --
+<html lang="en">
+  $0
+</html>

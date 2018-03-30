@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: bold
+# key: b
+# --
+<b>$1</b>$0

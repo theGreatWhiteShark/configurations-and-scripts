@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: left-square-bracket
+# expand-env: ((yas-indent-line 'fixed))
+# key: [
+# --
+\left[ $0

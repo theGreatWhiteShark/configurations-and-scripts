@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: paragraph
+# key: p
+# --
+<p>$1</p>
+$0

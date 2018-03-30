@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# contributor: Philipp Müller
+# name: table-row-head
+# key: trh
+# --
+<tr>
+  <th>$1</th>$0
+</tr>

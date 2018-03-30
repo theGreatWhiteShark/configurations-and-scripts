@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: eb
+# key: eb
+# binding: direct-keybinding
+# --
+element_blank() $0
