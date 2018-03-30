@@ -119,8 +119,8 @@ alias qs='qsub ./.job.sh'
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/bin/ {ck=1};END {print ck}') == 0 ];then
     PATH=$PATH:/usr/bin
 fi
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/bin\/local/ {ck=1};END {print ck}') == 0 ];then
-    PATH=/usr/local/bin:$PATH
+if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/local/ {ck=1};END {print ck}') == 0 ];then
+    PATH=/usr/local/bin:/usr/local/share:/usr/local/lib:/usr/local/lib64:$PATH
 fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/phil\/bin/ {ck=1};END {print ck}') == 0 ];then
     PATH=$HOME/bin:$PATH

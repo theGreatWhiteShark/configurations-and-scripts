@@ -37,3 +37,6 @@
 [submodule "emacs/bookdown-mode"]
 	path = emacs/bookdown-mode
 	url = git@github.com:theGreatWhiteShark/bookdown-mode.git
+[submodule "emacs/yasnippet"]
+	path = emacs/yasnippet
+	url = https://github.com/joaotavora/yasnippet.git
