@@ -1,9 +1,16 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
+## Turn off the blank screen every 10 minutes
+# Don't activate the screensaver
+xset s off
+# Disable the DPMS (display power managment signaling) features
+xset -dpms
+# Don't blank the video device
+xset s noblank
+
+# Startup i3
 exec i3
 
-## turn of the blank screen in i3
-xset dpms 0 0 0
-xset -dpms
-xset s off
-setterm -blank 0
+# Load my X11 configuration
+[ -f ~/.xprofile ] && source ~/.xprofile
+
