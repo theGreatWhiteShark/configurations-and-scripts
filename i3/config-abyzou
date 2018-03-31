@@ -149,14 +149,17 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
+# Start i3bar to display a workspace bar (plus the system information
+# i3status finds out, if available)
 bar {
         status_command i3status
 }
 
+# Suspend the computer. Do not forget to enter the pm-suspend command
+# as an exception for your user to the /etc/sudoers 
+bindsym $mod+m exec "sudo pm-suspend"
 # enable a lock screen
-bindsym $mod+m exec "~/git/configurations-and-scripts/i3/i3lock_screenshot.sh"
+bindsym $mod+Ctrl+m exec "~/git/configurations-and-scripts/i3/i3lock_screenshot.sh"
 exec xautolock -time 45 -locker '~/git/configurations-and-scripts/i3/i3lock_screenshot.sh'
 
 # increase and decrease volume
