@@ -599,7 +599,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
     ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org")))
  '(package-selected-packages
    (quote
-    (yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode js2-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex)))
+    (sclang-extensions csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode js2-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex)))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode (quote right))
  '(transient-mark-mode 1)
@@ -761,3 +761,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; Load some custom functions to edit Hydrogen files
 (load "~/git/configurations-and-scripts/emacs/elisp/hydrogen.el")
+
+;; Pointing to the right SuperCollider version
+(add-to-list 'load-path
+	     "~/git/configurations-and-scripts/emacs/scel/el")
+(require 'sclang)

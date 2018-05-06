@@ -40,3 +40,6 @@
 [submodule "emacs/yasnippet"]
 	path = emacs/yasnippet
 	url = https://github.com/joaotavora/yasnippet.git
+[submodule "emacs/scel"]
+	path = emacs/scel
+	url = https://github.com/supercollider/scel.git
