@@ -25,6 +25,28 @@ In the *elisp/hydrogen.el* file I wrote some functions that help with
 migrating from one drum kit to another in the
 [Hydrogen](https://github.com/hydrogen-music/hydrogen) drum machine.
 
+# SuperCollider
+
+When working with
+[SuperCollider](https://github.com/supercollider/supercollider)
+*without* installing the **supercollider-emacs** in Debian-based
+systems, you have to introduce the lisp in the [scel](emacs/scel/el)
+folder to the *load-path* in the **.emacs** file. This is already done
+in the version present in this repository.
+
+In addition, you also have to create the folder for the Emacs
+extension of SuperCollider and copy all .sc files but the Document.sc
+one in there.
+
+``` bash
+# Create a subfolder for the SuperCollider extension of Emacs
+sudo mkdir /usr/share/SuperCollider/Extensions/scide_scel
+
+# Copy all but the Document.sc files in there
+sudo cp emacs/scel/sc/* /usr/share/SuperCollider/Extensions/scide_scel/
+sudo rm /usr/share/SuperCollider/Extensions/scide_scel/Document.sc
+```
+
 # Hints
 
 ## General
