@@ -145,8 +145,12 @@ fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/go\/bin/ {ck=1};END {print ck}') == 0 ];then
     export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 fi
+## Binaries installed using Lua
+if [ $( echo $PATH | awk 'BEGIN {ck=0};/luarocks/ {ck=1};END {print ck}') == 0 ];then
+    export PATH=$HOME/.luarocks/bin:$PATH
+fi
 ## Using Anaconda3
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/.anaconda3\/bin/ {ck=1};END {print ck}') == 0 ];then
+if [ $( echo $PATH | awk 'BEGIN {ck=0};/anaconda3\/bin/ {ck=1};END {print ck}') == 0 ];then
     export PATH=$HOME/.anaconda3/bin:$PATH
 fi
 
