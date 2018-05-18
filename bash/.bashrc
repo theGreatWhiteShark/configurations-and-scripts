@@ -145,6 +145,10 @@ fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/go\/bin/ {ck=1};END {print ck}') == 0 ];then
     export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 fi
+## Binaries installed using Anaconda
+if [ $( echo $PATH | awk 'BEGIN {ck=0};/anaconda3\/bin/ {ck=1};END {print ck}') == 0 ];then
+    export PATH=$HOME/.anaconda3/bin:$PATH
+fi
 
 # For working with at I need to define such function
 function stop_clementine {
