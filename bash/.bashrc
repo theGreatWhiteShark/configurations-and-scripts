@@ -84,6 +84,11 @@ export GOPATH="$HOME/.go"
 export GOROOT="$HOME/.go1.9.2"
 export GOROOT_BOOTSTRAP="$HOME/.go1.4"
 
+## Lua
+export LUALIB="$HOME/software/lua/lua-5.3.4/src"
+export LUA_PATH="$HOME/.luarocks/share/lua/5.3/?.lua;$HOME/.luarocks/share/lua/5.3/?/init.lua;/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;/usr/local/lib/lua/5.3/?.lua;/usr/local/lib/lua/5.3/?/init.lua;./?.lua;./?/init.lua"
+export LUA_CPATH="$HOME/.luarocks/lib/lua/5.3/?.so;/usr/local/lib/lua/5.3/?.so;/usr/local/lib/lua/5.3/loadall.so;./?.so"
+
 ## reduce prompt to the two latest folders if there are more than three folders displayed
 function pwd_prompt {
     pwd | sed "s/\/home\/$(echo $USER)/\~/" | awk 'BEGIN { FS = "/" };{ if ( NF > 3 ) print $1"/.../"$(NF-1)"/"$NF ; else print $0}'
@@ -148,6 +153,10 @@ fi
 ## Binaries installed using Lua
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/luarocks/ {ck=1};END {print ck}') == 0 ];then
     export PATH=$HOME/.luarocks/bin:$PATH
+fi
+## Binaries installed using Ruby
+if [ $( echo $PATH | awk 'BEGIN {ck=0};/.gem\/ruby/ {ck=1};END {print ck}') == 0 ];then
+    export PATH=$HOME/.gem/ruby/2.1.0/bin:$PATH
 fi
 ## Using Anaconda3
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/anaconda3\/bin/ {ck=1};END {print ck}') == 0 ];then
