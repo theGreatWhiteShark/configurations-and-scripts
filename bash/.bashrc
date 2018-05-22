@@ -28,7 +28,11 @@ alias reboot='sudo /sbin/reboot'
 # Link to the glorious JDownloader
 alias jdownloader='~/.jd2/JDownloader2'
 alias bfg='java -jar $HOME/git/configurations-and-scripts/java/bfg-1.12.15.jar ';
-# Just execute this command whenever I am at a machine I configured myself
+# Use the my custom script to start up TuxGuitar with ZynAddSubFX and
+# connect them both using JACK
+alias tuxguitar='lua $HOME/git/tux2zyn/tux2zyn.lua'
+# Just execute this command whenever I am at a machine I configured
+# myself 
 if [ $USER == "phil" ];then
     ## activating alternative keymap
     xmodmap ~/.xmodmap
@@ -86,7 +90,7 @@ export GOROOT_BOOTSTRAP="$HOME/.go1.4"
 
 ## Lua
 export LUALIB="$HOME/software/lua/lua-5.3.4/src"
-export LUA_PATH="$HOME/.luarocks/share/lua/5.3/?.lua;$HOME/.luarocks/share/lua/5.3/?/init.lua;/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;/usr/local/lib/lua/5.3/?.lua;/usr/local/lib/lua/5.3/?/init.lua;./?.lua;./?/init.lua"
+export LUA_PATH="$HOME/.luarocks/share/lua/5.3/?.lua;$HOME/.luarocks/share/lua/5.3/?/init.lua;/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;/usr/local/lib/lua/5.3/?.lua;/usr/local/lib/lua/5.3/?/init.lua;./?.lua;./?/init.lua;$HOME/git/configurations-and-scripts/lua/?.lua"
 export LUA_CPATH="$HOME/.luarocks/lib/lua/5.3/?.so;/usr/local/lib/lua/5.3/?.so;/usr/local/lib/lua/5.3/loadall.so;./?.so"
 
 ## reduce prompt to the two latest folders if there are more than three folders displayed
@@ -109,11 +113,11 @@ export ANDROID_HOME="$HOME/software/android-sdk"
 # export JAVA_HOME="$HOME/software/java-jdk/jdk1.8.0_144"
 
 # Perl configuration
-# PATH="/home/phil/perl5/bin${PATH:+:${PATH}}"; export PATH;
-# PERL5LIB="/home/phil/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-# PERL_LOCAL_LIB_ROOT="/home/phil/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-# PERL_MB_OPT="--install_base \"/home/phil/perl5\""; export PERL_MB_OPT;
-# PERL_MM_OPT="INSTALL_BASE=/home/phil/perl5"; export PERL_MM_OPT;
+PATH="/home/phil/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/phil/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/phil/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/phil/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/phil/perl5"; export PERL_MM_OPT;
 
 ## handling of the batch job system at the institute
 source $HOME/git/configurations-and-scripts/bash/job.sh
