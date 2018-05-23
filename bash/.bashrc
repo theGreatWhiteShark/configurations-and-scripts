@@ -92,6 +92,8 @@ export GOROOT_BOOTSTRAP="$HOME/.go1.4"
 export LUALIB="$HOME/software/lua/lua-5.3.4/src"
 export LUA_PATH="$HOME/.luarocks/share/lua/5.3/?.lua;$HOME/.luarocks/share/lua/5.3/?/init.lua;/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;/usr/local/lib/lua/5.3/?.lua;/usr/local/lib/lua/5.3/?/init.lua;./?.lua;./?/init.lua;$HOME/git/configurations-and-scripts/lua/?.lua"
 export LUA_CPATH="$HOME/.luarocks/lib/lua/5.3/?.so;/usr/local/lib/lua/5.3/?.so;/usr/local/lib/lua/5.3/loadall.so;./?.so"
+# Load some packages during the start-up of Lua
+alias lua="$(which lua) -l 'inspect'"
 
 ## reduce prompt to the two latest folders if there are more than three folders displayed
 function pwd_prompt {
