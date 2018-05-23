@@ -186,3 +186,6 @@ export PULSE_SERVER=raum
 
 # added by travis gem
 [ -f /home/phil/.travis/travis.sh ] && source /home/phil/.travis/travis.sh
+
+# Load the custom configuration of individual computers.
+[ -f $HOME/.profile ] && source $HOME/.profile
