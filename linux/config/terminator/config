@@ -1,0 +1,30 @@
+[global_config]
+  enabled_plugins = APTURLHandler, LaunchpadCodeURLHandler, LaunchpadBugURLHandler
+  title_transmit_fg_color = "#dcdccc"
+  title_inactive_fg_color = "#3f3f3f"
+  suppress_multiple_term_dialog = True
+  title_receive_bg_color = "#5c888b"
+  title_transmit_bg_color = "#9c6363"
+  title_receive_fg_color = "#dcdccc"
+  title_inactive_bg_color = "#959592"
+[keybindings]
+[profiles]
+  [[default]]
+    palette = "#5f5f5f:#cc9393:#afd8af:#f0dfaf:#8cd0d3:#dc8cc3:#2aa198:#eee8d5:#3f3f3f:#9c6363:#7f9f7f:#d0bf8f:#6ca0a3:#93e0e3:#93a1a1:#fdf6e3"
+    background_darkness = 0.0
+    background_type = transparent
+    background_image = None
+    cursor_color = "#fdfde1"
+    foreground_color = "#dcdccc"
+    font = Monospace 12
+    background_color = "#3f3f3f"
+    cursor_blink = False
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]
