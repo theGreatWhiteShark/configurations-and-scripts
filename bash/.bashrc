@@ -70,10 +70,10 @@ alias ps6=print_with_ps6;
 # alias drumgizmo='~/git/drumgizmo/drumgizmo/drumgizmo'
 
 ## R
-alias R='$HOME/software/R/R-3.4.0/bin/R --quiet --no-save'
-alias Rscript='$HOME/software/R/R-3.4.0/bin/Rscript'
-alias Rinit='source $HOME/scripts/bash/Rinit.sh' # installation of the packages for a newly installed R distribution 
-alias Sweave='$HOME/software/R/R-3.4.0/bin/Sweave'
+# alias R='$HOME/software/R/R-3.5.0/bin/R --quiet --no-save'
+# alias Rscript='$HOME/software/R/R-3.5.0/bin/Rscript'
+# alias Rinit='source $HOME/scripts/bash/Rinit.sh' # installation of the packages for a newly installed R distribution 
+# alias Sweave='$HOME/software/R/R-3.5.0/bin/Sweave'
 alias Rb='R --resave-data CMD build'
 alias Rc='R CMD check'
 alias Ri='R --no-init-file CMD INSTALL'
@@ -109,7 +109,7 @@ else ## tell me when I'm not on my local machine but in the Hubert's cluster
     export PS1="\h: \[\e[0;33m\]\$(pwd_prompt) \[\e[0;32m\]$\[\e[0m\] ";
 fi
 # Configurations for setting up development environments
-export EDITOR=/usr/bin/emacs
+export EDITOR=/bin/nano
 export AWKPATH="$HOME/git/configurations-and-scripts/awk"
 export ANDROID_HOME="$HOME/software/android-sdk"
 # export JAVA_HOME="$HOME/software/java-jdk/jdk1.8.0_144"
@@ -131,7 +131,10 @@ if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/bin/ {ck=1};END {print ck}') == 0 ]
     PATH=$PATH:/usr/bin
 fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/local/ {ck=1};END {print ck}') == 0 ];then
-    PATH=/usr/local/bin:/usr/local/share:/usr/local/lib:/usr/local/lib64:$PATH
+    PATH=/usr/local/bin:/usr/local/share$PATH
+fi
+if [ $( echo $LD_LIBRARY_PATH | awk 'BEGIN {ck=0};/usr\/local\/lib/ {ck=1};END {print ck}') == 0 ];then
+    LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:$LD_LIBRARY_PATH
 fi
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/phil\/bin/ {ck=1};END {print ck}') == 0 ];then
     PATH=$HOME/bin:$PATH
@@ -180,9 +183,6 @@ export SHINY_LOG_LEVEL=TRACE
 
 # my GPG key ID
 export GPGKEY=0BF476DA
-
-# Use raum as PulseAudio server
-export PULSE_SERVER=raum
 
 # added by travis gem
 [ -f /home/phil/.travis/travis.sh ] && source /home/phil/.travis/travis.sh

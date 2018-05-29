@@ -1,8 +1,4 @@
-;;;; Customization of the glorious Emacs
-;; The screen of abyzou (my Acer laptop) is not that big. Use just two
-;; spaces for indention
-(setq standard-indent 2)
-(setq tab-width 2)
+;;;; customization
 
 ;; loading personal scripts and functions 
 (defvar elisp-path '("~/git/configurations-and-scripts/emacs/elisp/"))
@@ -17,7 +13,7 @@
 	("gnu" . "http://elpa.gnu.org/packages/")
 	("melpa" . "https://melpa.org/packages/")
 	("marmalade" . "http://marmalade-repo.org/packages/")))
-(package-initialize)
+;; (package-initialize)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; spell checking ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -115,7 +111,7 @@
 
 ;; Directory containing the binaries of the installed R version
 (setq
- R-binary-folder "~/software/R/R-3.4.0/bin/"
+ R-binary-folder "~/software/R/R-3.5.0/bin/"
  ;; A comment is a comment. No matter how many dashes
  ess-indent-with-fancy-comments nil
  ;; Try to complete statements
@@ -228,7 +224,7 @@
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (require 'org)
 ;; Exporting Org files into various formats.
-(require 'ox-html)
+;;(require 'ox-html)
 (require 'ox-latex)
 
 (global-set-key "\C-ca" 'org-agenda)
@@ -329,35 +325,35 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-ref for handling citations. Requires the hydra, parsebib,
 ;; helm, helm-bibtex package
-(add-to-list 'load-path
-	     "~/git/configurations-and-scripts/emacs/org-ref")
-(require 'org-ref)
+;; (add-to-list 'load-path
+;; 	     "~/git/configurations-and-scripts/emacs/org-ref")
+;; (require 'org-ref)
 
-;; Local bibliography. This one is just available when the PKS home
-;; is mounted.
-(if (file-exists-p "~/phd/thesis/Bib_190917.bib")
-    (setq
-     org-ref-pdf-directory "~/pks_home/material/"
-     bibtex-completion-library-path "~/pks_home/material/"
-     ;; open the PDF using a PDF viewer
-     bibtex-completion-pdf-open-function
-     (lambda (fpath) (start-process "open" "*open*" "open" fpath))))
-;; Assuring correct LaTeX exportation of org-ref commands
-(setq 
- reftex-default-bibliography '("~/phd/thesis/Bib_190917.bib")
- org-ref-default-bibliography '("~/phd/thesis/Bib_190917.bib")
- bibtex-completion-bibliography "~/phd/thesis/Bib_190917.bib"
- org-latex-pdf-process
- '("pdflatex -interaction nonstopmode -output-directory %o %f"
-   "bibtex %b"
-   "pdflatex -interaction nonstopmode -output-directory %o %f"
-   "pdflatex -interaction nonstopmode -output-directory %o %f"))
-;; Helpful tools for retrieving bibtex entries
-(require 'doi-utils)
-(require 'org-ref-isbn)
-(require 'org-ref-arxiv)
-(require 'org-ref-pdf) ;; allows drag and drop of PDFs
-(require 'org-ref-url-utils) ;; drag and drop from the web browser
+;; ;; Local bibliography. This one is just available when the PKS home
+;; ;; is mounted.
+;; (if (file-exists-p "~/phd/thesis/Bib_190917.bib")
+;;     (setq
+;;      org-ref-pdf-directory "~/pks_home/material/"
+;;      bibtex-completion-library-path "~/pks_home/material/"
+;;      ;; open the PDF using a PDF viewer
+;;      bibtex-completion-pdf-open-function
+;;      (lambda (fpath) (start-process "open" "*open*" "open" fpath))))
+;; ;; Assuring correct LaTeX exportation of org-ref commands
+;; (setq 
+;;  reftex-default-bibliography '("~/phd/thesis/Bib_190917.bib")
+;;  org-ref-default-bibliography '("~/phd/thesis/Bib_190917.bib")
+;;  bibtex-completion-bibliography "~/phd/thesis/Bib_190917.bib"
+;;  org-latex-pdf-process
+;;  '("pdflatex -interaction nonstopmode -output-directory %o %f"
+;;    "bibtex %b"
+;;    "pdflatex -interaction nonstopmode -output-directory %o %f"
+;;    "pdflatex -interaction nonstopmode -output-directory %o %f"))
+;; ;; Helpful tools for retrieving bibtex entries
+;; (require 'doi-utils)
+;; (require 'org-ref-isbn)
+;; (require 'org-ref-arxiv)
+;; (require 'org-ref-pdf) ;; allows drag and drop of PDFs
+;; (require 'org-ref-url-utils) ;; drag and drop from the web browser
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;; Diverse ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

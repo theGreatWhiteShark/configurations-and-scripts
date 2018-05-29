@@ -1,16 +1,16 @@
-xrandr --output LVDS1 --auto
+xrandr --output LVDS-1 --auto
 
 # Test whether a HDMI1 connection was established. If so, try to make
 # to make the setup work iteratively. 
-if [ $(xrandr --current | grep "HDMI1 connected" | wc -m) > 0 ];then
-    xrandr --output HDMI1 --above LVDS1
-    xrandr --output HDMI1 --rotate left
-    xrandr --output HDMI1 --above LVDS1
-    xrandr --output HDMI1 --auto
-    ## restore the background image
+if [ $(xrandr --current | grep "HDMI-1 connected" | wc -m) -gt 0 ];then
+    xrandr --output HDMI-1 --above LVDS-1
+    xrandr --output HDMI-1 --rotate left
+    xrandr --output HDMI-1 --above LVDS-1
+    xrandr --output HDMI-1 --auto
+    # restore the background image
     nitrogen --restore &
 else
-    ## restore the background image
+    # restore the background image
     nitrogen --restore &
 fi
 

@@ -16,12 +16,12 @@ touch $HOME/.profile
 # R
 ln -as $HOME/git/configurations-and-scripts/R/.Rprofile $HOME/.Rprofile
 # i3 window manager
-ln -s $HOME/git/configurations-and-scripts/i3/.i3status.conf-temeluchus $HOME/.i3status.conf
+ln -s $HOME/git/configurations-and-scripts/i3/.i3status.conf-abyzou $HOME/.i3status.conf
 mkdir $HOME/.i3
-ln -s $HOME/git/configurations-and-scripts/i3/config-temeluchus $HOME/.i3/config
+ln -s $HOME/git/configurations-and-scripts/i3/config-abyzou $HOME/.i3/config
 # Terminator setting
 mkdir -p $HOME/.config/terminator
-ln -s $HOME/git/configurations-and-scripts/linux/.config/terminator/config $HOME/.config/terminator/config
+ln -s $HOME/git/configurations-and-scripts/linux/config/terminator/config $HOME/.config/terminator/config
 
 ## Make directories required for mounting my institut's home via sshfs
 sudo mkdir /data
@@ -29,9 +29,9 @@ sudo chmod a+xw /data
 mkdir ~/pks_home
 
 ## Include the Nextcloud repositories
-echo 'deb http://download.opensuse.org/repositories/home:/ivaradi/Debian_8.0/ /' > nextcloud-client.list
+echo 'deb http://download.opensuse.org/repositories/home:/ivaradi/Debian_9.0/ /' > nextcloud-client.list
 sudo mv ./nextcloud-client.list /etc/apt/sources.list.d/
-wget -q -O - http://download.opensuse.org/repositories/home:/ivaradi/Debian_8.0/Release.key > nextcloud.key
+wget -q -O - http://download.opensuse.org/repositories/home:/ivaradi/Debian_9.0/Release.key > nextcloud.key
 sudo apt-key add ./nextcloud.key
 rm ./nextcloud.key
 sudo apt update
@@ -57,7 +57,7 @@ cd ../ESS
 make
 
 ## Install helpful packages
-sudo apt -y install apt-file sshfs at nitrogen imagemagick pandoc scrot xinput xbacklight xcompmgr meld lshw thunderbird thunar clementine kupfer terminator wicd-gtk pasystray pavucontrol ispell ingerman wngerman aspell-de htop
+sudo apt -y install apt-file sshfs at nitrogen imagemagick pandoc scrot xinput xbacklight xcompmgr meld lshw thunderbird thunar clementine kupfer terminator wicd-gtk pasystray pavucontrol ispell ingerman wngerman aspell-de htop nextcloud-client
 sudo apt-file update
 
 
@@ -66,7 +66,8 @@ sudo apt -y install xorg-dev texlive-fonts-extra texinfo default-jre default-jre
 
 
 ## Setting up the R environment
-sudo apt -y install gfortran fort77 texlive texlive-fonts-extra libreadline-dev xorg-dev default-jdk libzip-dev lbzip2 libbz2-dev
+sudo apt -y install gfortran fort77 texlive texlive-fonts-extra
+libreadline-dev xorg-dev default-jdk libzip-dev lbzip2 libbz2-dev libssl-dev
 
 mkdir $HOME/software/R
 cd $HOME/software/R
@@ -78,17 +79,53 @@ cd $HOME/software/R/R-3.5.0
 make
 sudo make install
 
+# This script will install a bunch of R libraries to get you
+# started. But it most probably won't work since the user has to agree
+# to install the libraries locally first.
 Rscript --no-init-file -e "options( repos = 'https://cran.uni-muenster.de/'); source( '~/git/configurations-and-scripts/R/package_installation.R' )"
 
 
 ## Install audio-related packages (also to
 ## install corresponding packages)
-sudo apt -y install qt5-default libqt5xmlpatterns5-dev libarchive-dev libsndfile1-dev libasound2-dev liblo-dev libpulse-dev libcppunit-dev liblrdf0-dev liblash-compat-dev librubberband-dev ecasound libecasoundc-dev libcsound64-dev csound csound-utils csound-data tuxguitar tuxguitar-alsa tuxguitar-fluidsynth tuxguitar-jack libjack-jackd2-dev ccache cmake supercollider
+sudo apt -y install ecasound libecasoundc-dev libcsound64-dev csound csound-utils csound-data tuxguitar tuxguitar-alsa tuxguitar-fluidsynth tuxguitar-jack supercollider ambdec pavumeter paprefs pulseaudio-module-jack
+
+## Link audio configuration files
+[ -f $HOME/.ambdecrc ] && rm $HOME/.ambdecrc
+[ -f $HOME/.ambdec-config-stereo ] && rm $HOME/.ambdec-config-stereo
+mkdir $HOME/.config/pulse
+mkdir $HOME/.config/rncbc.org
+
+ln -s $HOME/git/configurations-and-scripts/linux/.amdecrc $HOME/.ambdecrc
+ln -s $HOME/git/configurations-and-scripts/linux/.amdec-config-stereo $HOME/.ambdec-config-stereo
+ln -s $HOME/git/configurations-and-scripts/linux/config/pulse/client.conf $HOME/.config/pulse/client.conf
+ln -s $HOME/git/configurations-and-scripts/linux/config/pulse/default.pa $HOME/.config/pulse/default.pa
+ln -s $HOME/git/configurations-and-scripts/linux/config/rncbc.org/QjackCtl.conf $HOME/.config/rncbc.org/QjackCtl.conf
 
 ## Install LADSPA plugins
-sudo apt -y amb-plugins autotalent blepvco blop bs2b-ladspa calf-ladspa cmt csladspa fil-plugins guitarix-ladspa invada-studio-plugins-ladspa ladspalist mcp-plugins omins pd-plugin rev-plugins rubberband-ladspa ste-plugins swh-plugins tap-plugins vco-plugins wah-plugins zam-plugins
+sudo apt -y install amb-plugins autotalent blepvco blop bs2b-ladspa calf-ladspa cmt csladspa fil-plugins guitarix-ladspa invada-studio-plugins-ladspa ladspalist mcp-plugins omins pd-plugin rev-plugins rubberband-ladspa ste-plugins swh-plugins tap-plugins vco-plugins wah-plugins zam-plugins
 
+## Compile and install hydrogen
+sudo apt -y install qt5-default libqt5xmlpatterns5-dev libarchive-dev libsndfile1-dev libasound2-dev liblo-dev libpulse-dev libcppunit-dev liblrdf0-dev liblash-compat-dev librubberband-dev libjack-jackd2-dev ccache cmake libtar-dev doxygen
+git clone https://github.com/hydrogen-music/hydrogen.git $HOME/git/hydrogen
+cd $HOME/git/hydrogen
+./build.sh mm
+cd build
+sudo make install
 
+## Compile and install the NON DAW
+sudo apt -y install libsigc++-2.0-dev
+
+git clone git://git.tuxfamily.org/gitroot/non/non.git $HOME/git/non
+cd $HOME/git/non
+git submodule update --init --recursive
+cd lib/ntk
+./waf configure
+./waf
+sudo ./waf install
+cd ../..
+./waf configure
+./waf
+sudo ./waf install
 
 ## Final update
 sudo apt update

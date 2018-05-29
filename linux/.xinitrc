@@ -8,9 +8,10 @@ xset -dpms
 # Don't blank the video device
 xset s noblank
 
+# Load my X11 configuration
+[ -f ~/.xprofile ] && source ~/.xprofile
+
 # Startup i3
 exec i3
 
-# Load my X11 configuration
-[ -f ~/.xprofile ] && source ~/.xprofile
 
