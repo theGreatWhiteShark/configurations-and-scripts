@@ -163,23 +163,23 @@ bindsym $mod+Ctrl+m exec "~/git/configurations-and-scripts/i3/i3lock_screenshot.
 exec xautolock -time 45 -locker '~/git/configurations-and-scripts/i3/i3lock_screenshot.sh'
 
 # increase and decrease volume
-bindsym $mod+F2 exec "amixer -D pulse sset Master 3%-"
-bindsym $mod+F3 exec "amixer -D pulse sset Master 3%+"
-bindsyn $mod+F1 exec "amixer -D pulse sset Master toggle"
+bindsym $mod+F2 exec "amixer sset Master 3%-"
+bindsym $mod+F3 exec "amixer sset Master 3%+"
+bindsyn $mod+F1 exec "amixer sset Master toggle"
 
 # shortcuts for emacs, thunar etc.
 bindsym $mod+Ctrl+e exec "emacs"
 bindsym $mod+Ctrl+d exec "thunar"
 
 # rotate the external monitor by 90 degrees
-bindsym $mod+o exec "xrandr --output HDMI1 --rotate left"
-bindsym $mod+Shift+o exec "xrandr --output HDMI1 --rotate normal"
+bindsym $mod+o exec "xrandr --output HDMI-1 --rotate left"
+bindsym $mod+Shift+o exec "xrandr --output HDMI-1 --rotate normal"
 
 # increase and decrease the brightness of the screen by 10 percent and
 # revert possible changes applied by the adjust_brightness.py script
 # (because the reduced brightness by xbacklight is just way better)
-bindsym $mod+F5 exec "xrandr --output LVDS1 --brightness 1 & xbacklight -dec 10"
-bindsym $mod+F6 exec "xrandr --output LVDS1 --brightness 1 & xbacklight -inc 10"
+bindsym $mod+F5 exec "xrandr --output LVDS-1 --brightness 1 & xbacklight -dec 10"
+bindsym $mod+F6 exec "xrandr --output LVDS-1 --brightness 1 & xbacklight -inc 10"
 # Use a Python3 script to decrease and increase the brightness of all
 # screens by 10 percent simultaneously
 bindsym $mod+Shift+F5 exec "~/git/configurations-and-scripts/i3/adjust_brightness.py -0.05"
