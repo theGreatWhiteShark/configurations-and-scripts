@@ -583,26 +583,22 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(ansi-color-names-vector
    ["#3F3F3F" "#CC93932" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
  '(custom-safe-themes
-   (quote
-    ("6383295fb0c974d24c9dca1230c0489edf1cd5dd03d4b036aab290b6d3ceb50c" default)))
+   '("6383295fb0c974d24c9dca1230c0489edf1cd5dd03d4b036aab290b6d3ceb50c" default))
  '(delete-selection-mode nil)
  '(fci-rule-color "#383838")
  '(inhibit-startup-screen t)
  '(mark-even-if-inactive t)
  '(markdown-enable-math t)
  '(org-agenda-files
-   (quote
-    ("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org")))
+   '("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org"))
  '(package-selected-packages
-   (quote
-    (sclang-extensions csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode js2-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex)))
+   '(sclang-extensions csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode js2-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
  '(polymode-exporter-output-file-format "%s")
- '(scroll-bar-mode (quote right))
+ '(scroll-bar-mode 'right)
  '(transient-mark-mode 1)
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
-   (quote
-    ((20 . "#BC8383")
+   '((20 . "#BC8383")
      (40 . "#CC9393")
      (60 . "#DFAF8F")
      (80 . "#D0BF8F")
@@ -619,7 +615,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
      (300 . "#7CB8BB")
      (320 . "#8CD0D3")
      (340 . "#94BFF3")
-     (360 . "#DC8CC3"))))
+     (360 . "#DC8CC3")))
  '(vc-annotate-very-old-color "#DC8CC3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -740,6 +736,20 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; Easy evaluate lisp expressions even if `lightning-keymap-mode' is
 ;; activated. (Mapped to C-j in default Emacs).
 (global-set-key (kbd "C-M-e") 'eval-print-last-sexp)
+(add-hook 'ess-mode-hook
+	  (lambda()
+	    (local-set-key (kbd "C-M-e") 'eval-print-last-sexp)))
+
+(add-hook 'ess-mode-hook
+	  (lambda()
+	    ;; Copy the syntax table of the ESS-mode and set the "`"
+	    ;; symbol to a paired delimiter. Else, functions like
+	    ;; `ess-smart-S-assign` won't work as expected in
+	    ;; `polymode`.
+	    (setq ess-r-syntax-table-modified
+		  (make-syntax-table ess-r-syntax-table))
+	    (modify-syntax-entry ?` "$" ess-r-syntax-table-modified)
+	    (set-syntax-table ess-r-syntax-table-modified)))
 
 ;; Use auto-fill-mode in various modes
 (dolist (hook '(text-mode-hook
@@ -762,3 +772,11 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-to-list 'load-path
 	     "~/git/configurations-and-scripts/emacs/scel/el")
 (require 'sclang)
+
+;; Use the insane tab width of the Hydrogen code base.
+(add-hook 'c++-mode-hook '(lambda()
+			    (setq tag-width 8)
+			    (setq c-basic-offset 8)
+			    (setq c-indent-level 8)
+			    (setq indent-tabs-mode t)
+			    (setq c++-tab-always-indent t)))
