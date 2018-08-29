@@ -127,20 +127,20 @@
  (concatenate 'string R-binary-folder "R")
  ;; AUCTeX interface for Sweave
  ess-swv-plug-into-AUCTeX-p t
- ;; activating polymode and bookdown-mode
+ ;; activating polymode and markdown-mode
  load-path
  (append
-  '("~/git/configurations-and-scripts/emacs/polymode/"
-    "~/git/configurations-and-scripts/emacs/polymode/modes"
-    "~/git/configurations-and-scripts/emacs/bookdown-mode/")
+  '("~/git/configurations-and-scripts/emacs/polymode-clean/"
+    "~/git/configurations-and-scripts/emacs/polymode-clean/modes"
+    "~/git/configurations-and-scripts/emacs/markdown-mode/")
   load-path))
-(require 'bookdown-mode)
+(require 'markdown-mode)
 (require 'poly-R)
-(require 'poly-bookdown)
-(add-to-list 'auto-mode-alist '("\\.md" . poly-bookdown-mode))
+(require 'poly-markdown)
+(add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.Snw" . poly-noweb+r-mode))
 (add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
-(add-to-list 'auto-mode-alist '("\\.Rmd" . poly-bookdown+r-mode))
+(add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; Python ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -233,9 +233,8 @@
  org-agenda-files (list
 		   "~/git/tsa/org/work.org"
 		   "~/git/tsa/org/private.org"
-		   "~/git/tsa/org/software.org"
-		   "~/git/tsa/org/notes/papers.org"
-		   "~/git/tsa/org/notes/algorithms-computation.org")
+		   "~/git/tsa/org/audio.org"
+		   "~/git/tsa/org/software.org")
  org-directory "~/git/tsa/org"
  ;; Add a time stamp whenever a TODO item is marked as DONE
  org-log-done "time"
@@ -243,7 +242,7 @@
  ;; children tasks were accomplished.
  org-enforce-todo-dependencies t
  ;; Display the agenda in a slightly more compact format.
- org-agenda-compact-blocks t
+ org-agenda-compact-blocks nil
  ;; Create an archive for each individual org file.
  org-archive-location "%s_archive::* Archived Tasks"
  ;; Don't ask for confirmation when evaluating code blocks in Org.
@@ -285,75 +284,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
    "bibtex latex/$basename %b)"
    "pdflatex -interaction nonstopmode -shell-escape -output-directory latex/%o latex/%f")
  )
-;; The custom class 'thesis' binds it all together.
-(add-to-list 'org-latex-classes '("thesis"
-				  "\\documentclass{article}
-[NO-DEFAULT-PACKAGES]
-[PACKAGES]
-[EXTRA]"
-                ("\\section{%s}" . "\\section*{%s}")
-                ("\\subsection{%s}" "\\newpage" "\\subsection*{%s}" "\\newpage")
-                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
-;; Use reftex to handle citations
-(require 'reftex-cite)
-(defun org-mode-reftex-setup ()
-  (interactive)
-  (and (buffer-file-name) (file-exists-p (buffer-file-name))
-       (progn
-	 ;; Reftex should use the org file as master file. See C-h v
-	 ;;TeX-master for infos.
-	 (setq TeX-master t)
-	 (turn-on-reftex)
-	 ;; enable auto-revert-mode to update reftex when bibtex file
-	 ;; changes on disk
-	 (global-auto-revert-mode t)
-	 (reftex-parse-all)
-	 ;; add a custom reftex cite format to insert links
-	 ;; This also changes any call to org-citation!
-	 (reftex-set-cite-format
-	  '((?c . "\\citet{%l}") ; natbib inline text
-	    (?i . "\\citep{%l}") ; natbib with parens
-	    )))))
-(add-hook 'org-mode-hook 'org-mode-reftex-setup)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; org-mode
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;; org-ref ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; org-ref for handling citations. Requires the hydra, parsebib,
-;; helm, helm-bibtex package
-;; (add-to-list 'load-path
-;; 	     "~/git/configurations-and-scripts/emacs/org-ref")
-;; (require 'org-ref)
-
-;; ;; Local bibliography. This one is just available when the PKS home
-;; ;; is mounted.
-;; (if (file-exists-p "~/phd/thesis/Bib_190917.bib")
-;;     (setq
-;;      org-ref-pdf-directory "~/pks_home/material/"
-;;      bibtex-completion-library-path "~/pks_home/material/"
-;;      ;; open the PDF using a PDF viewer
-;;      bibtex-completion-pdf-open-function
-;;      (lambda (fpath) (start-process "open" "*open*" "open" fpath))))
-;; ;; Assuring correct LaTeX exportation of org-ref commands
-;; (setq 
-;;  reftex-default-bibliography '("~/phd/thesis/Bib_190917.bib")
-;;  org-ref-default-bibliography '("~/phd/thesis/Bib_190917.bib")
-;;  bibtex-completion-bibliography "~/phd/thesis/Bib_190917.bib"
-;;  org-latex-pdf-process
-;;  '("pdflatex -interaction nonstopmode -output-directory %o %f"
-;;    "bibtex %b"
-;;    "pdflatex -interaction nonstopmode -output-directory %o %f"
-;;    "pdflatex -interaction nonstopmode -output-directory %o %f"))
-;; ;; Helpful tools for retrieving bibtex entries
-;; (require 'doi-utils)
-;; (require 'org-ref-isbn)
-;; (require 'org-ref-arxiv)
-;; (require 'org-ref-pdf) ;; allows drag and drop of PDFs
-;; (require 'org-ref-url-utils) ;; drag and drop from the web browser
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;; Diverse ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -590,7 +520,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(mark-even-if-inactive t)
  '(markdown-enable-math t)
  '(org-agenda-files
-   '("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org"))
+   '("~/git/tsa/org/work.org" "~/git/tsa/org/private.org"
+     "~/git/tsa/org/software.org" "~/git/tsa/org/audio.org"))
  '(package-selected-packages
    '(sclang-extensions csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode js2-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
  '(polymode-exporter-output-file-format "%s")
@@ -722,6 +653,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; front of the auto-most-alist but append it.
 (add-to-list 'auto-mode-alist '("config\\([^\\.]\\)*" . conf-mode) t)
 (add-to-list 'auto-mode-alist '("\\.conf" . conf-mode))
+(add-to-list 'auto-mode-alist '("Dockerfile" . conf-mode))
 
 ;; Customize the grep command
 ;; ‘-i’   Ignore case distinctions
@@ -749,6 +681,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 	    (setq ess-r-syntax-table-modified
 		  (make-syntax-table ess-r-syntax-table))
 	    (modify-syntax-entry ?` "$" ess-r-syntax-table-modified)
+	    (modify-syntax-entry ?% "w" ess-r-syntax-table-modified)
 	    (set-syntax-table ess-r-syntax-table-modified)))
 
 ;; Use auto-fill-mode in various modes

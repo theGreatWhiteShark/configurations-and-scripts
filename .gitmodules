@@ -18,13 +18,10 @@
 	url = https://github.com/dandavison/minimal.git
 [submodule "emacs/polymode"]
 	path = emacs/polymode
-	url = git@github.com:theGreatWhiteShark/polymode.git
+	url = https://github.com/vspinu/polymode.git
 [submodule "emacs/org-mode"]
 	path = emacs/org-mode
 	url = https://code.orgmode.org/bzg/org-mode.git
-[submodule "emacs/org-ref"]
-	path = emacs/org-ref
-	url = https://github.com/jkitchin/org-ref.git
 [submodule "emacs/python-mode"]
 	path = emacs/python-mode
 	url = https://gitlab.com/python-mode-devs/python-mode.git
@@ -34,9 +31,6 @@
 [submodule "emacs/lightning-keymap-mode"]
 	path = emacs/lightning-keymap-mode
 	url = git@github.com:theGreatWhiteShark/lightning-keymap-mode.git
-[submodule "emacs/bookdown-mode"]
-	path = emacs/bookdown-mode
-	url = git@github.com:theGreatWhiteShark/bookdown-mode.git
 [submodule "emacs/yasnippet"]
 	path = emacs/yasnippet
 	url = https://github.com/joaotavora/yasnippet.git
