@@ -89,7 +89,7 @@ export GOROOT="$HOME/.go1.9.2"
 export GOROOT_BOOTSTRAP="$HOME/.go1.4"
 
 ## Lua
-export LUALIB="$HOME/software/lua/lua-5.3.4/src"
+export LUALIB="$HOME/software/lua/lua-5.3.5/src"
 export LUA_PATH="$HOME/.luarocks/share/lua/5.3/?.lua;$HOME/.luarocks/share/lua/5.3/?/init.lua;/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;/usr/local/lib/lua/5.3/?.lua;/usr/local/lib/lua/5.3/?/init.lua;./?.lua;./?/init.lua;$HOME/git/configurations-and-scripts/lua/?.lua"
 export LUA_CPATH="$HOME/.luarocks/lib/lua/5.3/?.so;/usr/local/lib/lua/5.3/?.so;/usr/local/lib/lua/5.3/loadall.so;./?.so"
 # Load some packages during the start-up of Lua
@@ -169,6 +169,7 @@ if [ $( echo $PATH | awk 'BEGIN {ck=0};/.gem\/ruby/ {ck=1};END {print ck}') == 0
 fi
 ## Using Anaconda3
 if [ $( echo $PATH | awk 'BEGIN {ck=0};/anaconda3\/bin/ {ck=1};END {print ck}') == 0 ];then
+    export NOCONDA_PATH=$PATH
     export PATH=$HOME/.anaconda3/bin:$PATH
 fi
 
