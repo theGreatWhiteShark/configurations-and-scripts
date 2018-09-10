@@ -130,16 +130,16 @@
  ;; activating polymode and markdown-mode
  load-path
  (append
-  '("~/git/configurations-and-scripts/emacs/polymode-clean/"
-    "~/git/configurations-and-scripts/emacs/polymode-clean/modes"
+  '("~/git/configurations-and-scripts/emacs/polymode/"
+    "~/git/configurations-and-scripts/emacs/poly-R"
+    "~/git/configurations-and-scripts/emacs/poly-noweb"
+    "~/git/configurations-and-scripts/emacs/poly-markdown"
     "~/git/configurations-and-scripts/emacs/markdown-mode/")
   load-path))
 (require 'markdown-mode)
 (require 'poly-R)
 (require 'poly-markdown)
 (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.Snw" . poly-noweb+r-mode))
-(add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
 (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
