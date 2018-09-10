@@ -85,7 +85,7 @@ alias ogit='tempdir=$(pwd); cd $HOME/git/tsa; git commit -am "org"; git push; cd
 
 ## Go
 export GOPATH="$HOME/.go"
-export GOROOT="$HOME/.go1.9.2"
+export GOROOT="$HOME/.go1.11"
 export GOROOT_BOOTSTRAP="$HOME/.go1.4"
 
 ## Lua
@@ -168,10 +168,10 @@ if [ $( echo $PATH | awk 'BEGIN {ck=0};/.gem\/ruby/ {ck=1};END {print ck}') == 0
     export PATH=$HOME/.gem/ruby/2.1.0/bin:$PATH
 fi
 ## Using Anaconda3
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/anaconda3\/bin/ {ck=1};END {print ck}') == 0 ];then
-    export NOCONDA_PATH=$PATH
-    export PATH=$HOME/.anaconda3/bin:$PATH
-fi
+# if [ $( echo $PATH | awk 'BEGIN {ck=0};/anaconda3\/bin/ {ck=1};END {print ck}') == 0 ];then
+#     export NOCONDA_PATH=$PATH
+#     export PATH=$HOME/.anaconda3/bin:$PATH
+# fi
 
 # For working with at I need to define such function
 function stop_clementine {
