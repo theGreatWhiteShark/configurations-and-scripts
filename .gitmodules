@@ -37,3 +37,12 @@
 [submodule "emacs/scel"]
 	path = emacs/scel
 	url = https://github.com/supercollider/scel.git
+[submodule "emacs/poly-R"]
+	path = emacs/poly-R
+	url = https://github.com/polymode/poly-R
+[submodule "emacs/poly-noweb"]
+	path = emacs/poly-noweb
+	url = https://github.com/polymode/poly-noweb
+[submodule "emacs/poly-markdown"]
+	path = emacs/poly-markdown
+	url = https://github.com/polymode/poly-markdown
