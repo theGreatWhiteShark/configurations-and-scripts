@@ -43,3 +43,6 @@
 [submodule "emacs/poly-markdown"]
 	path = emacs/poly-markdown
 	url = https://github.com/polymode/poly-markdown
+[submodule "emacs/poly-noweb"]
+	path = emacs/poly-noweb
+	url = https://github.com/polymode/poly-noweb
