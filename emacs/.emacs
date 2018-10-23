@@ -3,6 +3,8 @@
 ;; loading personal scripts and functions 
 (defvar elisp-path '("~/git/configurations-and-scripts/emacs/elisp/"))
 (mapcar #'(lambda(p) (add-to-list 'load-path p)) elisp-path)
+;; Path to the lisp sources of Emacs
+(setq emacs-lisp-source-path "~/git/emacs/lisp")
 
 ;; Using the MELPA repository (this has to be on top or packages
 ;; installed using MELPA will not be found by this script
@@ -14,6 +16,18 @@
 	("melpa" . "https://melpa.org/packages/")
 	("marmalade" . "http://marmalade-repo.org/packages/")))
 ;; (package-initialize)
+
+;; remapping caps-lock to M-x
+(if (eq window-system 'x)
+    (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
+(define-key key-translation-map [f13] (kbd "M-x"))
+
+;; Use company for autocompletion
+(add-to-list 'load-path
+	     "~/git/configurations-and-scripts/emacs/company")
+(require 'company)
+(require 'company-gtags)
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; spell checking ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -73,23 +87,106 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; using helm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path
+	     "~/git/configurations-and-scripts/emacs/helm")
 (require 'helm)
 (require 'helm-config)
-;; remapping caps-lock to M-x
-(if (eq window-system 'x)
-    (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
-(define-key key-translation-map [f13] (kbd "M-x"))
+(require 'helm-gtags)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-unset-key (kbd "C-x b"))
-(global-set-key (kbd "C-x b") 'helm-buffers-list)
+(global-set-key (kbd "C-x b") 'helm-mini)
 (global-unset-key (kbd "C-x rb"))
 (global-set-key (kbd "C-x rb") 'helm-bookmarks)
 (global-unset-key (kbd "C-x C-f"))
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "M-s") 'helm-swoop)
 
-;; Using TAB for completion within the helm seach
+;; Using TAB for completion within the helm search and custom key
+;; bindings. 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-z") 'helm-select-action)
+(global-set-key (kbd "C-c h l") 'helm-locate)
+(global-set-key (kbd "C-c h s") 'helm-semantic-or-imenu)
+(global-set-key (kbd "C-c h o") 'helm-occur)
+(global-set-key (kbd "C-c h i") 'helm-info)
+(global-set-key (kbd "C-c h r") 'helm-resume)
+(global-set-key (kbd "C-c h SPC") 'helm-all-mark-rings)
+(global-set-key (kbd "C-c h c") 'helm-calcul-expression)
+
+;; Use helm-projectile
+(require 'helm-projectile)
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+(global-set-key (kbd "C-c h f") 'helm-projectile-find-file)
+(global-set-key (kbd "C-c h p") 'helm-projectile-switch-project)
+(global-set-key (kbd "C-c h d") 'helm-projectile-find-other-file)
+(global-set-key (kbd "C-c h g") 'helm-projectile-grep)
+(global-set-key (kbd "C-c h b")
+  'helm-projectile-switch-to-buffer)
+
+(setq projectile-switch-project-action 'helm-projectile
+      projectile-enable-caching t)
+
+;; General helm configuration
+(setq helm-split-window-in-side-p t ;; open helm buffer in current
+				    ;; window
+      helm-move-to-line-cycle-in-source t ;; periodic boundary
+					  ;; conditions in selection
+      helm-ff-file-name-history-use-recentf t
+      helm-echo-input-in-header-line t ;; Show search in both the echo
+      ;; line and in the first line of the current buffer.
+      helm-buffers-fuzzy-matching t
+      helm-recentf-fuzzy-match t
+      helm-semantic-fuzzy-match t
+      )
+
+;; Configure the handling of gtags
+(setq helm-gtags-ignore-case t
+      helm-gtags-auto-update t
+      helm-gtags-use-input-at-cursor t
+      helm-gtags-pulse-at-cursor t
+      helm-gtags-prefix-key "\C-cg"
+      helm-gtags-suggested-key-mapping t
+      helm-gtags-direct-helm-completing t)
+
+
+;; Define custom keyboard mapping to harness the power of helm-gtags
+;; alongside of lightning-keymap-mode.
+(global-set-key (kbd "C-c g a")
+  'helm-gtags-tags-in-this-function)
+(global-set-key (kbd "C-c g f") 'helm-gtags-select)
+(global-set-key (kbd "C-c g s") 'helm-gtags-dwim)
+(global-set-key (kbd "C-c g o") 'helm-gtags-pop-stack)
+(global-set-key (kbd "C-c g p") 'helm-gtags-previous-history)
+(global-set-key (kbd "C-c g n") 'helm-gtags-next-history)
+(global-set-key (kbd "C-c j") 'helm-gtags-previous-history)
+(global-set-key (kbd "C-c k") 'helm-gtags-previous-history)
+(global-set-key (kbd "C-c l") 'helm-gtags-next-history)
+(global-set-key (kbd "C-c ;") 'helm-gtags-next-history)
+(global-set-key (kbd "C-c g r") 'helm-gtags-resume)
+(global-set-key (kbd "C-c g h") 'helm-gtags-show-stack)
+(global-set-key (kbd "C-c g c") 'helm-gtags-clear-all-stacks)
+(global-set-key (kbd "C-c g u") 'helm-gtags-update-tags)
+
+
+(dolist (hook '(lisp-interaction-mode-hook
+		emacs-lisp-mode-hook
+		c-mode-hook
+		c++-mode-hook
+		dired-mode-hook
+		eshell-mode-hook) t)
+  (add-hook hook (lambda() (helm-gtags-mode 1))))
+
+;; Use helm history expansion in eshell
+(require 'helm-eshell)
+(add-hook 'eshell-mode-hook
+	  #'(lambda()
+	      (define-key eshell-mode-map (kbd "C-c h h")
+		'helm-eshell-history)))
+(define-key minibuffer-local-map (kbd "C-c h h")
+  'helm-minibuffer-history)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; ESS and R ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -286,6 +383,80 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;; C/C++ & Qt & CEDET ;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Globally enable Semantic mode
+(require 'semantic)
+(require 'stickyfunc-enhance)
+(semantic-mode 1)
+;; Enable parsing via Semantic
+(global-semanticdb-minor-mode 1)
+(global-semantic-idle-scheduler-mode 1)
+
+;; Make Semantics aware of the Qt5 headers
+(require 'semantic/bovine/c)
+(require 'cc-mode)
+(load (expand-file-name "find-file.el" emacs-lisp-source-path))
+(setq qt-include-directory "/usr/include/x86_64-linux-gnu/qt5/")
+(dolist (file (directory-files qt-include-directory))
+  (let ((path (expand-file-name file qt-include-directory)))
+    (when (and (file-directory-p path)
+	       (not (or (equal file ".") (equal file ".."))))
+      (progn
+	(semantic-add-system-include path 'c++mode)
+	(add-to-list 'cc-search-directories path)))))
+;; Feed additional definitions of Qt5 to the lexical parser.
+(dolist (file (list "QtCore/qconfig.h" "QtCore/qconfig-dist.h"
+		    "QtCore/qconfig-large.h" "QtCore/qconfig-medium.h"
+		    "QtCore/qconfig-minimal.h" "QtCore/qconfig-nacl.h"
+		    "QtCore/qconfig-small.h" "QtCore/qglobal.h" ))
+  (add-to-list 'semantic-lex-c-preprocessor-symbol-file
+	       (expand-file-name file qt-include-directory)))
+;; Some more on semantics
+;; Display the interface of a function in the bottom minibuffer.
+(global-semantic-idle-summary-mode 1)
+;; Keep the line containing the definition of a function in the
+;; top-most line
+(add-to-list 'semantic-default-submodes
+	     'global-semantic-stickyfunc-mode)
+
+;; Use a dedicated mode for Qt build-system files
+(add-to-list 'load-path
+	     "~/git/configurations-and-scripts/emacs/qt-pro-mode")
+(require 'qt-pro-mode)
+(add-to-list 'auto-mode-alist '("\\.pr[io]$" . qt-pro-mode))
+
+;; Activating c-mode for CUDA files
+(setq auto-mode-alist (cons '(".cu$" . c-mode) auto-mode-alist))
+
+;; Use the insane tab width of the Hydrogen code base.
+(add-hook 'c++-mode-hook '(lambda()
+			    (setq tag-width 8)
+			    (setq c-basic-offset 8)
+			    (setq c-indent-level 8)
+			    (setq indent-tabs-mode t)
+			    (setq c++-tab-always-indent t)
+			    ;; use sr-speedbar with cc-mode
+			    ;; (sr-speedbar-open)
+			    ))
+
+;; Use irony for completion
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+;; ;; Use C headers to complete in headers using company
+;; (require 'company-c-headers)
+;; (add-to-list 'company-backends 'company-c-headers)
+;; (add-to-list 'company-c-headers-path-system "/usr/include/c++/6/")
+
+;; Use the many window view of GDB. To use it, one must supply the
+;; -i=mi argument to gdb
+(setq gdb-many-windows 1
+      gdb-show-main 1)
+
+;; Use function-args-mode
+(require 'function-args)
+(fa-config-default)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;; Diverse ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Enable the narrowing	     
@@ -322,9 +493,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-hook 'LaTeX-mode-hook
 	  (lambda() (local-set-key [tab] 'yas/expand)))
 
-;; Show line numbers
-(autoload 'linum-mode "linum" "toggle line numbers on/off" t)
-(global-set-key (kbd "C-<f5>") 'linum-mode)
+;; Show line numbers in all buffers
+(global-display-line-numbers-mode 1)
 
 ;; Highlight changes in files under version control
 (global-highlight-changes-mode t)
@@ -403,12 +573,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 		web-mode-hook) t)
   (add-hook hook 'rainbow-delimiters-mode))
 
-;; Using multi-term to open more than one terminal in emacs
-(autoload 'multi-term "multi-term" nil t)
-(autoload 'multi-term-next "multi-term" nil t)
-(setq multi-term-program "/bin/bash")
-(global-set-key (kbd "C-c t") 'multi-term-next)
-(global-set-key (kbd "C-c T") 'multi-term)
+;; Use Eshell over multiterm.
+(global-set-key (kbd "C-c t") 'eshell)
 
 ;; Changing the style of the mode-line
 (setq-default mode-line-format
@@ -516,14 +682,14 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
    '("6383295fb0c974d24c9dca1230c0489edf1cd5dd03d4b036aab290b6d3ceb50c" default))
  '(delete-selection-mode nil)
  '(fci-rule-color "#383838")
+ '(inferior-R-args "--no-restore-history --no-save ")
  '(inhibit-startup-screen t)
  '(mark-even-if-inactive t)
  '(markdown-enable-math t)
  '(org-agenda-files
-   '("~/git/tsa/org/work.org" "~/git/tsa/org/private.org"
-     "~/git/tsa/org/software.org" "~/git/tsa/org/audio.org"))
+   '("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org" "~/git/tsa/org/audio.org"))
  '(package-selected-packages
-   '(sclang-extensions csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode js2-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
+   '(package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags sclang-extensions csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode 'right)
  '(transient-mark-mode 1)
@@ -586,9 +752,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; Edit the Emacs file at work in el mode
 (add-to-list 'auto-mode-alist '(".emacs-tc08" . emacs-lisp-mode))
-
-;; Activating c-mode for CUDA files
-(setq auto-mode-alist (cons '(".cu$" . c-mode) auto-mode-alist))
 
 ;; Arduino
 (add-to-list 'load-path
@@ -667,10 +830,10 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; Easy evaluate lisp expressions even if `lightning-keymap-mode' is
 ;; activated. (Mapped to C-j in default Emacs).
-(global-set-key (kbd "C-M-e") 'eval-print-last-sexp)
+(global-set-key (kbd "C-x e") 'eval-print-last-sexp)
 (add-hook 'ess-mode-hook
 	  (lambda()
-	    (local-set-key (kbd "C-M-e") 'eval-print-last-sexp)))
+	    (local-set-key (kbd "C-x e") 'eval-print-last-sexp)))
 
 (add-hook 'ess-mode-hook
 	  (lambda()
@@ -705,11 +868,3 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-to-list 'load-path
 	     "~/git/configurations-and-scripts/emacs/scel/el")
 (require 'sclang)
-
-;; Use the insane tab width of the Hydrogen code base.
-(add-hook 'c++-mode-hook '(lambda()
-			    (setq tag-width 8)
-			    (setq c-basic-offset 8)
-			    (setq c-indent-level 8)
-			    (setq indent-tabs-mode t)
-			    (setq c++-tab-always-indent t)))
