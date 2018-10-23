@@ -1,1 +1,0 @@
-(define-package "ts-comint" "20161006.1034" "Run a Typescript interpreter in an inferior process window." 'nil :url "https://github.com/josteink/ts-comint" :keywords '("typescript" "node" "inferior-mode" "convenience"))

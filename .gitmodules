@@ -46,3 +46,12 @@
 [submodule "emacs/poly-markdown"]
 	path = emacs/poly-markdown
 	url = https://github.com/polymode/poly-markdown
+[submodule "emacs/qt-pro-mode"]
+	path = emacs/qt-pro-mode
+	url = https://github.com/EricCrosson/qt-pro-mode
+[submodule "emacs/helm"]
+	path = emacs/helm
+	url = https://github.com/emacs-helm/helm
+[submodule "emacs/company-mode"]
+	path = emacs/company-mode
+	url = https://github.com/company-mode/company-mode
