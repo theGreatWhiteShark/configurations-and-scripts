@@ -10,11 +10,11 @@ ln -s $HOME/git/configurations-and-scripts/emacs/.emacs.d $HOME/.emacs.d
 rm $HOME/.bashrc $HOME/.xinitrc $HOME/.xprofile $HOME/.xmodmap $HOME/.profile
 ln -s $HOME/git/configurations-and-scripts/bash/.bashrc $HOME/.bashrc
 ln -s $HOME/git/configurations-and-scripts/linux/.xinitrc $HOME/.xinitrc
-ln -s $HOME/git/configurations-and-scripts/linux/.xprofile $HOME/.xprofile-abyzou
+ln -s $HOME/git/configurations-and-scripts/linux/.xprofile-abyzou $HOME/.xprofile
 ln -s $HOME/git/configurations-and-scripts/linux/.xmodmap $HOME/.xmodmap
 touch $HOME/.profile
 # R
-ln -as $HOME/git/configurations-and-scripts/R/.Rprofile $HOME/.Rprofile
+ln -s $HOME/git/configurations-and-scripts/R/.Rprofile $HOME/.Rprofile
 # i3 window manager
 ln -s $HOME/git/configurations-and-scripts/i3/.i3status.conf-abyzou $HOME/.i3status.conf
 mkdir $HOME/.i3
@@ -37,9 +37,9 @@ rm ./nextcloud.key
 sudo apt update
 
 ## Compile the most recent Emacs version
-sudo apt -y install autoconf make gcc g++ pkg-config libasound2-dev libgtk-3-dev libxpm-dev libgnutls28-dev libtiff5-dev libgif-dev libxml2-dev libotf-dev libgpm-dev libncurses5-dev libjansson-dev liblcms2-dev 
+sudo apt -y install autoconf make gcc g++ pkg-config libasound2-dev libgtk-3-dev libxpm-dev libgnutls28-dev libtiff5-dev libgif-dev libxml2-dev libotf-dev libgpm-dev libncurses5-dev libjansson-dev liblcms2-dev texinfo
 
-git clone https://github.com/emacs-mirror/emacs.git $home/git/emacs
+git clone https://github.com/emacs-mirror/emacs.git $HOME/git/emacs
 cd $HOME/git/emacs/
 ./autogen.sh
 ./configure
@@ -57,19 +57,14 @@ cd ../ESS
 make
 
 ## Install helpful packages
-sudo apt -y install apt-file sshfs at nitrogen imagemagick pandoc scrot xinput xbacklight xcompmgr meld lshw thunderbird thunar clementine kupfer terminator wicd-gtk pasystray pavucontrol ispell ingerman wngerman aspell-de htop nextcloud-client
+sudo apt -y install apt-file sshfs at nitrogen imagemagick pandoc scrot xinput xbacklight xcompmgr meld lshw thunderbird thunar clementine kupfer terminator wicd-gtk pasystray pavucontrol ispell ingerman wngerman aspell-de htop nextcloud-client i3-wm i3blocks i3lock i3status
 sudo apt-file update
 
 
-## Installation of required packages
-sudo apt -y install xorg-dev texlive-fonts-extra texinfo default-jre default-jre-headless default-jdk texlive-latex-extra intltool emacs24 multitail libreadline6 libreadline6-dev libreadline6-dbg hunspell g++ emacs-goodies-el global sshfs apt-file libcairo2-dev libssh-dev libcurl4-gnutls-dev libxml2-dev
+## Installation of required packages for R
+sudo apt -y install xorg-dev texlive-fonts-extra default-jre default-jre-headless default-jdk texlive-latex-extra intltool multitail libreadline7 libreadline-dev hunspell g++ global libcairo2-dev libssh-dev libcurl4-gnutls-dev libxml2-dev gfortran fort77 texlive libzip-dev lbzip2 libbz2-dev libprotobuf-dev libv8-3.14-dev libgdal-dev gdal-bin libproj-dev libudunits2-dev libnetcdf-dev netcdf-bin libjq-dev protobuf-compiler
 
-
-## Setting up the R environment
-sudo apt -y install gfortran fort77 texlive texlive-fonts-extra
-libreadline-dev xorg-dev default-jdk libzip-dev lbzip2 libbz2-dev libssl-dev
-
-mkdir $HOME/software/R
+mkdir -p $HOME/software/R
 cd $HOME/software/R
 wget https://cran.r-project.org/src/base/R-3/R-3.5.0.tar.gz
 tar -xf R-3.5.0.tar.gz
