@@ -24,7 +24,7 @@
 
 ;; Use company for autocompletion
 (add-to-list 'load-path
-	     "~/git/configurations-and-scripts/emacs/company")
+	     "~/git/configurations-and-scripts/emacs/company-mode")
 (require 'company)
 (require 'company-gtags)
 (add-hook 'after-init-hook 'global-company-mode)
@@ -211,6 +211,8 @@
  R-binary-folder "~/software/R/R-3.5.0/bin/"
  ;; A comment is a comment. No matter how many dashes
  ess-indent-with-fancy-comments nil
+ ;; Evaluate all code in the global namespace.
+ ess-r-package-auto-enable-namespaced-evaluation nil
  ;; Try to complete statements
  ess-tab-complete-in-script 1
  ;; Use the GNU indentation style (2 whitespaces)
