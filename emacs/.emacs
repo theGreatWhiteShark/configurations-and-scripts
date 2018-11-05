@@ -819,6 +819,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-to-list 'auto-mode-alist '("config\\([^\\.]\\)*" . conf-mode) t)
 (add-to-list 'auto-mode-alist '("\\.conf" . conf-mode))
 (add-to-list 'auto-mode-alist '("Dockerfile" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\.in" . conf-mode))
 
 ;; Customize the grep command
 ;; ‘-i’   Ignore case distinctions
