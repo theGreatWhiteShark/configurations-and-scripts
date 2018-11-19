@@ -821,6 +821,12 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-to-list 'auto-mode-alist '("Dockerfile" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.in" . conf-mode))
 
+;; Use shell-script-mode for linux configuration files
+(add-to-list 'auto-mode-alist '(".xprofile*" . shell-script-mode))
+(add-to-list 'auto-mode-alist '(".profile*" . shell-script-mode))
+(add-to-list 'auto-mode-alist '(".xinitrc*" . shell-script-mode))
+(add-to-list 'auto-mode-alist '(".bash*" . shell-script-mode))
+
 ;; Customize the grep command
 ;; ‘-i’   Ignore case distinctions
 ;; ‘-n’   Prefix each line of output with line number
