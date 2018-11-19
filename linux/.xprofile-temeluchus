@@ -1,6 +1,6 @@
 ## Works with my Lenovo Thinkpad and an additional display above it connected via VGA
 ## Only apply the following if clause, if an external monitor is connect via HDMI
-if [ $(xrandr --current | grep HDMI-2 | grep disconnect | wc -w) -gt 0 ]; then
+if [ "$(xrandr --current | grep HDMI-2 | grep disconnect | wc -w)" -eq "0" ]; then
     xrandr --output HDMI-2 --auto --right-of eDP-1
     xrandr --output eDP-1 --mode 1360x768
 else
