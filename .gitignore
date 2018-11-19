@@ -33,7 +33,7 @@ emacs/.emacs.d/.aspell.en.pws
 
 # Ignoring changes in the installed package versions
 emacs/.emacs.d/elpa/*
-
+emacs/.emacs.d/network-security.data
 
 # Ignoring all Python caches
 python/**/__pycache__/
@@ -44,3 +44,15 @@ python/audio_crawling/*.json
 
 # Ignore large Java files
 java/bfg-1.12.15.jar
+
+# Abbreviations used in Emacs
+emacs/.emacs.d/abbrev_defs
+
+# Cache of the Emacs `eshell`
+emacs/.emacs.d/eshell/
+
+# Cache of Emacs `projectile` minor-mode
+emacs/.emacs.d/projectile-bookmarks.eld
+
+# Semantic database of Emacs for parsing source code files
+emacs/.emacs.d/semanticdb/
