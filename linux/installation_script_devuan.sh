@@ -107,6 +107,23 @@ cd $HOME/git/hydrogen
 cd build
 sudo make install
 
+## Compile and install JACK2. (It has to be configured to NOT use
+## systemd)
+sudo apt -y install libeigen3-dev libopus-dev opus-tools  libsamplerate0-dev install libdb-dev
+git clone https://github.com/jackaudio/jack2.git $HOME/git/jack2
+cd $HOME/git/jack2
+./waf configure --systemd=no
+./waf build
+sudo ./waf install
+
+## Compile and install QJackCtl
+git clone https://github.com/rncbc/qjackctl $HOME/git/qjackctl
+cd $HOME/qjackctl/
+./autogen.sh 
+./configure --enable-jack-version=yes --enable-dbus=no
+make
+sudo make install
+
 ## Compile and install the NON DAW
 sudo apt -y install libsigc++-2.0-dev
 
