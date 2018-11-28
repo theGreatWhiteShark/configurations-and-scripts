@@ -877,3 +877,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-to-list 'load-path
 	     "~/git/configurations-and-scripts/emacs/scel/el")
 (require 'sclang)
+
+;; Mute Emacs. Yes, there are devices playing a 'beep' received from Emacs.
+(setq visible-bell 1)
