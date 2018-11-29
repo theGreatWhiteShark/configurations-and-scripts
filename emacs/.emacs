@@ -280,7 +280,7 @@
 			      (setq py-indent-offset 2)))
 
 ;; Use jedi for autocompletion
-(add-hook 'python-mode-hook 'jedi:setup)
+;; (add-hook 'python-mode-hook 'jedi:setup)
 (setq
  jedi:complete-on-dot t
  ;; Use Python3 (Set up the virtual environment first outside of Emacs)
