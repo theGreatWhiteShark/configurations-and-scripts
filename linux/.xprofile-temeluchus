@@ -1,5 +1,12 @@
 ## Works with my Lenovo Thinkpad and an additional display above it connected via VGA
-xrandr --output VGA-1 --auto --above eDP-1
+## Only apply the following if clause, if an external monitor is connect via HDMI
+if [ "$(xrandr --current | grep HDMI-2 | grep disconnect | wc -w)" -eq "0" ]; then
+    xrandr --output HDMI-2 --auto --right-of eDP-1
+    xrandr --output eDP-1 --mode 1360x768
+else
+    xrandr --output eDP-1 --auto
+fi
+       
 
 # Reset the brightness adjustment of the previous session
 if [ -f "$HOME/.i3/brightness" ];then

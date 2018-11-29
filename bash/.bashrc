@@ -33,14 +33,14 @@ alias bfg='java -jar $HOME/git/configurations-and-scripts/java/bfg-1.12.15.jar '
 alias tuxguitar='lua $HOME/git/tux2zyn/tux2zyn.lua'
 # Just execute this command whenever I am at a machine I configured
 # myself 
-if [ $USER == "phil" ];then
+if [ "$USER" == "phil" ];then
     ## activating alternative keymap
     xmodmap ~/.xmodmap
     # Source my custom X11 configuration. But only if the screens are
     # not in their preferred output mode.
     # This is necessary since i3 doesn't source the .xprofile itself
     # (and we don't want to source it every time we are opening a shell)
-    if [ $(xrandr --current | grep *+ | wc -l) == 0 ];then
+    if [ "$(xrandr --current | grep *+ | wc -l)" -eq "0" ];then
        source ~/.xprofile
        i3 restart
        source ~/.xprofile
@@ -99,8 +99,8 @@ alias lua="$(which lua) -l 'inspect'"
 function pwd_prompt {
     pwd | sed "s/\/home\/$(echo $USER)/\~/" | awk 'BEGIN { FS = "/" };{ if ( NF > 3 ) print $1"/.../"$(NF-1)"/"$NF ; else print $0}'
 }
-if [ $(hostname) == "temeluchus" ] || [ $(hostname) == "abyzou" ]; then
-    if [ $HOME == "/root" ]; then
+if [ "$(hostname)" == "temeluchus" ] || [ "$(hostname)" == "abyzou" ]; then
+    if [ "$HOME" == "/root" ]; then
 	export PS1="\e[1;31m\]\h\e[0m\]: \[\e[1;34m\]\$(pwd_prompt) \[\e[1;31m\]$\[\e[0m\] ";
     else
 	export PS1="\h: \[\e[1;34m\]\$(pwd_prompt) \[\e[0;32m\]$\[\e[0m\] ";
@@ -127,48 +127,48 @@ alias qjob=function_qjob
 alias qs='qsub ./.job.sh'
 
 ## Only append those paths if they arn't already present
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/bin/ {ck=1};END {print ck}') == 0 ];then
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/usr\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
     PATH=$PATH:/usr/bin
 fi
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/local/ {ck=1};END {print ck}') == 0 ];then
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/usr\/local/ {ck=1};END {print ck}')" -eq "0" ];then
     PATH=/usr/local/bin:/usr/local/share$PATH
 fi
-if [ $( echo $LD_LIBRARY_PATH | awk 'BEGIN {ck=0};/usr\/local\/lib/ {ck=1};END {print ck}') == 0 ];then
+if [ "$( echo $LD_LIBRARY_PATH | awk 'BEGIN {ck=0};/usr\/local\/lib/ {ck=1};END {print ck}')" -eq "0" ];then
     LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:$LD_LIBRARY_PATH
 fi
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/phil\/bin/ {ck=1};END {print ck}') == 0 ];then
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/phil\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
     PATH=$HOME/bin:$PATH
 fi
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/scripts/ {ck=1};END {print ck}') == 0 ];then
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/scripts/ {ck=1};END {print ck}')" -eq "0" ];then
     PATH=$HOME/git/configurations-and-scripts/bash:$HOME/git/configurations-and-scripts/awk:$HOME/git/configurations-and-scripts/python:$HOME/git/configurations-and-scripts/java:$PATH
 fi
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/^\/sbin/ {ck=1};END {print ck}') == 0 ];then
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/^\/sbin/ {ck=1};END {print ck}')" -eq "0" ];then
     PATH=$PATH:/sbin
 fi
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/usr\/sbin/ {ck=1};END {print ck}') == 0 ];then
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/usr\/sbin/ {ck=1};END {print ck}')" -eq "0" ];then
     PATH=$PATH:/usr/sbin
 fi
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/android/ {ck=1};END {print ck}') == 0 ];then
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/android/ {ck=1};END {print ck}')" -eq "0" ];then
     export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/25.0.3:$ANDROID_HOME/tools/bin
 fi
 ## Binaries installed using Cabal
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/cabal/ {ck=1};END {print ck}') == 0 ];then
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/cabal/ {ck=1};END {print ck}')" -eq "0" ];then
     export PATH=$HOME/.cabal/bin:$PATH
 fi
 ## Binaries installed using Go
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/go\/bin/ {ck=1};END {print ck}') == 0 ];then
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/go\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
     export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 fi
 ## Binaries installed using Lua
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/luarocks/ {ck=1};END {print ck}') == 0 ];then
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/luarocks/ {ck=1};END {print ck}')" -eq "0" ];then
     export PATH=$HOME/.luarocks/bin:$PATH
 fi
 ## Binaries installed using Ruby
-if [ $( echo $PATH | awk 'BEGIN {ck=0};/.gem\/ruby/ {ck=1};END {print ck}') == 0 ];then
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/.gem\/ruby/ {ck=1};END {print ck}')" -eq "0" ];then
     export PATH=$HOME/.gem/ruby/2.1.0/bin:$PATH
 fi
 ## Using Anaconda3
-# if [ $( echo $PATH | awk 'BEGIN {ck=0};/anaconda3\/bin/ {ck=1};END {print ck}') == 0 ];then
+# if [ $( echo $PATH | awk 'BEGIN {ck=0};/anaconda3\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
 #     export NOCONDA_PATH=$PATH
 #     export PATH=$HOME/.anaconda3/bin:$PATH
 # fi
