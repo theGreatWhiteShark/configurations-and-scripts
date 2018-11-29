@@ -185,6 +185,9 @@ export SHINY_LOG_LEVEL=TRACE
 # my GPG key ID
 export GPGKEY=0BF476DA
 
+## Use a system-wide GNU Global database
+export GTAGSLIBPATH=$HOME/.gtags/
+
 # added by travis gem
 [ -f /home/phil/.travis/travis.sh ] && source /home/phil/.travis/travis.sh
 
