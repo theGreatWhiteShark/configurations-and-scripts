@@ -281,10 +281,10 @@
 
 ;; Use jedi for autocompletion
 ;; (add-hook 'python-mode-hook 'jedi:setup)
-(setq
- jedi:complete-on-dot t
+;; (setq
+ ;; jedi:complete-on-dot t
  ;; Use Python3 (Set up the virtual environment first outside of Emacs)
- jedi:environment-root "jedi")
+ ;; jedi:environment-root "jedi")
 
 ;; load the python-mode for .bzl files since their Skylark language
 ;; resembles in some way the python syntax
@@ -822,10 +822,10 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-to-list 'auto-mode-alist '("\\.in" . conf-mode))
 
 ;; Use shell-script-mode for linux configuration files
-(add-to-list 'auto-mode-alist '(".xprofile*" . shell-script-mode))
-(add-to-list 'auto-mode-alist '(".profile*" . shell-script-mode))
-(add-to-list 'auto-mode-alist '(".xinitrc*" . shell-script-mode))
-(add-to-list 'auto-mode-alist '(".bash*" . shell-script-mode))
+(add-to-list 'auto-mode-alist '("\\.xprofile*" . shell-script-mode))
+(add-to-list 'auto-mode-alist '("\\.profile*" . shell-script-mode))
+(add-to-list 'auto-mode-alist '("\\.xinitrc*" . shell-script-mode))
+(add-to-list 'auto-mode-alist '("\\.bash*" . shell-script-mode))
 
 ;; Customize the grep command
 ;; ‘-i’   Ignore case distinctions
