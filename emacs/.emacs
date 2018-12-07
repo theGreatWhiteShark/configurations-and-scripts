@@ -193,7 +193,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'load-path
 	     "~/git/configurations-and-scripts/emacs/ESS/lisp"
-	     "~/git/configurations-and-scripts/emacs/ESS/etc")
+	     "~/git/configurations-and-scripts/emacs/ESS")
 (require 'ess-site)
 
 ;; Specify the export options of polymode to accelerate the export of
@@ -206,22 +206,8 @@
 ;; using Rutils
 (require 'ess-rutils)
 
-;; Directory containing the binaries of the installed R version
 (setq
  R-binary-folder "~/software/R/R-3.5.0/bin/"
- ;; A comment is a comment. No matter how many dashes
- ess-indent-with-fancy-comments nil
- ;; Evaluate all code in the global namespace.
- ess-r-package-auto-enable-namespaced-evaluation nil
- ;; Try to complete statements
- ess-tab-complete-in-script 1
- ;; Use the GNU indentation style (2 whitespaces)
- ess-default-style 'GNU)
-(defun myindent-ess-hook ()
-  (setq ess-indent-level 2))
-(add-hook 'ess-mode-hook 'myindent-ess-hook)
-;; using the latest emacs version.
-(setq
  inferior-R-program-name
  (concatenate 'string R-binary-folder "R")
  ;; AUCTeX interface for Sweave
@@ -240,6 +226,23 @@
 (require 'poly-markdown)
 (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
+
+(setq
+ ;; A comment is a comment. No matter how many dashes
+ ess-indent-with-fancy-comments nil
+ ;; Evaluate all code in the global namespace.
+ ess-r-package-auto-enable-namespaced-evaluation nil
+ ;; Try to complete statements
+ ess-tab-complete-in-script 1
+ ;; Use the GNU indentation style (2 whitespaces)
+ ess-default-style 'GNU)
+(defun myindent-ess-hook ()
+  (setq ess-indent-level 2))
+(add-hook 'ess-mode-hook 'myindent-ess-hook)
+;; Use the old smart assign
+(add-hook 'ess-mode-hook
+	  (lambda()
+	    (local-set-key (kbd "_") 'ess-insert-assign)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; Python ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -843,18 +846,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-hook 'ess-mode-hook
 	  (lambda()
 	    (local-set-key (kbd "C-x e") 'eval-print-last-sexp)))
-
-(add-hook 'ess-mode-hook
-	  (lambda()
-	    ;; Copy the syntax table of the ESS-mode and set the "`"
-	    ;; symbol to a paired delimiter. Else, functions like
-	    ;; `ess-smart-S-assign` won't work as expected in
-	    ;; `polymode`.
-	    (setq ess-r-syntax-table-modified
-		  (make-syntax-table ess-r-syntax-table))
-	    (modify-syntax-entry ?` "$" ess-r-syntax-table-modified)
-	    (modify-syntax-entry ?% "w" ess-r-syntax-table-modified)
-	    (set-syntax-table ess-r-syntax-table-modified)))
 
 ;; Use auto-fill-mode in various modes
 (dolist (hook '(text-mode-hook
