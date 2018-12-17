@@ -871,3 +871,12 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; Mute Emacs. Yes, there are devices playing a 'beep' received from Emacs.
 (setq visible-bell 1)
+
+;; Reducing global indentation width
+(dolist (hook '(text-mode-hook
+		fundamental-mode-hook
+		lisp-interaction-mode-hook
+		emacs-lisp-mode-hook
+		go-mode-hook
+		sh-mode-hook) t)
+  (add-hook hook (lambda() (setq tab-width 4))))
