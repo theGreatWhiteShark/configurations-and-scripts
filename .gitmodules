@@ -22,9 +22,6 @@
 [submodule "emacs/org-mode"]
 	path = emacs/org-mode
 	url = https://code.orgmode.org/bzg/org-mode.git
-[submodule "emacs/python-mode"]
-	path = emacs/python-mode
-	url = https://gitlab.com/python-mode-devs/python-mode.git
 [submodule "emacs/zenburn-emacs"]
 	path = emacs/zenburn-emacs
 	url = https://github.com/bbatsov/zenburn-emacs.git

@@ -70,6 +70,7 @@
 		LaTeX-mode-hook
 		markdown-mode-hook
 		fundamental-mode-hook
+		mutt-mode-hook
 		org-mode-hook) t)
   (add-hook hook (lambda() (flyspell-mode 1))))
 ;; Activate Flyspell in the comments only.
@@ -247,50 +248,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; Python ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; http://www.jesshamrick.com/2012/09/18/emacs-as-a-python-ide/
-(add-to-list 'load-path
-	     "~/git/configurations-and-scripts/emacs/python-mode")
-(setq py-install-directory
-      "~/git/configurations-and-scripts/emacs/python-mode")
-(require 'python-mode)
+;; Use elpy with python-mode
+(require 'elpy)
+(add-hook 'python-mode-hook (lambda() (elpy-mode)))
+(setenv "WORKON_HOME" "~/.virtualenvironments/")
+(setenv "IPY_TEST_SIMPLE_PROMPT" "1")
+(setq python-shell-interpreter "ipython3"
+      python-shell-intepreter-args "-i")
 
-;; If you want to use Python2.7 instead, you have to set the following
-;; variable to "ipython" or use the py-choose-shell command before
-;; executing code.
-(setq-default py-shell-name "ipython3")
-(setq-default py-which-bufname "IPython3")
-;; use the wx backend for both mayavi and matplotlib
-(setq
- py-python-command-args '("--gui=wx" "--pylab=wx" "-colors" "Linux" )
- py-force-py-shell-name-p t
- ;; don't split windows and don't change them either
- py-split-window-on-execute nil
- py-split-windows-on-execute nil
- py-split-windows-on-execute-p nil
- py-split-windows-on-execute-function nil
- ;; This one just won't work. 
- py-switch-buffers-on-execute-p t
- ;; such a pain in the ass
- py-keep-windows-configutation t
- ;; try to automagically figure out indentation
- py-smart-indentation nil
- ;; Use just two spaces for indention
- py-indent-offset 2
- ;; Use the TAB to call the py-indent-line function
- py-tab-indent t)
-(add-hook 'python-mode-hook (lambda()
-			      (setq tab-width 2)
-			      (setq py-indent-offset 2)))
-
-;; Use jedi for autocompletion
-;; (add-hook 'python-mode-hook 'jedi:setup)
-;; (setq
- ;; jedi:complete-on-dot t
- ;; Use Python3 (Set up the virtual environment first outside of Emacs)
- ;; jedi:environment-root "jedi")
-
-;; load the python-mode for .bzl files since their Skylark language
-;; resembles in some way the python syntax
+;; Load elpy for .bzl files since their Skylark language resembles in
+;; some way the python syntax
 (add-to-list 'auto-mode-alist '(".bzl$" . python-mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 
@@ -434,9 +401,13 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; Activating c-mode for CUDA files
 (setq auto-mode-alist (cons '(".cu$" . c-mode) auto-mode-alist))
 
+;; Use irony for completion
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+
 ;; Use the insane tab width of the Hydrogen code base.
 (add-hook 'c++-mode-hook '(lambda()
-			    (setq tag-width 8)
+			    (setq tab-width 8)
 			    (setq c-basic-offset 8)
 			    (setq c-indent-level 8)
 			    (setq indent-tabs-mode t)
@@ -445,9 +416,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 			    ;; (sr-speedbar-open)
 			    ))
 
-;; Use irony for completion
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
 ;; ;; Use C headers to complete in headers using company
 ;; (require 'company-c-headers)
 ;; (add-to-list 'company-backends 'company-c-headers)
@@ -686,6 +654,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(custom-safe-themes
    '("6383295fb0c974d24c9dca1230c0489edf1cd5dd03d4b036aab290b6d3ceb50c" default))
  '(delete-selection-mode nil)
+ '(elpy-rpc-python-command "python")
  '(fci-rule-color "#383838")
  '(inferior-R-args "--no-restore-history --no-save ")
  '(inhibit-startup-screen t)
@@ -694,7 +663,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(org-agenda-files
    '("~/git/tsa/org/work.org" "~/git/tsa/org/private.org" "~/git/tsa/org/software.org" "~/git/tsa/org/audio.org"))
  '(package-selected-packages
-   '(package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags sclang-extensions csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
+   '(elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags sclang-extensions csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode 'right)
  '(transient-mark-mode 1)
@@ -724,17 +693,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(helm-M-x-key ((t (:foreground "#CC9393"))))
- '(helm-ff-directory ((t (:foreground "#93E0E3" :weight bold :background nil))))
- '(helm-ff-dotted-directory ((t (:foreground "steel blue" :background nil))))
- '(helm-ff-dotted-symlink-directory ((t (:foreground "DarkOrange" :background nil))))
- '(helm-ff-executable ((t (:foreground "#9FC59F" :weight normal :background nil))))
- '(helm-ff-file ((t (:foreground "#DCDCCC" :weight normal :background nil))))
- '(helm-ff-invalid-symlink ((t (:foreground "#CC9393" :weight bold :background nil))))
- '(helm-ff-prefix ((t (:foreground "#3F3F3F" :weight normal :background nil))))
- '(helm-ff-symlink ((t (:foreground "#F0DFAF" :weight bold :background nil))))
- '(helm-match ((t (:foreground "khaki" :underline t))))
- '(helm-match-item ((t (:foreground "khaki")))))
+ )
 
 ;; Minimal mode. Removes some lines and bars from Emacs to make its
 ;; appearance more appealing
@@ -823,6 +782,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-to-list 'auto-mode-alist '("\\.conf" . conf-mode))
 (add-to-list 'auto-mode-alist '("Dockerfile" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.in" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\muttrc" . conf-mode))
 
 ;; Use shell-script-mode for linux configuration files
 (add-to-list 'auto-mode-alist '("\\.xprofile*" . shell-script-mode))
@@ -871,3 +831,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; Mute Emacs. Yes, there are devices playing a 'beep' received from Emacs.
 (setq visible-bell 1)
+
+;; Activate mutt mode
+(require 'mutt)

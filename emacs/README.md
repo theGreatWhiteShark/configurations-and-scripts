@@ -73,30 +73,55 @@ make autoloads
 
 ## python-mode
 
-Since this mode is lacking a proper documentation, I might write some lines about it.
+Lately I migrated to `elpy` since it is much more faster, stable and
+easy to use than `anaconda-mode` or
+[this](https://gitlab.com/python-mode-devs/python-mode)
+`python-mode`. But, still, there are some requirements/packages you
+need to install to make it work.
 
-Per default **ipython3.5** will be called when running the whole Python script. If it is instead Python2.7 based, run **M-x py-choose-shell** *before* evaluating the script.
+Inside `Emacs` install the following packages: `elpy`, `pyvenv`
+(e.g. using **M-x package-list-packages**).
 
-The mode features a nice function **py-smart-indentation** which figures out the indentation width of a document. While this is quite handy for collaboration, I usually want to reindent the script before modifying it. Therefore this function is disabled and has to be activated using **M-x py-toggle-smart-indentation**.
+First of all, it uses `virtualenv`. I will create a folder called
+*.virtualenvironments* in my home, which will contain all the
+environments. Feel free to adjust the name as you please.
 
-## jedi
-
-In order to use the Python autocompletion tool **jedi** in combination with **Python3** and not the default Python2.7, I used the trick from [this](https://archive.zhimingwang.org/blog/2015-04-26-using-python-3-with-emacs-jedi.html) blog post.
-
-First one has to set up the virtual environment outside of Emacs
 ``` bash
-## Since I ignore the .python-environments folder in this repository
-## you have to create it first.
-mkdir -p ~/.emacs.d/.python-environments
-virtualenv -p /usr/bin/python3 ~/.emacs.d/.python-environments/jedi
-
-## Insert your correct version number in the next one
-~/.emacs.d/.python-environments/jedi/bin/pip install --upgrade ~/.emacs.d/elpa/jedi-core-20170121.610/
+# Install the necessary packages
+sudo apt install virtualenv python3-virtualenv
+# Create a folder to store all environments
+mkdir $HOME/.virtualenvironments
+cd $HOME/.virtualenvironments
 ```
-Afterwards one has to set the environment root folder to the one just created within the *.emacs*.
+
+Now, we will create a new virtual environment, which will use
+`python3` instead of `python2`
+
+``` bash
+virtualenv elpy_env -p /usr/bin/python3
+```
+
+To tell `Emacs` about the changes, you have to add the following lines
+to your *.emacs*
 
 ``` lisp
-(setq jedi:environment-root "jedi")
+(require 'elpy)
+(add-hook 'python-mode-hook (lambda() (elpy-mode)))
+(setenv "WORKON_HOME" "~/.virtualenvironments/")
+```
+
+Inside `Emacs` we have to run the following commands to set up the
+environment properly: 
+- **M-x pyvenv-workon elpy_env**
+- **M-x elpy-config**
+
+If you wish to use `ipython3` as interpreter, add to following lines
+to your *.emacs*.
+
+``` lisp
+(setenv "IPY_TEST_SIMPLE_PROMPT" "1")
+(setq python-shell-interpreter "ipython3"
+      python-shell-intepreter-args "-i")
 ```
 
 ## aspell
