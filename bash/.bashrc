@@ -183,7 +183,9 @@ function stop_clementine {
 export SHINY_LOG_LEVEL=TRACE
 
 # my GPG key ID
-export GPGKEY=0BF476DA
+export GPGKEY=0xB9EB2795611A2033
+# Use correct terminal
+export GPG_TTY=$(tty)
 
 ## Use a system-wide GNU Global database
 export GTAGSLIBPATH=$HOME/.gtags/
