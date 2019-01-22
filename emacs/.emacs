@@ -834,3 +834,11 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; Activate mutt mode
 (require 'mutt)
+;; Reducing global indentation width
+(dolist (hook '(text-mode-hook
+		fundamental-mode-hook
+		lisp-interaction-mode-hook
+		emacs-lisp-mode-hook
+		go-mode-hook
+		sh-mode-hook) t)
+  (add-hook hook (lambda() (setq tab-width 4))))
