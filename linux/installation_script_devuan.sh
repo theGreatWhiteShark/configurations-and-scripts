@@ -139,6 +139,41 @@ cd ../..
 ./waf
 sudo ./waf install
 
+## building and configuring mutt
+sudo apt install mutt postfix libncursesw5-dev libgpgme-dev gpgsm dirmngr gnupg2
+sudo apt-mark auto gpgsm dirmngr
+cd $HOME/software
+wget ftp://ftp.mutt.org/pub/mutt/mutt-1.11.2.tar.gz
+tar -xf mutt-1.11.2.tar.gz
+cd mutt-1.11.2
+./prepare
+./configure --enable-pgp --enable-gpgme --enable-compressed --enable-hcache --enable-smtp --enable-imap --enable-sidebar --with-gnutls --with-curses=/usr/lib/x86_64-linux-gnu/
+make
+sudo make install
+cd $HOME/git/configurations-and-scripts/mutt/
+gpg2 --decrypt --output account.0 account.0.asc
+gpg2 --decrypt --output account.1 account.1.asc
+gpg2 --decrypt --output account.2 account.2.asc
+gpg2 --decrypt --output aliases aliases.asc
+gpg2 --decrypt --output mailing.lists.and.groups mailing.lists.and.groups.asc
+
+mkdir $HOME/.mutt
+ln -s $HOME/git/configurations-and-scripts/mutt/account.0 $HOME/.mutt/account.0
+ln -s $HOME/git/configurations-and-scripts/mutt/account.1 $HOME/.mutt/account.1
+ln -s $HOME/git/configurations-and-scripts/mutt/account.2 $HOME/.mutt/account.2
+ln -s $HOME/git/configurations-and-scripts/mutt/aliases $HOME/.mutt/aliases
+ln -s $HOME/git/configurations-and-scripts/mutt/mailing.lists.and.groups $HOME/.mutt/mailing.lists.and.groups
+ln -s $HOME/git/configurations-and-scripts/mutt/colors $HOME/.mutt/colors
+ln -s $HOME/git/configurations-and-scripts/mutt/muttrc $HOME/.mutt/muttrc
+# Setup the postfix server for outgoing mail
+cd $HOME/git/configurations-and-scripts/linux/postfix/
+gpg2 --decrypt --output sasl_passwd.asc sasl_passwd
+gpg2 --decrypt --output sender_relay.asc sender_relay
+sudo cp /etc/postfix/main.cf /etc/postfix/main.cf.backup
+sudo cp $HOME/git/configurations-and-scripts/linux/postfix/main.cf /etc/postfix/
+sudo cp $HOME/git/configurations-and-scripts/linux/postfix/sasl_passwd /etc/postfix/
+sudo cp $HOME/git/configurations-and-scripts/linux/postfix/sender_relay /etc/postfix/
+
 ## Final update
 sudo apt update
 sudo apt -y upgrade
