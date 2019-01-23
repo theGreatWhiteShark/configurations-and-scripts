@@ -63,3 +63,5 @@ mutt/account.1
 mutt/account.2
 mutt/aliases
 mutt/mailing.lists.and.groups
+linux/postfix/sasl_passwd
+linux/postfix/sender_relay
