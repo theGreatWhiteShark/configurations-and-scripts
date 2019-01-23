@@ -1,0 +1,87 @@
+### Accounts
+# Switch between different accounts. '!' is the shortcut for "inbox"
+macro index <f5> '<sync-mailbox><enter-command>source ~/.mutt/account.0<enter><change-folder>!<enter>'
+macro index <f6> '<sync-mailbox><enter-command>source ~/.mutt/account.1<enter><change-folder>!<enter>'
+macro index <f7> '<sync-mailbox><enter-command>source ~/.mutt/account.2<enter><change-folder>!<enter>'
+
+macro index 'a' '<change-folder>?<change-dir><home>^K=<enter>'
+# Set the default account initialized during startup
+source ~/.mutt/account.1
+
+### IMAP
+# Activate TLS
+set ssl_starttls=yes
+# Always use SSL when connecting to server
+set ssl_force_tls=yes
+# Don't wait till a manual entering of the mailbox occurred
+unset imap_passive
+# Poll every 15 seconds
+set mail_check=15
+# Keep a cache of the headers for faster loading
+set header_cache=~/.muttHeaderCache
+# Display the download progress every 5KB
+set net_inc=5
+# View the mail in threaded mode
+set sort = threads
+set sort_aux = reverse-last-date-received
+# Only notify me for new mails since the last poll and not about all
+# new mails in the mailbox.
+set mail_check_recent = yes
+# Check for new mail in the current mailbox.
+set imap_idle = yes
+
+### Use GPG en|decryption
+# Enable the automatic key retrieval of GPG
+source ~/.mutt/gpg.rc
+# Default key used during the encryption
+set pgp_default_key = "0x7220C95BB68538EF"
+# Uses 'gpg-agent'. Since gpg > version 2.1 this option has to be set.
+set pgp_use_gpg_agent = yes
+# Use automated encryption whenever the public keys of all recipients
+# are in the keyring.
+set crypt_opportunistic_encrypt = yes
+# Reply encrypted to encrypted mails
+set crypt_replyencrypt = yes
+# Automatically verify signatures upon opening an email.
+set crypt_verify_sig = yes
+# Postponed messages that are marked for encruption will be
+# self-encrypted.
+set postpone_encrypt = yes
+
+### Aliases
+# Use a separate file for the aliases
+set alias_file = ~/.mutt/aliases
+# Sort the alias file according to the nicknames
+set sort_alias = alias
+# Load the file to enable auto-completion
+source $alias_file
+# Handle the mailing lists I'm in
+source ~/.mutt/mailing.lists.and.groups
+
+### Various
+# Use Emacs as default editor
+set editor = "emacs %s -nw -f mutt-mode"
+# Use sendmail to transfer mails via SMTP to an MTA
+set sendmail="/usr/sbin/sendmail -oi -oem"
+# Use a custom color theming
+source ~/.mutt/colors
+# Include messages in replies
+set include
+# Don't ask me about postponing a message when writing a new email.
+set recall = ask-no
+#
+
+### Configuring the sidebar
+# Show the sidebar (all folders defined in the 'mailbox' variable)
+set sidebar_visible = yes
+# Don't print the full path of the individual folders
+set sidebar_short_path = yes
+# Width in number of characters
+set sidebar_width = 15
+# Keybindings to handle the sidebar
+# macro index,pager \C<Up> '<sidebar-prev>'		"move up in the sidebar"
+macro index,pager i '<sidebar-prev>'		"move down in the sidebar"
+macro index,pager o '<sidebar-next>'		"move down in the sidebar"
+macro index,pager p '<sidebar-open>'		"open a folder from the sidebar"
+macro index,pager <ESC>i '<sidebar-page-up>'	"move one page up in the sidebar"
+macro index,pager <ESC>o '<sidebar-page-down>'	"move one page down in the sidebar"

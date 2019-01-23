@@ -1,0 +1,28 @@
+### Custom colors used within mutt
+# Default colour definitions
+color quoted     red          black
+color indicator  white	      brightblack
+color error      brightyellow  black
+color message    brightyellow black
+color search     brightwhite  magenta
+color status     black 	      brightyellow
+color tree       red          black
+color normal     white        black
+
+set header_color_partial = yes
+# # Colours for items in the reader
+color header brightwhite black "^(From|Subject):"
+
+# Colours for items in the index
+color index brightwhite black ~O # old messages
+color index brightwhite black ~N # new messages
+color index white 	brightred ~D # deleted messages
+color index brightyellow	black ~T # tagged messages
+
+# Highbrights inside the body of a message.
+# URLs
+color body brightblue  black "(http|https|ftp|news|telnet|finger)://[^ \">\t\r\n]*"
+color body brightblue  black "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
+color body brightblue  black "news:[^ \">\t\r\n]*"
+# email addresses
+color body brightblue  black "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"

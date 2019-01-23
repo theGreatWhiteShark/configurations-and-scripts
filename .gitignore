@@ -56,3 +56,10 @@ emacs/.emacs.d/projectile-bookmarks.eld
 
 # Semantic database of Emacs for parsing source code files
 emacs/.emacs.d/semanticdb/
+
+# Ignore the decrypted personal mutt files
+mutt/account.0
+mutt/account.1
+mutt/account.2
+mutt/aliases
+mutt/mailing.lists.and.groups
