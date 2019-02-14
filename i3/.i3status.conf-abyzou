@@ -11,9 +11,10 @@ general {
         interval = 5
 }
 
-order += "disk /home/phil"
+order += "disk /"
 order += "cpu_usage"
 order += "run_watch VPN"
+order += "cpu_temperature 0"
 order += "load"
 order += "wireless wlan0"
 order += "battery 0"
@@ -40,8 +41,12 @@ tztime local {
 load {
         format = "%1min"
 }
+cpu_temperature 0 {
+	format = "%degrees °C"
+	path = "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input"
+}
 
-disk "/home/phil" {
+disk "/" {
         format = "%avail"
 }
 
@@ -55,4 +60,4 @@ volume master {
         device = "default"
         mixer = "Master"
         mixer_idx = 0
-	}
+}
