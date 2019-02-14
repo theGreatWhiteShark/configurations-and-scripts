@@ -90,8 +90,8 @@ sudo apt -y install ecasound libecasoundc-dev libcsound64-dev csound csound-util
 mkdir $HOME/.config/pulse
 mkdir $HOME/.config/rncbc.org
 
-ln -s $HOME/git/configurations-and-scripts/linux/.amdecrc $HOME/.ambdecrc
-ln -s $HOME/git/configurations-and-scripts/linux/.amdec-config-stereo $HOME/.ambdec-config-stereo
+ln -s $HOME/git/configurations-and-scripts/linux/.ambdecrc $HOME/.ambdecrc
+ln -s $HOME/git/configurations-and-scripts/linux/.ambdec-config-stereo $HOME/.ambdec-config-stereo
 ln -s $HOME/git/configurations-and-scripts/linux/config/pulse/client.conf $HOME/.config/pulse/client.conf
 ln -s $HOME/git/configurations-and-scripts/linux/config/pulse/default.pa $HOME/.config/pulse/default.pa
 ln -s $HOME/git/configurations-and-scripts/linux/config/rncbc.org/QjackCtl.conf $HOME/.config/rncbc.org/QjackCtl.conf
@@ -140,7 +140,7 @@ cd ../..
 sudo ./waf install
 
 ## building and configuring mutt
-sudo apt install mutt postfix libncursesw5-dev libgpgme-dev gpgsm dirmngr gnupg2
+sudo apt install mutt postfix libncursesw5-dev libgpgme-dev gpgsm dirmngr gnupg2 libdb-dev pass
 sudo apt-mark auto gpgsm dirmngr
 cd $HOME/software
 wget ftp://ftp.mutt.org/pub/mutt/mutt-1.11.2.tar.gz
@@ -164,6 +164,7 @@ ln -s $HOME/git/configurations-and-scripts/mutt/account.2 $HOME/.mutt/account.2
 ln -s $HOME/git/configurations-and-scripts/mutt/aliases $HOME/.mutt/aliases
 ln -s $HOME/git/configurations-and-scripts/mutt/mailing.lists.and.groups $HOME/.mutt/mailing.lists.and.groups
 ln -s $HOME/git/configurations-and-scripts/mutt/colors $HOME/.mutt/colors
+ln -s $HOME/git/configurations-and-scripts/mutt/gpg.rc $HOME/.mutt/gpg.rc
 ln -s $HOME/git/configurations-and-scripts/mutt/muttrc $HOME/.mutt/muttrc
 # Setup the postfix server for outgoing mail
 cd $HOME/git/configurations-and-scripts/linux/postfix/
