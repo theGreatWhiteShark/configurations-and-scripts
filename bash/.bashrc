@@ -1,32 +1,22 @@
 ## Basics, navigation, and aliases
-alias ll='ls -lah'
+alias ll='ls -lAh'
 alias l='ls --color=auto'
 alias ls='ls --color=auto'
 alias cp='cp -a'
 alias rm='rm -rf'
-alias mroe='more'
 alias ..='cd ..'
-alias ...='cd ..; cd ..'
-alias ....='cd ..; cd ..; cd ..'
-alias .....='cd ..; cd ..; cd ..; cd ..'
 # Open Emacs in a shell
 alias ema='emacs -nw'
-alias eam='emacs -nw'
 # Emacs with super user permissions
 alias sema='sudo emacs -nw'
-# Convenient way to debug your .bashrc
-alias sbash='source $HOME/.bashrc'
-alias bashrc='emacs -nw $HOME/.bashrc; source $HOME/.bashrc'
 # Display the size of all folders in a directory
 alias duh='du --max-depth=1 -h'
 # Shutdown/stop the audio with the least amount of characters.
 # This is especially useful when you are connected via ssh from your smartphone
 alias s='sudo shutdown -h'
 alias sc='stop_clementine'
-alias pp='sudo shutdown -h now'
 alias reboot='sudo /sbin/reboot'
 # Link to the glorious JDownloader
-alias jdownloader='~/.jd2/JDownloader2'
 alias bfg='java -jar $HOME/git/configurations-and-scripts/java/bfg-1.12.15.jar ';
 # Use the my custom script to start up TuxGuitar with ZynAddSubFX and
 # connect them both using JACK
@@ -47,39 +37,12 @@ if [ "$USER" == "phil" ];then
     fi
 fi
 
-## Networks and servers
-alias ipconfig='nmcli dev list iface eth0 | grep IP4'
-alias locmap='nmap -n 192.168.178.1/50'
 # Mount the home and data folders of the institute's cluster at my local computer
 alias mpks='sshfs phmu@newton.mpipks-dresden.mpg.de:/home/phmu $HOME/pks_home; sshfs phmu@newton.mpipks-dresden.mpg.de:/data /data'
-alias mpks_vesta='sshfs phmu@vesta.mpipks-dresden.mpg.de:/home/phmu $HOME/pks_home; sshfs phmu@vesta.mpipks-dresden.mpg.de:/data /data'
 # Quick access to some frequently visited servers
-alias newton='ssh phmu@newton.mpipks-dresden.mpg.de'
-alias vesta='ssh phmu@vesta.mpipks-dresden.mpg.de'
-alias jolly='ssh phmu@jolly.mpipks-dresden.mpg.de'
-alias hermes='ssh phmu@hermes.mpipks-dresden.mpg.de'
-alias makalu='ssh phmu9775@makalu250.rz.tu-ilmenau.de'
 alias vpn='sudo /usr/sbin/openvpn --suppress-timestamps --nobind --config $HOME/.vpn_mpipks.conf --writepid /var/run/openvpn/vpn_mpipks.pid'
-alias visit='ssh -X newton "ssh -X makalu /usr/app-soft/visit/visit2_7_1.linux-x86_64/bin/visit"'
-alias fema='ssh -X feynman "emacs"';
-alias ps6=print_with_ps6;
-
-# Music
-# alias lmms='~/git/lmms/build/lmms'
-# alias hydrogen='~/git/hydrogen/build/src/gui/hydrogen'
-# alias drumgizmo='~/git/drumgizmo/drumgizmo/drumgizmo'
-
-## R
-# alias R='$HOME/software/R/R-3.5.0/bin/R --quiet --no-save'
-# alias Rscript='$HOME/software/R/R-3.5.0/bin/Rscript'
-# alias Rinit='source $HOME/scripts/bash/Rinit.sh' # installation of the packages for a newly installed R distribution 
-# alias Sweave='$HOME/software/R/R-3.5.0/bin/Sweave'
-alias Rb='R --resave-data CMD build'
-alias Rc='R CMD check'
-alias Ri='R --no-init-file CMD INSTALL'
 
 ## Git - some bad practice shortcut for my org-files collecting all sorts of information
-alias cgit='cd $HOME/git/tsa'
 alias pgit='tempdir=$(pwd); cd $HOME/git/tsa; git pull; cd $tempdir'
 alias ogit='tempdir=$(pwd); cd $HOME/git/tsa; git commit -am "org"; git push; cd $tempdir'
 
@@ -112,19 +75,6 @@ fi
 export EDITOR=/bin/nano
 export AWKPATH="$HOME/git/configurations-and-scripts/awk"
 export ANDROID_HOME="$HOME/software/android-sdk"
-# export JAVA_HOME="$HOME/software/java-jdk/jdk1.8.0_144"
-
-# Perl configuration
-PATH="/home/phil/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/phil/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/phil/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/phil/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/phil/perl5"; export PERL_MM_OPT;
-
-## handling of the batch job system at the institute
-source $HOME/git/configurations-and-scripts/bash/job.sh
-alias qjob=function_qjob
-alias qs='qsub ./.job.sh'
 
 ## Only append those paths if they arn't already present
 if [ "$( echo $PATH | awk 'BEGIN {ck=0};/usr\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
@@ -167,11 +117,6 @@ fi
 if [ "$( echo $PATH | awk 'BEGIN {ck=0};/.gem\/ruby/ {ck=1};END {print ck}')" -eq "0" ];then
     export PATH=$HOME/.gem/ruby/2.1.0/bin:$PATH
 fi
-## Using Anaconda3
-# if [ $( echo $PATH | awk 'BEGIN {ck=0};/anaconda3\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
-#     export NOCONDA_PATH=$PATH
-#     export PATH=$HOME/.anaconda3/bin:$PATH
-# fi
 
 # For working with at I need to define such function
 function stop_clementine {
