@@ -842,3 +842,9 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 		go-mode-hook
 		sh-mode-hook) t)
   (add-hook hook (lambda() (setq tab-width 4))))
+
+;; Function to display ANSI escape colors in a log file
+(require 'ansi-color)
+(defun display-ansi-colors ()
+  (interactive)
+  (ansi-color-apply-on-region (point-min) (point-max)))
