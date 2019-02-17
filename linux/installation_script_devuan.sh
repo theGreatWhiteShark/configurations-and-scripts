@@ -100,7 +100,7 @@ ln -s $HOME/git/configurations-and-scripts/linux/config/rncbc.org/QjackCtl.conf 
 sudo apt -y install amb-plugins autotalent blepvco blop bs2b-ladspa calf-ladspa cmt csladspa fil-plugins guitarix-ladspa invada-studio-plugins-ladspa ladspalist mcp-plugins omins pd-plugin rev-plugins rubberband-ladspa ste-plugins swh-plugins tap-plugins vco-plugins wah-plugins zam-plugins
 
 ## Compile and install hydrogen
-sudo apt -y install qt5-default libqt5xmlpatterns5-dev libarchive-dev libsndfile1-dev libasound2-dev liblo-dev libpulse-dev libcppunit-dev liblrdf0-dev liblash-compat-dev librubberband-dev libjack-jackd2-dev ccache cmake libtar-dev doxygen
+sudo apt -y install qt5-default libqt5xmlpatterns5-dev libarchive-dev libsndfile1-dev libasound2-dev liblo-dev libpulse-dev libcppunit-dev liblrdf0-dev liblash-compat-dev librubberband-dev libjack-jackd2-dev ccache cmake libtar-dev doxygen qttools5-dev-tools
 git clone https://github.com/hydrogen-music/hydrogen.git $HOME/git/hydrogen
 cd $HOME/git/hydrogen
 ./build.sh mm
