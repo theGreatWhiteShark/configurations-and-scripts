@@ -169,7 +169,8 @@ bindsyn $mod+F1 exec "amixer sset Master toggle"
 
 # shortcuts for emacs, thunar etc.
 bindsym $mod+Ctrl+e exec "emacs"
-bindsym $mod+Ctrl+d exec "thunar"
+bindsym $mod+Ctrl+d exec "xfe -p 3"
+bindsym $mod+Ctrl+Shift+d exec "thunar"
 
 # rotate the external monitor by 90 degrees
 bindsym $mod+o exec "xrandr --output HDMI-1 --rotate left"
