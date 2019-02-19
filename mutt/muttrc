@@ -60,7 +60,7 @@ source ~/.mutt/mailing.lists.and.groups
 
 ### Various
 # Use Emacs as default editor
-set editor = "emacs %s -nw -f mutt-mode"
+set editor = "emacs %s --no-init-file --no-x-resources --no-site-file --no-window-system --load ~/.mutt/.emacs-mutt -f mutt-mode"
 # Use sendmail to transfer mails via SMTP to an MTA
 set sendmail="/usr/sbin/sendmail -oi -oem"
 # Use a custom color theming
