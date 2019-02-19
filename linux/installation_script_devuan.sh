@@ -166,11 +166,13 @@ ln -s $HOME/git/configurations-and-scripts/mutt/mailing.lists.and.groups $HOME/.
 ln -s $HOME/git/configurations-and-scripts/mutt/colors $HOME/.mutt/colors
 ln -s $HOME/git/configurations-and-scripts/mutt/gpg.rc $HOME/.mutt/gpg.rc
 ln -s $HOME/git/configurations-and-scripts/mutt/muttrc $HOME/.mutt/muttrc
+ln -s $HOME/git/configurations-and-scripts/emacs/.emacs-mutt $HOME/.mutt/.emacs-mutt
 # Setup the postfix server for outgoing mail
 cd $HOME/git/configurations-and-scripts/linux/postfix/
-gpg2 --decrypt --output sasl_passwd.asc sasl_passwd
-gpg2 --decrypt --output sender_relay.asc sender_relay
+gpg2 --decrypt --output sasl_passwd sasl_passwd.asc
+gpg2 --decrypt --output sender_relay sender_relay.asc
 sudo cp /etc/postfix/main.cf /etc/postfix/main.cf.backup
+sudo cp /etc/postfix/main.cf /etc/postfix/old.main.cf
 sudo cp $HOME/git/configurations-and-scripts/linux/postfix/main.cf /etc/postfix/
 sudo cp $HOME/git/configurations-and-scripts/linux/postfix/sasl_passwd /etc/postfix/
 sudo cp $HOME/git/configurations-and-scripts/linux/postfix/sender_relay /etc/postfix/
