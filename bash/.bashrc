@@ -43,13 +43,13 @@ alias mpks='sshfs phmu@newton.mpipks-dresden.mpg.de:/home/phmu $HOME/pks_home; s
 alias vpn='sudo /usr/sbin/openvpn --suppress-timestamps --nobind --config $HOME/.vpn_mpipks.conf --writepid /var/run/openvpn/vpn_mpipks.pid'
 
 ## Git - some bad practice shortcut for my org-files collecting all sorts of information
-alias pgit='tempdir=$(pwd); cd $HOME/git/tsa; git pull; cd $tempdir'
-alias ogit='tempdir=$(pwd); cd $HOME/git/tsa; git commit -am "org"; git push; cd $tempdir'
+alias pgit='tempdir=$(pwd); cd $HOME/git/orga; git pull; cd $tempdir'
+alias ogit='tempdir=$(pwd); cd $HOME/git/orga; git commit -am "org"; git push; cd $tempdir'
 
 ## Go
 export GOPATH="$HOME/.go"
-export GOROOT="$HOME/.go1.11"
-export GOROOT_BOOTSTRAP="$HOME/.go1.4"
+# export GOROOT="$HOME/.go1.11"
+# export GOROOT_BOOTSTRAP="$HOME/.go1.4"
 
 ## Lua
 export LUALIB="$HOME/software/lua/lua-5.3.5/src"
@@ -107,7 +107,7 @@ if [ "$( echo $PATH | awk 'BEGIN {ck=0};/cabal/ {ck=1};END {print ck}')" -eq "0"
 fi
 ## Binaries installed using Go
 if [ "$( echo $PATH | awk 'BEGIN {ck=0};/go\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
-    export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+    export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
 fi
 ## Binaries installed using Lua
 if [ "$( echo $PATH | awk 'BEGIN {ck=0};/luarocks/ {ck=1};END {print ck}')" -eq "0" ];then

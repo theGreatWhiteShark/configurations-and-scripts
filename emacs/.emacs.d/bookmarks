@@ -1,0 +1,50 @@
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+((".bashrc"
+ (filename . "~/git/configurations-and-scripts/bash/.bashrc")
+ (front-context-string . "\n## reduce promp")
+ (rear-context-string . ") -l 'inspect'\"\n")
+ (position . 2732))
+("config-abyzou"
+ (filename . "~/git/configurations-and-scripts/i3/config-abyzou")
+ (front-context-string . "# This file has ")
+ (rear-context-string)
+ (position . 1))
+("work.org"
+ (filename . "~/git/orga/org/work.org")
+ (front-context-string . "#+STARTUP: hides")
+ (rear-context-string)
+ (position . 1))
+("software.org"
+ (filename . "~/git/orga/org/software.org")
+ (front-context-string . "#+STARTUP: hides")
+ (rear-context-string)
+ (position . 1))
+("social.org"
+ (filename . "~/git/orga/org/social.org")
+ (front-context-string . "#+STARTUP: hides")
+ (rear-context-string)
+ (position . 1))
+("private.org"
+ (filename . "~/git/orga/org/private.org")
+ (front-context-string . "#+STARTUP: hides")
+ (rear-context-string)
+ (position . 1))
+("jobs.org"
+ (filename . "~/git/orga/org/jobs.org")
+ (front-context-string . "#+STARTUP: hides")
+ (rear-context-string)
+ (position . 1))
+("audio.org"
+ (filename . "~/git/orga/org/audio.org")
+ (front-context-string . "#+STARTUP: hides")
+ (rear-context-string)
+ (position . 1))
+(".emacs"
+ (filename . "~/git/configurations-and-scripts/emacs/.emacs")
+ (front-context-string . ";;;; customizati")
+ (rear-context-string)
+ (position . 1))
+)
