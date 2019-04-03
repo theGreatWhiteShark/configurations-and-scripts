@@ -17,7 +17,7 @@ alias s='sudo shutdown -h'
 alias sc='stop_clementine'
 alias reboot='sudo /sbin/reboot'
 # Link to the glorious JDownloader
-alias bfg='java -jar $HOME/git/configurations-and-scripts/java/bfg-1.12.15.jar ';
+alias bfg='java -jar $HOME/git/configurations-and-scripts/java/bfg-1.13.0.jar ';
 # Use the my custom script to start up TuxGuitar with ZynAddSubFX and
 # connect them both using JACK
 alias tuxguitar='lua $HOME/git/tux2zyn/tux2zyn.lua'
