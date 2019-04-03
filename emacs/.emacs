@@ -226,7 +226,7 @@
 (require 'markdown-mode)
 (require 'poly-R)
 (require 'poly-markdown)
-(add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
+;; (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
 
 (setq
@@ -245,6 +245,12 @@
 (add-hook 'ess-mode-hook
 	  (lambda()
 	    (local-set-key (kbd "_") 'ess-insert-assign)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Go ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Run gofmt before saving a file.
+(add-hook 'before-save-hook #'gofmt-before-save)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; Python ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
