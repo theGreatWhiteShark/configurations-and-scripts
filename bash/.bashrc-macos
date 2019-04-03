@@ -6,6 +6,7 @@ alias cp='cp -a'
 alias rm='rm -rf'
 alias ..='cd ..'
 # Open Emacs in a shell 
+alias emacs='$HOME/git/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs'
 alias ema='emacs -nw'
 # Display the size of all folders in a directory
 alias duh='du --max-depth=1 -h'
@@ -25,7 +26,7 @@ export GOPATH="$HOME/autosql-monitor/Code/"
 function pwd_prompt {
     pwd | sed "s/\/home\/$(echo $USER)/\~/" | awk 'BEGIN { FS = "/" };{ if ( NF > 3 ) print $1"/.../"$(NF-1)"/"$NF ; else print $0}'
 }
-if [ "$(hostname)" == "Philipps-MacBook-Pro.local" ]; then
+if [ "$(hostname | grep Philipps-MBP | wc -w)" -gt "0" ]; then
     if [ "$HOME" == "/root" ]; then
 	export PS1="\e[1;31m\]\h\e[0m\]: \[\e[1;34m\]\$(pwd_prompt) \[\e[1;31m\]$\[\e[0m\] ";
     else
