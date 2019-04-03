@@ -5,7 +5,7 @@ alias ls='ls -G'
 alias cp='cp -a'
 alias rm='rm -rf'
 alias ..='cd ..'
-# Open Emacs in a shell
+# Open Emacs in a shell 
 alias ema='emacs -nw'
 # Display the size of all folders in a directory
 alias duh='du --max-depth=1 -h'
