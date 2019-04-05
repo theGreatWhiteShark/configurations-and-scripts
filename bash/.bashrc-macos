@@ -26,13 +26,7 @@ export GOPATH="$HOME/autosql-monitor/Code/"
 function pwd_prompt {
     pwd | sed "s/\/home\/$(echo $USER)/\~/" | awk 'BEGIN { FS = "/" };{ if ( NF > 3 ) print $1"/.../"$(NF-1)"/"$NF ; else print $0}'
 }
-if [ "$(hostname | grep Philipps-MBP | wc -w)" -gt "0" ]; then
-    if [ "$HOME" == "/root" ]; then
-	export PS1="\e[1;31m\]\h\e[0m\]: \[\e[1;34m\]\$(pwd_prompt) \[\e[1;31m\]$\[\e[0m\] ";
-    else
-	export PS1="\h: \[\e[1;34m\]\$(pwd_prompt) \[\e[0;32m\]$\[\e[0m\] ";
-    fi
-fi
+export PS1="\h: \[\e[1;34m\]\$(pwd_prompt) \[\e[0;32m\]$\[\e[0m\] ";
 # Configurations for setting up development environments
 export EDITOR=/bin/nano
 export AWKPATH="$HOME/git/configurations-and-scripts/awk"
