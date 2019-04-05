@@ -628,7 +628,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (async))))
+ '(package-selected-packages '(go-mode web-mode async)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -656,7 +656,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (show-paren-mode t)
 
 ;; Edit the Emacs file at work in el mode
-(add-to-list 'auto-mode-alist '(".emacs-tc08" . emacs-lisp-mode))
+(add-to-list 'auto-mode-alist '(".emacs-macos" . emacs-lisp-mode))
 
 ;; Arduino
 (add-to-list 'load-path
@@ -684,8 +684,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (setq dired-listing-switches "-alh")
 
 ;; Transparent background
-(set-frame-parameter (selected-frame) 'alpha '(77 . 50))
-(add-to-list 'default-frame-alist '(alpha . (77 . 50)))
+(set-frame-parameter (selected-frame) 'alpha '(85 . 70))
+(add-to-list 'default-frame-alist '(alpha . (85 . 70)))
 (set-face-attribute 'default nil :background "black")
 
 ;; Use perl-mode for perl scripts
