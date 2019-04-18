@@ -2,7 +2,7 @@
 alias ll='ls -lAh'
 alias l='ls -G'
 alias ls='ls -G'
-alias cp='cp -a'
+alias cp='cp -r'
 alias rm='rm -rf'
 alias ..='cd ..'
 # Open Emacs in a shell 
@@ -20,7 +20,7 @@ alias pgit='tempdir=$(pwd); cd $HOME/git/orga; git pull; cd $tempdir'
 alias ogit='tempdir=$(pwd); cd $HOME/git/orga; git commit -am "org"; git push; cd $tempdir'
 
 ## Go
-export GOPATH="$HOME/autosql-monitor/Code/"
+export GOPATH="$HOME/go/"
 
 ## reduce prompt to the two latest folders if there are more than three folders displayed
 function pwd_prompt {
@@ -56,4 +56,8 @@ fi
 ## Binaries installed using Go
 if [ "$( echo $PATH | awk 'BEGIN {ck=0};/go\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
     export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
+fi
+## Binaries installed using pip
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/Python\/3.7/ {ck=1};END {print ck}')" -eq "0" ];then
+    export PATH=/Users/phil/Library/Python/3.7/bin:$PATH
 fi
