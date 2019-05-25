@@ -1,12 +1,13 @@
 ### Accounts
 # Switch between different accounts. '!' is the shortcut for "inbox"
 macro index <f5> '<sync-mailbox><enter-command>source ~/.mutt/account.0<enter><change-folder>!<enter>'
-macro index <f6> '<sync-mailbox><enter-command>source ~/.mutt/account.1<enter><change-folder>!<enter>'
+macro index <f6> '<sync-mailbox><enter-command>source ~/.mutt/account.3<enter><change-folder>!<enter>'
 macro index <f7> '<sync-mailbox><enter-command>source ~/.mutt/account.2<enter><change-folder>!<enter>'
+macro index <f8> '<sync-mailbox><enter-command>source ~/.mutt/account.1<enter><change-folder>!<enter>'
 
 macro index 'a' '<change-folder>?<change-dir><home>^K=<enter>'
 # Set the default account initialized during startup
-source ~/.mutt/account.1
+source ~/.mutt/account.3
 
 ### IMAP
 # Activate TLS

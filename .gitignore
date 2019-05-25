@@ -61,6 +61,7 @@ emacs/.emacs.d/semanticdb/
 mutt/account.0
 mutt/account.1
 mutt/account.2
+mutt/account.3
 mutt/aliases
 mutt/mailing.lists.and.groups
 linux/postfix/sasl_passwd
