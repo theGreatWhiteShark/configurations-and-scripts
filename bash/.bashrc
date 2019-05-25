@@ -140,3 +140,9 @@ export GTAGSLIBPATH=$HOME/.gtags/
 
 # Load the custom configuration of individual computers.
 [ -f $HOME/.profile ] && source $HOME/.profile
+
+# export USE_CCACHE=1
+# export CCACHE_COMPRESS=1
+# export ANDROID_JACK_VM_ARGS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4G"
+# export ANDROID_HOME="$HOME/software/android/sdk-tools-linux/"
+# export PATH=$HOME/software/android/sdk-tools-linux/platform-tools:$HOME/software/android/sdk-tools-linux/tools:$HOME/software/android/sdk-tools-linux/tools/bin:$HOME/software/android/sdk-tools-linux/build-tools/25.0.3:$PATH
