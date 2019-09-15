@@ -105,8 +105,9 @@ fi
 if [ "$( echo $PATH | awk 'BEGIN {ck=0};/cabal/ {ck=1};END {print ck}')" -eq "0" ];then
     export PATH=$HOME/.cabal/bin:$PATH
 fi
-## Binaries installed using Go
-if [ "$( echo $PATH | awk 'BEGIN {ck=0};/go\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
+## Binaries installed using Go. The 'cargo' component from Rust'
+## binaries messes up things and has to be covered.
+if [ "$( echo $PATH | sed 's/cargo/XXX/g' | awk 'BEGIN {ck=0};/go\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
     export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
 fi
 ## Binaries installed using Lua
