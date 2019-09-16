@@ -5,11 +5,17 @@
 
 # --------------------------------------------------------------------
 # Assure a number between 0 and 100 is provided as input.
-intergeRegExp='^[0-9]+$'
-if ! [[ $1 =~ $integerRegExp ]] ; then
-	echo "ERROR: Please provide an integer as input argument" >&2
+integerRegExp='^[0-9]+$'
+if ! [[ $1 =~ $integerRegExp ]]; then
+	echo "ERROR: Please provide an integer as input argument!" >&2
 	# exit 1
 fi
+
+if [ $1 -lt 0 ] || [ $1 -gt 100 ]; then
+	echo "ERROR: Input out of bound. Please provide an integer between 0 and 100!" >&2
+	# exit 1
+fi
+
 
 # Get maximal and current backlight value of the system
 brightness_max=$(cat /sys/class/backlight/intel_backlight/max_brightness)
