@@ -16,7 +16,7 @@ if [ $1 -lt 0 ] || [ $1 -gt 100 ]; then
 	# exit 1
 fi
 
-
+# --------------------------------------------------------------------
 # Get maximal and current backlight value of the system
 brightness_max=$(cat /sys/class/backlight/intel_backlight/max_brightness)
 brightness_old=$(cat /sys/class/backlight/intel_backlight/brightness)
