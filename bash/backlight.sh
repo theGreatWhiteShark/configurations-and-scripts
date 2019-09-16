@@ -5,8 +5,8 @@
 
 # --------------------------------------------------------------------
 # Assure a number between 0 and 100 is provided as input.
-integerRegExp='^[0-9]+$'
-if ! [[ $1 =~ $integerRegExp ]]; then
+integer_regex='^[0-9]+$'
+if ! [[ $1 =~ $integer_regex ]]; then
 	echo "ERROR: Please provide an integer as input argument!" >&2
 	# exit 1
 fi
@@ -30,7 +30,7 @@ value_change=$((brightness_max*$1/100))
 # Calculate the new brigthness and sanity checking for the value
 brightness_new=$((brightness_old+value_change))
 if [ $brightness_new -gt $brightness_max ];then
-    brightness_new=$($brightness_max)
+    brightness_new=$brightness_max
 fi
 if [ $brightness_new -lt 0 ];then
     brightness_new=0
@@ -41,11 +41,9 @@ fi
 # to be owned by the current user of must be writable for 'others'.
 
 # Check whether the brightness file is writable.
-permissionValue=`stat -c '%a' /sys/class/backlight/intel_backlight/brightness`
+permission_value=`stat -c '%a' /sys/class/backlight/intel_backlight/brightness`
 
-echo "permissionValue: $permissionValue"
-
-case "$permissionValue" in
+case "$permission_value" in
 	2)
 		writable=true
 		;;
@@ -67,7 +65,7 @@ if [ "$(stat -c '%U' /sys/class/backlight/intel_backlight/brightness)" == "$USER
 
 else
 
-	echo "ERROR: Unable to update /sys/class/backlight/intel_backlight/brightness. Insufficient permissions!" >&2
+	echo "ERROR: Unable to update /sys/class/backlight/intel_backlight/brightness. Insufficient permissions: $permission_value!" >&2
 	# exit 1
 
 fi
