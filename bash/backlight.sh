@@ -41,7 +41,7 @@ fi
 # to be owned by the current user of must be writable for 'others'.
 
 # Check whether the brightness file is writable.
-permission_value=`stat -c '%a' /sys/class/backlight/intel_backlight/brightness`
+permission_value=`stat -c '%a' /sys/class/backlight/intel_backlight/brightness | sed -e 's/\(^.*\)\(.$\)/\2/'`
 
 case "$permission_value" in
 	2)
