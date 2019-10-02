@@ -2,16 +2,21 @@
 
 # Since 'xbacklight' does not work on temeluchus, this script will
 # increase (or decrease) the backlight by a certain percentage.
+#
+# This script assumes the an integer argument specifying the
+# percentage of change. Negative values correspond to a decrease of
+# the brightness and positive ones to an increase. -10 e.g. does
+# decrease the brightness by 10%.
 
 # --------------------------------------------------------------------
 # Assure a number between 0 and 100 is provided as input.
-integer_regex='^[0-9]+$'
+integer_regex='^[-]*[0-9]+$'
 if ! [[ $1 =~ $integer_regex ]]; then
 	echo "ERROR: Please provide an integer as input argument!" >&2
 	# exit 1
 fi
 
-if [ $1 -lt 0 ] || [ $1 -gt 100 ]; then
+if [ $1 -lt -100 ] || [ $1 -gt 100 ]; then
 	echo "ERROR: Input out of bound. Please provide an integer between 0 and 100!" >&2
 	# exit 1
 fi
@@ -24,17 +29,18 @@ brightness_old=$(cat /sys/class/backlight/intel_backlight/brightness)
 # --------------------------------------------------------------------
 # Calculate the change in value from the supplied maximum.
 # Since BASH is not supporting floating point arithmetic, the value get's rounded
-value_change=$((brightness_max*$1/100))
+value_change=$(($brightness_max*$1/100))
 
 # --------------------------------------------------------------------
 # Calculate the new brigthness and sanity checking for the value
-brightness_new=$((brightness_old+value_change))
+brightness_new=$(($brightness_old+$value_change))
 if [ $brightness_new -gt $brightness_max ];then
     brightness_new=$brightness_max
 fi
 if [ $brightness_new -lt 0 ];then
     brightness_new=0
 fi
+
 
 # --------------------------------------------------------------------
 # Check whether the brightness file can be written too. It either has
