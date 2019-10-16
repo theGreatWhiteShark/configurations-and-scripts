@@ -159,8 +159,8 @@ bar {
 # as an exception for your user to the /etc/sudoers 
 bindsym $mod+m exec "sudo pm-suspend"
 # enable a lock screen
-bindsym $mod+Ctrl+m exec "~/git/configurations-and-scripts/i3/i3lock_screenshot.sh"
-exec xautolock -time 45 -locker '~/git/configurations-and-scripts/i3/i3lock_screenshot.sh'
+bindsym $mod+Ctrl+m exec "~/git/configurations-and-scripts/i3/i3suspend_and_lock.sh"
+exec xautolock -time 45 -locker '~/git/configurations-and-scripts/i3/i3suspend_and_lock.sh'
 
 # increase and decrease volume
 bindsym $mod+F2 exec "amixer sset Master 3%-"
