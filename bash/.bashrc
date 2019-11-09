@@ -47,7 +47,7 @@ alias pgit='tempdir=$(pwd); cd $HOME/git/orga; git pull; cd $tempdir'
 alias ogit='tempdir=$(pwd); cd $HOME/git/orga; git commit -am "org"; git push; cd $tempdir'
 
 ## Go
-export GOPATH="$HOME/.go"
+export GOPATH="$HOME/go"
 # export GOROOT="$HOME/.go1.11"
 # export GOROOT_BOOTSTRAP="$HOME/.go1.4"
 
@@ -89,6 +89,9 @@ fi
 if [ "$( echo $PATH | awk 'BEGIN {ck=0};/phil\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
     PATH=$HOME/bin:$PATH
 fi
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/phil\/.local\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
+    PATH=$HOME/.local/bin:$PATH
+fi
 if [ "$( echo $PATH | awk 'BEGIN {ck=0};/scripts/ {ck=1};END {print ck}')" -eq "0" ];then
     PATH=$HOME/git/configurations-and-scripts/bash:$HOME/git/configurations-and-scripts/awk:$HOME/git/configurations-and-scripts/python:$HOME/git/configurations-and-scripts/java:$PATH
 fi
@@ -117,6 +120,10 @@ fi
 ## Binaries installed using Ruby
 if [ "$( echo $PATH | awk 'BEGIN {ck=0};/.gem\/ruby/ {ck=1};END {print ck}')" -eq "0" ];then
     export PATH=$HOME/.gem/ruby/2.1.0/bin:$PATH
+fi
+## Binaries installed using Rust
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/.cargo/ {ck=1};END {print ck}')" -eq "0" ];then
+    export PATH=$HOME/.cargo/bin:$PATH
 fi
 
 # For working with at I need to define such function
