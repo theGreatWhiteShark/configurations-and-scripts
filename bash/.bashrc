@@ -154,3 +154,6 @@ export GTAGSLIBPATH=$HOME/.gtags/
 # export ANDROID_JACK_VM_ARGS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4G"
 # export ANDROID_HOME="$HOME/software/android/sdk-tools-linux/"
 # export PATH=$HOME/software/android/sdk-tools-linux/platform-tools:$HOME/software/android/sdk-tools-linux/tools:$HOME/software/android/sdk-tools-linux/tools/bin:$HOME/software/android/sdk-tools-linux/build-tools/25.0.3:$PATH
+
+# Default search path for LADSPA audio plugins
+export LADSPA_PATH=$HOME/.ladspa:/usr/lib/ladspa/:/usr/local/lib/ladspa/
