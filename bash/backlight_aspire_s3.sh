@@ -44,44 +44,17 @@ function set_aspire_s3_backlight {
 		brightness_new=0
 	fi
 
-
 	# ----------------------------------------------------------------
-	# Check whether the brightness file can be written too. It either
-	# has to be owned by the current user of must be writable for
-	# 'others'.
+	# The permissions of the backlight file will be set any for sysfs
+	# by the kernel on every new boot of the device. Instead, one need
+	# to add the following line to the sudoers to gain permission of
+	# writing it:
+	#
+	#  <user> ALL = (ALL) NOPASSWD: /usr/bin/tee /sys/class/backlight/intel_backlight/brightness
 
-	# Check whether the brightness file is writable.
-	permission_value=`stat -c '%a' /sys/class/backlight/intel_backlight/brightness | sed -e 's/\(^.*\)\(.$\)/\2/'`
+	# Writting the new value to 
+	echo $brightness_new | sudo /usr/bin/tee /sys/class/backlight/intel_backlight/brightness
 
-	case "$permission_value" in
-		2)
-			writable=true
-			;;
-		6)
-			writable=true
-			;;
-		7)
-			writable=true
-			;;
-		*)
-			writable=false
-			;;
-	esac
-
-	# ----------------------------------------------------------------
-	# Write the new brightness values.
-	
-	if [ "$(stat -c '%U' /sys/class/backlight/intel_backlight/brightness)" == "$USER" ] || $writable; then
-
-		# Writting the new value to 
-		echo $brightness_new > /sys/class/backlight/intel_backlight/brightness
-
-	else
-
-		echo "ERROR: Unable to update /sys/class/backlight/intel_backlight/brightness. Insufficient permissions: $permission_value!" >&2
-		exit 1
-
-	fi
 }
 
 # --------------------------------------------------------------------
