@@ -305,7 +305,7 @@ But keep in mind: the enumeration of the instruments starts at 0!
 					  nil (region-beginning) (point))))
   )
 
-(defun hydrogen-swap-instruments-non-interactive (old &rest new replace)
+(defun hydrogen-swap-instruments-non-interactive (old new replace)
   "Non-interactive version of `hydrogen-swap-instruments' and
   `hydrogen-replace-instruments'.
 
