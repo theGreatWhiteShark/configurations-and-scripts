@@ -128,7 +128,7 @@ fi
 
 # For working with at I need to define such function
 function stop_clementine {
-    at now + $1 minutes -f ~/scripts/bash/at_clementine.sh
+    at now + $1 minutes -f ~/git/configurations-and-scripts/bash/at_clementine.sh
     return
 }
 
@@ -156,4 +156,5 @@ export GTAGSLIBPATH=$HOME/.gtags/
 # export PATH=$HOME/software/android/sdk-tools-linux/platform-tools:$HOME/software/android/sdk-tools-linux/tools:$HOME/software/android/sdk-tools-linux/tools/bin:$HOME/software/android/sdk-tools-linux/build-tools/25.0.3:$PATH
 
 # Default search path for LADSPA audio plugins
-export LADSPA_PATH=$HOME/.ladspa:/usr/lib/ladspa/:/usr/local/lib/ladspa/
+export LADSPA_PATH=$HOME/.ladspa/:/usr/lib/ladspa/:/usr/local/lib/ladspa/
+export LV2_PATH=$HOME/.lv2:/usr/lib/lv2/
