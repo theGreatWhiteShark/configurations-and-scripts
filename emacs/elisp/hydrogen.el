@@ -27,6 +27,33 @@
 ;;   ;; Load some custom functions to edit Hydrogen files
 ;;   (load "PATH-TO-YOUR-COPY-OF/hydrogen.el")
 ;;
+;; Changing a drumkit in Hydrogen is, unfortunately, not as straight
+;; forward as fit should be. Using the functions below, you have to
+;; stick to the following workflow:
+;;
+;; 1. Open the Song in Hydrogen, load the new drumkit, and save the
+;;    song.
+;; 2. Close Hydrogen and open the song in Emacs.
+;; 3. Execute e.g. the `hydrogen-swap-forzeeStereo-and-Flac-GSCW-2'
+;;    function and save the song.
+;; 4. Reopen the song in Hydrogen.
+;;
+;; If the change of one particular drumkit to another is not covered
+;; yet by the functions in this file, you can add a new one at the
+;; bottom or use the `hydrogen-swap-instruments' and
+;; `hydrogen-replace-instrument' to perform it manually. But be
+;; careful since Hydrogen has a rather particular way of applying
+;; these changes. If a new drumkit will be loaded, the <instrument>
+;; node in the pattern - linking it to an instrument of that
+;; particular ID - will be replaced by the ID of the instrument
+;; residing in that particular location (row number). If e.g. the
+;; hihat has ID 11 in the old and the new drumkit but it resides on
+;; row 12 with ride being at column 11, all occurrences of the hihat
+;; will be replaced by the ride ID. Therefore, afterwards you have to
+;; replace all occurrences of the ride IDs with the hihat
+;; IDs. Unfortunately, this is not a unrealistic edge case but an
+;; everyday scenario.
+;;
 ;; Functions defined within this file
 ;;
 ;;   `hydrogen-swap-instruments'
@@ -54,7 +81,7 @@
 ;;     But keep in mind: the enumeration of the instruments starts at
 ;;     0! 
 ;;
-;;   `hydrogen-replace-instruments'
+;;   `hydrogen-replace-instrument'
 ;;
 ;;     Interactive function to replace an instrument in patterns.
 ;;
@@ -74,7 +101,7 @@
 ;;   `hydrogen-swap-instruments-non-interactive'
 ;;
 ;;     Non-interactive version of `hydrogen-swap-instruments' and
-;;     `hydrogen-replace-instruments'.
+;;     `hydrogen-replace-instrument'.
 ;;
 ;;     If the third parameter `replace' is nil, the instrument IDs
 ;;     corresponding to `old' and `new' will be swapped. If non-nil,
@@ -431,15 +458,16 @@ Please note that this function will only work properly when executed
   in a buffer visiting the .h2song file of a recent (1.0.0*) version
   of the Hydrogen drum computer. "
   (interactive)
+  (hydrogen-swap-instruments-non-interactive "15" "9" nil)
+  (hydrogen-swap-instruments-non-interactive "18" "7" nil)
+  (hydrogen-swap-instruments-non-interactive "17" "13" nil)
+  (hydrogen-swap-instruments-non-interactive "12" "15" nil)
+  (hydrogen-swap-instruments-non-interactive "11" "15" 1)
   (hydrogen-swap-instruments-non-interactive "2" "12" nil)
-  (hydrogen-swap-instruments-non-interactive "11" "18" nil)
-  (hydrogen-swap-instruments-non-interactive "17" "9" nil)
-  (hydrogen-swap-instruments-non-interactive "20" "7" nil)
+  (hydrogen-swap-instruments-non-interactive "14" "18" nil)
+  (hydrogen-swap-instruments-non-interactive "3" "14" nil)
   (hydrogen-swap-instruments-non-interactive "1" "11" nil)
-  (hydrogen-swap-instruments-non-interactive "4" "1" nil)
-  (hydrogen-swap-instruments-non-interactive "13" "15" 1)
-  (hydrogen-swap-instruments-non-interactive "14" "13" nil)
-  (hydrogen-swap-instruments-non-interactive "3" "14" nil))
+  (hydrogen-swap-instruments-non-interactive "4" "1" nil))
 
 (defun hydrogen-swap-gmkit-and-forzeeStereo ()
   "Please use with caution. Legacy and not tested recently."
