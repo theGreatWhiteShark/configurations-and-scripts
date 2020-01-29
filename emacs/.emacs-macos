@@ -43,27 +43,27 @@
 ;; git repository)
 ;; The personal dictionary has always to be of the same language as the
 ;; current used one!
-(setq ispell-personal-dictionary "~/.emacs.d/.aspell.en.pws"
-      ;; Increase the speed (since we are using the more slower aspell
-      ;; instead of ispell)
-      ispell-extra-args '("--sug-mode=fast"))
+;; (setq ispell-personal-dictionary "~/.emacs.d/.aspell.en.pws"
+;;       ;; Increase the speed (since we are using the more slower aspell
+;;       ;; instead of ispell)
+;;       ispell-extra-args '("--sug-mode=fast"))
 
 ;; Add a german dictionary and the option of switching between
 ;; languages.
-(defun flyspell-switch-dictionary()
-  (interactive)
-  ;; Change the default dictionary too.
-  ;; Well, the functions have a `ispell' prefix. But in the background
-  ;; the spell checking is using aspell instead. Be aware of this when
-  ;; installing additional software packages.
-  (if (string= ispell-current-dictionary "de")
-      (setq ispell-personal-dictionary "~/.emacs.d/.aspell.en.pws")
-    (setq ispell-personal-dictionary "~/.emacs.d/.aspell.de.pws"))
-  (let* ((dic ispell-current-dictionary)
-	 (change (if (string= dic "de") "en" "de")))
-    (ispell-change-dictionary change)
-    (message "Dictionary changed from %s to %s" dic change)))
-(global-set-key (kbd "<f8>") 'flyspell-switch-dictionary)
+;; (defun flyspell-switch-dictionary()
+;;   (interactive)
+;;   ;; Change the default dictionary too.
+;;   ;; Well, the functions have a `ispell' prefix. But in the background
+;;   ;; the spell checking is using aspell instead. Be aware of this when
+;;   ;; installing additional software packages.
+;;   (if (string= ispell-current-dictionary "de")
+;;       (setq ispell-personal-dictionary "~/.emacs.d/.aspell.en.pws")
+;;     (setq ispell-personal-dictionary "~/.emacs.d/.aspell.de.pws"))
+;;   (let* ((dic ispell-current-dictionary)
+;; 	 (change (if (string= dic "de") "en" "de")))
+;;     (ispell-change-dictionary change)
+;;     (message "Dictionary changed from %s to %s" dic change)))
+;; (global-set-key (kbd "<f8>") 'flyspell-switch-dictionary)
 
 ;; Activating Flyspell in the whole buffer.
 (dolist (hook '(text-mode-hook
@@ -209,7 +209,7 @@
 (require 'ess-rutils)
 
 (setq
- R-binary-folder "~/software/R/R-3.5.0/bin/"
+ R-binary-folder "~/software/R/R-3.5.3/bin/"
  inferior-R-program-name
  (concatenate 'string R-binary-folder "R")
  ;; AUCTeX interface for Sweave
@@ -254,7 +254,7 @@
 (add-hook 'python-mode-hook (lambda() (elpy-mode)))
 (setenv "WORKON_HOME" "~/.virtualenvironments/")
 (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
-(setq python-shell-interpreter "ipython3"
+(setq python-shell-interpreter "ipython"
       python-shell-intepreter-args "-i")
 
 ;; Load elpy for .bzl files since their Skylark language resembles in
@@ -386,9 +386,9 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; Use the insane tab width of the Hydrogen code base.
 (add-hook 'c++-mode-hook '(lambda()
-			    (setq tab-width 8)
-			    (setq c-basic-offset 8)
-			    (setq c-indent-level 8)
+			    (setq tab-width 4)
+			    (setq c-basic-offset 4)
+			    (setq c-indent-level 4)
 			    (setq indent-tabs-mode t)
 			    (setq c++-tab-always-indent t)
 			    ;; use sr-speedbar with cc-mode
@@ -628,7 +628,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(go-mode web-mode async)))
+ '(package-selected-packages
+   '(rust-mode cmake-mode lua-mode scala-mode cython-mode go-mode web-mode async)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -795,3 +796,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (global-set-key (kbd "s-:") 'windmove-right)
 (global-set-key (kbd "s-L") 'windmove-up)
 (global-set-key (kbd "s-K") 'windmove-down)
+
+;; Using the compose key in macOS
+(global-set-key (kbd "M-u") nil)
+(setq mac-option-modifier nil)
