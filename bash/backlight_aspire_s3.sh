@@ -1,9 +1,8 @@
 #!/bin/bash
 
 function set_aspire_s3_backlight {
-	# Since 'xbacklight' does not work on an Aspire S3, this script
-	# will increase (or decrease) the backlight by a certain
-	# percentage.
+	# This script will increase (or decrease) the backlight by a
+	# certain percentage using it command `light`.
 	#
 	# This script assumes the an integer argument specifying the
 	# percentage of change. Negative values correspond to a decrease
@@ -24,37 +23,12 @@ function set_aspire_s3_backlight {
 	fi
 
 	# ----------------------------------------------------------------
-	# Get maximal and current backlight value of the system
-	brightness_max=$(cat /sys/class/backlight/intel_backlight/max_brightness)
-	brightness_old=$(cat /sys/class/backlight/intel_backlight/brightness)
 
-	# ----------------------------------------------------------------
-	# Calculate the change in value from the supplied maximum.  Since
-	# BASH is not supporting floating point arithmetic, the value
-	# get's rounded
-	value_change=$(($brightness_max*$1/100))
-
-	# ----------------------------------------------------------------
-	# Calculate the new brigthness and sanity checking for the value
-	brightness_new=$(($brightness_old+$value_change))
-	if [ $brightness_new -gt $brightness_max ];then
-		brightness_new=$brightness_max
+	if [ $1 -gt 0 ]; then
+		sudo light -A $1
+	else
+		sudo light -U $(echo "-1 * $1" | bc)
 	fi
-	if [ $brightness_new -lt 0 ];then
-		brightness_new=0
-	fi
-
-	# ----------------------------------------------------------------
-	# The permissions of the backlight file will be set any for sysfs
-	# by the kernel on every new boot of the device. Instead, one need
-	# to add the following line to the sudoers to gain permission of
-	# writing it:
-	#
-	#  <user> ALL = (ALL) NOPASSWD: /usr/bin/tee /sys/class/backlight/intel_backlight/brightness
-
-	# Writting the new value to 
-	echo $brightness_new | sudo /usr/bin/tee /sys/class/backlight/intel_backlight/brightness
-
 }
 
 # --------------------------------------------------------------------
