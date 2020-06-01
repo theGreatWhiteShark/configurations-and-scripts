@@ -155,34 +155,29 @@ bar {
         status_command i3status
 }
 
-# Suspend the computer. Do not forget to enter the pm-suspend command
-# as an exception for your user to the /etc/sudoers 
-bindsym $mod+m exec "sudo pm-suspend"
 # enable a lock screen
-bindsym $mod+Ctrl+m exec "~/git/configurations-and-scripts/i3/i3suspend_and_lock.sh"
+bindsym $mod+m exec "~/git/configurations-and-scripts/i3/i3suspend_and_lock.sh"
 exec xautolock -time 45 -locker '~/git/configurations-and-scripts/i3/i3suspend_and_lock.sh'
 
 # increase and decrease volume
-bindsym $mod+F2 exec "amixer sset Master 3%-"
-bindsym $mod+F3 exec "amixer sset Master 3%+"
-bindsyn $mod+F1 exec "amixer sset Master toggle"
+bindsym $mod+F2 exec "amixer -D pulse sset Master 3%-"
+bindsym $mod+F3 exec "amixer -D pulse sset Master 3%+"
+bindsyn $mod+F1 exec "amixer -D pulse sset Master toggle"
 
 # shortcuts for emacs, thunar etc.
 bindsym $mod+Ctrl+e exec "emacs"
-bindsym $mod+Ctrl+d exec "xfe -p 3"
-bindsym $mod+Ctrl+Shift+d exec "thunar"
+bindsym $mod+Ctrl+d exec "thunar"
 
 # rotate the external monitor by 90 degrees
 bindsym $mod+o exec "xrandr --output HDMI-1 --rotate left"
 bindsym $mod+Shift+o exec "xrandr --output HDMI-1 --rotate normal"
 
-# increase and decrease the brightness of the screen by 10 percent and
-# revert possible changes applied by the adjust_brightness.py script
-# (because the reduced brightness by xbacklight is just way better)
+# increase and decrease the brightness of the screen by 10 percent.
 bindsym $mod+F5 exec "~/git/configurations-and-scripts/bash/backlight_aspire_s3.sh -10"
 bindsym $mod+F6 exec "~/git/configurations-and-scripts/bash/backlight_aspire_s3.sh 10"
 
-## alternative: echo 1000 > /sys/class/blacklight/intel_backlight/brightness
+# toggle the keyboard layout
+bindsym $mod+F7 exec "~/git/configurations-and-scripts/i3/toggle_keyboard_layout.sh"
 
 # toggle the touchpad
 bindsym $mod+F12 exec "~/git/configurations-and-scripts/i3/toggle_touchpad.sh"
@@ -190,23 +185,10 @@ bindsym $mod+F12 exec "~/git/configurations-and-scripts/i3/toggle_touchpad.sh"
 # Make a Screenshot
 bindsym $mod+Print exec scrot
 
-# background image
-# exec --no-startup-id nitrogen --restore
-
-# starting Nextcloud
-# exec nextcloud
-
 # transparent windows
 exec xcompmgr -c -n
 
-
-# Start the sound server
-exec pulseaudio -D
-
-# applets
-exec pasystray
-exec wicd-gtk --tray
+exec nm-applet
 
 # open thunderbird, firefox and eamcs as default startup
 exec --no-startup-id i3-msg 'workspace 2; exec firefox; exec thunderbird; workspace 1; exec terminator'
-# exec --no-startup-id i3-msg 'workspace 2; exec chromium-browser; '
