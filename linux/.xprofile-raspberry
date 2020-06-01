@@ -1,0 +1,11 @@
+if [ -b "/dev/disk/by-uuid/64be19e8-d0fb-4ae4-9d80-2cd9536d137a" ];then
+	sudo cryptsetup luksOpen /dev/disk/by-uuid/64be19e8-d0fb-4ae4-9d80-2cd9536d137a --keyfile thisIsForMyNextCloud0 black
+	sudo mount /dev/mapper/black
+	sleep 1
+	sudo service apache2 restart
+	sudo service php7.3-fpm restart
+fi
+
+clementine &
+
+
