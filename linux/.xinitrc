@@ -9,7 +9,9 @@ xset -dpms
 xset s noblank
 
 # Load my X11 configuration
-[ -f ~/.xprofile ] && source ~/.xprofile
+if [ -f ~/.xprofile ]; then
+	source ~/.xprofile
+fi
 
 # Startup i3
 exec i3

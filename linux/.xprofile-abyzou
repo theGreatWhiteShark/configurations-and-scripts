@@ -7,11 +7,6 @@ if [ "$(xrandr --current | grep "HDMI-1 connected" | wc -m)" -gt "0" ];then
     # xrandr --output HDMI-1 --rotate left
     # xrandr --output HDMI-1 --right-of LVDS-1
     xrandr --output HDMI-1 --auto
-    # restore the background image
-    nitrogen --restore &
-else
-    # restore the background image
-    nitrogen --restore &
 fi
 
 # Reset the brightness adjustment of the previous session
