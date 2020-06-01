@@ -13,15 +13,14 @@ general {
 
 order += "disk /"
 order += "cpu_usage"
-order += "run_watch VPN"
 order += "cpu_temperature 0"
 order += "load"
-order += "wireless wlan0"
+order += "wireless wlp2s0"
 order += "battery 0"
 order += "volume master"
 order += "tztime local"
 
-wireless wlan0 {
+wireless wlp2s0 {
         format_up = "W: (%quality at %essid) %ip"
         format_down = "W: down"
 }
@@ -30,12 +29,8 @@ battery 0 {
         format = "%status %percentage %remaining"
 }
 
-run_watch VPN {
-        pidfile = "/var/run/openvpn/vpn_mpipks.pid"
-}
-
 tztime local {
-        format = "%Y-%m-%d %H:%M:%S"
+        format = "[%a] %Y-%m-%d %H:%M:%S"
 }
 
 load {
@@ -43,7 +38,7 @@ load {
 }
 cpu_temperature 0 {
 	format = "%degrees °C"
-	path = "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input"
+	path = "/sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input"
 }
 
 disk "/" {
@@ -57,7 +52,7 @@ cpu_usage {
 volume master {
 	format = "♪: %volume"
 	format_muted = "♪: muted (%volume)"
-        device = "default"
+        device = "pulse"
         mixer = "Master"
         mixer_idx = 0
 }
