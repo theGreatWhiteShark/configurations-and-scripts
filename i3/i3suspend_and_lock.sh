@@ -12,7 +12,7 @@ mogrify -scale 20% -scale 500% /tmp/screen_shot.png
 ## -------------------------------------------------------------------
 
 ## Unmount the external hard disk.
-if [ -d "/media/black/" ];then
+if [ -d "/media/black/music" ];then
 
 	## If the clementine player is running, it probably plays back
 	## some song from the hard disk. Thus, make it stop first.
@@ -60,7 +60,7 @@ fi
 ## -------------------------------------------------------------------
 
 ## Suspend the system into memory
-sudo pm-suspend
+systemctl suspend
 
 ## -------------------------------------------------------------------
 
@@ -70,6 +70,4 @@ i3lock -i /tmp/screen_shot.png
 ## -------------------------------------------------------------------
 
 ## If the external hard disk is plugged in, mount it.
-if [ "$(ls /dev/disk/by-id/ | grep ata-TOSHIBA_MK1059GSM_11LNTERLT | wc -m)" -gt "0" ];then
-	pmount /dev/disk/by-id/ata-TOSHIBA_MK1059GSM_11LNTERLT black
-fi
+source ~/.profile
