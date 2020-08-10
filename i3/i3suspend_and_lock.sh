@@ -5,6 +5,11 @@
 
 ## -------------------------------------------------------------------
 
+## Switch back to English layout so I can get the password right
+setxkbmap -layout us
+
+## -------------------------------------------------------------------
+
 ## As a nice screensaver, take a screenshot and blurs it.
 scrot /tmp/screen_shot.png
 mogrify -scale 20% -scale 500% /tmp/screen_shot.png
