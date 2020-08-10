@@ -8,16 +8,6 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
 # Mount the HDD containing the music if present.
 if [ -b "/dev/disk/by-id/ata-TOSHIBA_MK1059GSM_11LNTERLT" ]; then
 	if [ ! -d "/media/black/music" ]; then
@@ -29,4 +19,12 @@ if [ -b "/dev/disk/by-id/ata-TOSHIBA_MK1059GSM_11LNTERLT" ]; then
 		fi
 	fi
 		
+fi
+
+# Start the JACK server if the external sound card is present and it
+# is not running yet.
+if [ "$(jack_control status)" ];then
+	if [ "$(aplay --list-devices | grep US2x2 | wc -w)" -gt "0" ];then
+		qjackctl &
+	fi
 fi
