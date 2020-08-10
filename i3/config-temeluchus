@@ -166,9 +166,9 @@ exec xautolock -time 45 -locker '~/git/configurations-and-scripts/i3/i3lock_scre
 bindsym $mod+F12 exec "~/git/configurations-and-scripts/i3/toggle_touchpad.sh"
 
 # increase and decrease volume
-bindsym $mod+F2 exec "amixer -D pulse sset Master 3%-"
-bindsym $mod+F3 exec "amixer -D pulse sset Master 3%+"
-bindsyn $mod+F1 exec "amixer -D pulse sset Master toggle"
+bindsym $mod+F1 exec "~/git/configurations-and-scripts/i3/adjust_volume 0"
+bindsym $mod+F2 exec "~/git/configurations-and-scripts/i3/adjust_volume -3"
+bindsym $mod+F3 exec "~/git/configurations-and-scripts/i3/adjust_volume 3"
 
 # shortcuts for emacs, thunar etc.
 bindsym $mod+Ctrl+e exec "emacs"

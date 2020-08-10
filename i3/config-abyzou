@@ -157,12 +157,13 @@ bar {
 
 # enable a lock screen
 bindsym $mod+m exec "~/git/configurations-and-scripts/i3/i3suspend_and_lock.sh"
+bindsym $mod+Shift+m exec "systemctl suspend"
 exec xautolock -time 45 -locker '~/git/configurations-and-scripts/i3/i3suspend_and_lock.sh'
 
 # increase and decrease volume
-bindsym $mod+F2 exec "amixer -D pulse sset Master 3%-"
-bindsym $mod+F3 exec "amixer -D pulse sset Master 3%+"
-bindsyn $mod+F1 exec "amixer -D pulse sset Master toggle"
+bindsym $mod+F2 exec "~/git/configurations-and-scripts/i3/adjust_volume.sh -3"
+bindsym $mod+F3 exec "~/git/configurations-and-scripts/i3/adjust_volume.sh 3"
+bindsyn $mod+F1 exec "~/git/configurations-and-scripts/i3/adjust_volume.sh 0"
 
 # shortcuts for emacs, thunar etc.
 bindsym $mod+Ctrl+e exec "emacs"
@@ -179,6 +180,9 @@ bindsym $mod+F6 exec "~/git/configurations-and-scripts/bash/backlight_aspire_s3.
 # toggle the keyboard layout
 bindsym $mod+F7 exec "~/git/configurations-and-scripts/i3/toggle_keyboard_layout.sh"
 
+# Mount the local hard drive.
+bindsym $mod+F8 exec "pmount /dev/disk/by-id/ata-TOSHIBA_MK1059GSM_11LNTERLT black"
+
 # toggle the touchpad
 bindsym $mod+F12 exec "~/git/configurations-and-scripts/i3/toggle_touchpad.sh"
 
@@ -191,4 +195,4 @@ exec xcompmgr -c -n
 exec nm-applet
 
 # open thunderbird, firefox and eamcs as default startup
-exec --no-startup-id i3-msg 'workspace 2; exec firefox; exec thunderbird; workspace 1; exec terminator'
+exec --no-startup-id i3-msg 'workspace 2; exec firefox; exec thunderbird; workspace 4; exec clementine; workspace 1; exec terminator'
