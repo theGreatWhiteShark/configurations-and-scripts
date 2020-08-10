@@ -120,9 +120,6 @@ export GPG_TTY=$(tty)
 ## Use a system-wide GNU Global database
 export GTAGSLIBPATH=$HOME/.gtags/
 
-# Load the custom configuration of individual computers.
-[ -f $HOME/.profile ] && source $HOME/.profile
-
 # Default search path for LADSPA audio plugins
 export LADSPA_PATH=$HOME/.ladspa/:/usr/lib/ladspa/:/usr/local/lib/ladspa/
 export LV2_PATH=$HOME/.lv2:/usr/lib/lv2/
