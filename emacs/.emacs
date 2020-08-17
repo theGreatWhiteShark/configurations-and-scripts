@@ -725,10 +725,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-to-list 'auto-mode-alist '(".emacs-tc08" . emacs-lisp-mode))
 
 ;; Arduino
-(add-to-list 'load-path
-	     "~/git/configurations-and-scripts/emacs/arduino-mode")
-(add-to-list 'auto-mode-alist '("\\.\\(pde\\|ino\\)$" . arduino-mode))
-(autoload 'arduino-mode "arduino-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.\\(pde\\|ino\\)$" . c++-mode))
 
 ;; Why is the marking of regions not working with i3 on behemoth?
 (global-set-key (kbd "M-SPC") 'set-mark-command)
@@ -788,7 +785,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-to-list 'auto-mode-alist '("config\\([^\\.]\\)*" . conf-mode) t)
 (add-to-list 'auto-mode-alist '("\\.conf" . conf-mode))
 (add-to-list 'auto-mode-alist '("Dockerfile" . conf-mode))
-(add-to-list 'auto-mode-alist '("\\.in" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\.in$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\muttrc" . conf-mode))
 
 ;; Use shell-script-mode for linux configuration files
