@@ -20,7 +20,7 @@ alias reboot='sudo /sbin/reboot'
 alias bfg='java -jar $HOME/git/configurations-and-scripts/java/bfg-1.13.0.jar ';
 # Use the my custom script to start up TuxGuitar with ZynAddSubFX and
 # connect them both using JACK
-alias tuxguitar='lua $HOME/git/tux2zyn/tux2zyn.lua'
+# alias tuxguitar='lua $HOME/git/tux2zyn/tux2zyn.lua'
 
 alias backup='sudo borg create /media/purple/borg_backups::$(echo "abyzou-$(date -Idate)") ~/Documents/ ~/drums/ ~/lam/ ~/NSM\ Sessions/ ~/programming/ ~/vid/ ~/software/ ~/tabs/ ~/samples/ ~/.gnupg/ ~/.mutt/ ~/.ssh/ ~/.wicd/ --show-rc --progress -x'
 
@@ -125,3 +125,7 @@ export GTAGSLIBPATH=$HOME/.gtags/
 # Default search path for LADSPA audio plugins
 export LADSPA_PATH=$HOME/.ladspa/:/usr/lib/ladspa/:/usr/local/lib/ladspa/
 export LV2_PATH=$HOME/.lv2:/usr/lib/lv2/
+
+if [ -d "$HOME/software/android/platform-tools" ]; then
+	export PATH=$HOME/software/android/platform-tools:$PATH
+fi
