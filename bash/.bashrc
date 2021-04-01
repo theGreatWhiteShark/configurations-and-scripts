@@ -22,7 +22,7 @@ alias bfg='java -jar $HOME/git/configurations-and-scripts/java/bfg-1.13.0.jar ';
 # connect them both using JACK
 # alias tuxguitar='lua $HOME/git/tux2zyn/tux2zyn.lua'
 
-alias backup='sudo borg create /media/purple/borg_backups::$(echo "abyzou-$(date -Idate)") ~/Documents/ ~/drums/ ~/lam/ ~/NSM\ Sessions/ ~/programming/ ~/vid/ ~/software/ ~/tabs/ ~/samples/ ~/.gnupg/ ~/.mutt/ ~/.ssh/ ~/.wicd/ --show-rc --progress -x'
+alias backup='sudo borg create /media/purple/borg_backups::$(echo "abyzou-$(date -Idate)") ~/Documents/ ~/drums/ ~/lam/ ~/NSM\ Sessions/ ~/programming/ ~/vid/ ~/software/ ~/tabs/ ~/samples/ ~/.gnupg/ ~/.mutt/ ~/.ssh/ ~/.wicd/ ~/.thunderbird --show-rc --progress -x'
 
 ## Git - some bad practice shortcut for my org-files collecting all sorts of information
 alias pgit='tempdir=$(pwd); cd $HOME/git/orga; git pull; cd $tempdir'
