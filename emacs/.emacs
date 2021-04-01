@@ -83,6 +83,7 @@
 		sh-mode-hook
 		c-mode-hook
 		lua-mode-hook
+		nxml-mode-hook
 		c++-mode-hook) t)
   (add-hook hook (lambda() (flyspell-prog-mode))))
 
@@ -852,3 +853,11 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (defun display-ansi-colors ()
   (interactive)
   (ansi-color-apply-on-region (point-min) (point-max)))
+
+;; nXML
+(setq nxml-slash-auto-complete-flag 1)
+(add-to-list 'rng-schema-locating-files
+			 "/usr/local/share/emacs/27.0.91/etc/schema/")
+(push "~/.emacs.d/nxml-schemas/schemas.xml" rng-schema-locating-files-default)
+(push (cons (concat "\\." (regexp-opt '("dbk" "docbook") t)
+                    "\\'") 'nxml-mode) auto-mode-alist)
