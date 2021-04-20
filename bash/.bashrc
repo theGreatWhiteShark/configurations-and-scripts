@@ -44,7 +44,7 @@ export GOPATH="$HOME/go"
 function pwd_prompt {
     pwd | sed "s/\/home\/$(echo $USER)/\~/" | awk 'BEGIN { FS = "/" };{ if ( NF > 3 ) print $1"/.../"$(NF-1)"/"$NF ; else print $0}'
 }
-if [ "$(hostname)" == "abyzou" ]; then
+if [ "$(hostname)" == "mastema" ]; then
     if [ "$HOME" == "/root" ]; then
 	export PS1="\e[1;31m\]\h\e[0m\]: \[\e[1;34m\]\$(pwd_prompt) \[\e[1;31m\]$\[\e[0m\] ";
     else

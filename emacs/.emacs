@@ -194,58 +194,58 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; ESS and R ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-to-list 'load-path
-	     "~/git/configurations-and-scripts/emacs/ESS/lisp"
-	     "~/git/configurations-and-scripts/emacs/ESS")
-(require 'ess-site)
+;; (add-to-list 'load-path
+;; 	     "~/git/configurations-and-scripts/emacs/ESS/lisp"
+;; 	     "~/git/configurations-and-scripts/emacs/ESS")
+;; (require 'ess-site)
 
-;; Specify the export options of polymode to accelerate the export of
-;; .Rmd files.
-(add-hook 'ess-mode-hook
-	  (lambda()
-	    (defvar pm--exporter-hist "Rmarkdown")
-	    (defvar pm--export:to-last "html document (html)")
-	    (defvar pm--export:to-hist "html document (html)")))
-;; using Rutils
-(require 'ess-rutils)
+;; ;; Specify the export options of polymode to accelerate the export of
+;; ;; .Rmd files.
+;; (add-hook 'ess-mode-hook
+;; 	  (lambda()
+;; 	    (defvar pm--exporter-hist "Rmarkdown")
+;; 	    (defvar pm--export:to-last "html document (html)")
+;; 	    (defvar pm--export:to-hist "html document (html)")))
+;; ;; using Rutils
+;; (require 'ess-rutils)
 
-(setq
- R-binary-folder "~/software/R/R-3.5.0/bin/"
- inferior-R-program-name
- (concatenate 'string R-binary-folder "R")
- ;; AUCTeX interface for Sweave
- ess-swv-plug-into-AUCTeX-p t
- ;; activating polymode and markdown-mode
- load-path
- (append
-  '("~/git/configurations-and-scripts/emacs/polymode/"
-    "~/git/configurations-and-scripts/emacs/poly-R"
-    "~/git/configurations-and-scripts/emacs/poly-noweb"
-    "~/git/configurations-and-scripts/emacs/poly-markdown"
-    "~/git/configurations-and-scripts/emacs/markdown-mode/")
-  load-path))
-(require 'markdown-mode)
-(require 'poly-R)
-(require 'poly-markdown)
-;; (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
+;; (setq
+;;  R-binary-folder "~/software/R/R-3.5.0/bin/"
+;;  inferior-R-program-name
+;;  (concatenate 'string R-binary-folder "R")
+;;  ;; AUCTeX interface for Sweave
+;;  ess-swv-plug-into-AUCTeX-p t
+;;  ;; activating polymode and markdown-mode
+;;  load-path
+;;  (append
+;;   '("~/git/configurations-and-scripts/emacs/polymode/"
+;;     "~/git/configurations-and-scripts/emacs/poly-R"
+;;     "~/git/configurations-and-scripts/emacs/poly-noweb"
+;;     "~/git/configurations-and-scripts/emacs/poly-markdown"
+;;     "~/git/configurations-and-scripts/emacs/markdown-mode/")
+;;   load-path))
+;; (require 'markdown-mode)
+;; (require 'poly-R)
+;; (require 'poly-markdown)
+;; ;; (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
+;; (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
 
-(setq
- ;; A comment is a comment. No matter how many dashes
- ess-indent-with-fancy-comments nil
- ;; Evaluate all code in the global namespace.
- ess-r-package-auto-enable-namespaced-evaluation nil
- ;; Try to complete statements
- ess-tab-complete-in-script 1
- ;; Use the GNU indentation style (2 whitespaces)
- ess-default-style 'GNU)
-(defun myindent-ess-hook ()
-  (setq ess-indent-level 2))
-(add-hook 'ess-mode-hook 'myindent-ess-hook)
-;; Use the old smart assign
-(add-hook 'ess-mode-hook
-	  (lambda()
-	    (local-set-key (kbd "_") 'ess-insert-assign)))
+;; (setq
+;;  ;; A comment is a comment. No matter how many dashes
+;;  ess-indent-with-fancy-comments nil
+;;  ;; Evaluate all code in the global namespace.
+;;  ess-r-package-auto-enable-namespaced-evaluation nil
+;;  ;; Try to complete statements
+;;  ess-tab-complete-in-script 1
+;;  ;; Use the GNU indentation style (2 whitespaces)
+;;  ess-default-style 'GNU)
+;; (defun myindent-ess-hook ()
+;;   (setq ess-indent-level 2))
+;; (add-hook 'ess-mode-hook 'myindent-ess-hook)
+;; ;; Use the old smart assign
+;; (add-hook 'ess-mode-hook
+;; 	  (lambda()
+;; 	    (local-set-key (kbd "_") 'ess-insert-assign)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Go ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -326,8 +326,8 @@
  org-confirm-babel-evaluate nil
  ;; Which R process to use when evaluating R code blocks. But I would
  ;; highly recommend to use ESS/polymode with Rmarkdown instead!
- org-babel-R-command (concatenate 'string R-binary-folder
-				  "R --no-save --slave")
+ ;; org-babel-R-command (concatenate 'string R-binary-folder
+ ;; 				  "R --no-save --slave")
  ;; Which languages to evaluate in Org.
  org-babel-load-languages '((emacs-lisp . t)
 			    (R . t)
@@ -671,7 +671,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(org-agenda-files
    '("~/git/orga/org/work.org" "~/git/orga/org/private.org" "~/git/orga/org/software.org" "~/git/orga/org/audio.org"))
  '(package-selected-packages
-   '(docbook docbook-snippets rust-mode editorconfig irony 0blayout elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags sclang-extensions csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
+   '(docbook docbook-snippets rust-mode editorconfig irony 0blayout elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode 'right)
  '(transient-mark-mode 1)
@@ -829,11 +829,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; Load some custom functions to edit Hydrogen files
 (load "~/git/configurations-and-scripts/emacs/elisp/hydrogen.el")
 
-;; Pointing to the right SuperCollider version
-(add-to-list 'load-path
-	     "~/git/configurations-and-scripts/emacs/scel/el")
-(require 'sclang)
-
 ;; Mute Emacs. Yes, there are devices playing a 'beep' received from Emacs.
 (setq visible-bell 1)
 
@@ -861,3 +856,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (push "~/.emacs.d/nxml-schemas/schemas.xml" rng-schema-locating-files-default)
 (push (cons (concat "\\." (regexp-opt '("dbk" "docbook") t)
                     "\\'") 'nxml-mode) auto-mode-alist)
+
+(load-file "~/git/configurations-and-scripts/emacs/elisp/po-mode.el")
+(require 'po-mode)
+(add-to-list 'auto-mode-alist '("\\.po*" . po-mode))

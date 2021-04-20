@@ -7,14 +7,11 @@ rm -r $HOME/.emacs $HOME/.emacs.d
 ln -s $HOME/git/configurations-and-scripts/emacs/.emacs $HOME/.emacs
 ln -s $HOME/git/configurations-and-scripts/emacs/.emacs.d $HOME/.emacs.d
 # Bash and linux
-rm $HOME/.bashrc $HOME/.xinitrc $HOME/.xprofile $HOME/.xmodmap $HOME/.profile
+rm $HOME/.bashrc $HOME/.xinitrc $HOME/.xprofile $HOME/.profile
 ln -s $HOME/git/configurations-and-scripts/bash/.bashrc $HOME/.bashrc
 ln -s $HOME/git/configurations-and-scripts/linux/.xinitrc $HOME/.xinitrc
 ln -s $HOME/git/configurations-and-scripts/linux/.xprofile-abyzou $HOME/.xprofile
-ln -s $HOME/git/configurations-and-scripts/linux/.xmodmap $HOME/.xmodmap
 touch $HOME/.profile
-# R
-ln -s $HOME/git/configurations-and-scripts/R/.Rprofile $HOME/.Rprofile
 # i3 window manager
 ln -s $HOME/git/configurations-and-scripts/i3/.i3status.conf-abyzou $HOME/.i3status.conf
 mkdir $HOME/.i3
@@ -22,25 +19,15 @@ ln -s $HOME/git/configurations-and-scripts/i3/config-abyzou $HOME/.i3/config
 # Terminator setting
 mkdir -p $HOME/.config/terminator
 ln -s $HOME/git/configurations-and-scripts/linux/config/terminator/config $HOME/.config/terminator/config
-
-## Make directories required for mounting my institut's home via sshfs
-sudo mkdir /data
-sudo chmod a+xw /data
-mkdir ~/pks_home
-
-## Include the Nextcloud repositories
-echo 'deb http://download.opensuse.org/repositories/home:/ivaradi/Debian_9.0/ /' > nextcloud-client.list
-sudo mv ./nextcloud-client.list /etc/apt/sources.list.d/
-wget -q -O - http://download.opensuse.org/repositories/home:/ivaradi/Debian_9.0/Release.key > nextcloud.key
-sudo apt-key add ./nextcloud.key
-rm ./nextcloud.key
-sudo apt update
+mkdir $HOME/bin
+export PATH=$HOME/bin:$PATH
 
 ## Compile the most recent Emacs version
 sudo apt -y install autoconf make gcc g++ pkg-config libasound2-dev libgtk-3-dev libxpm-dev libgnutls28-dev libtiff5-dev libgif-dev libxml2-dev libotf-dev libgpm-dev libncurses5-dev libjansson-dev liblcms2-dev texinfo
 
 git clone https://github.com/emacs-mirror/emacs.git $HOME/git/emacs
 cd $HOME/git/emacs/
+git checkout emacs-27.2
 ./autogen.sh
 ./configure
 make
@@ -55,34 +42,18 @@ make
 make autoloads
 cd ../ESS
 make
+cd ../helm
+make
+cd ../company
+make
 
 ## Install helpful packages
-sudo apt -y install apt-file sshfs at nitrogen imagemagick pandoc scrot xinput xbacklight xcompmgr meld lshw thunderbird thunar clementine kupfer terminator wicd-gtk pasystray pavucontrol ispell ingerman wngerman aspell-de htop nextcloud-client i3-wm i3blocks i3lock i3status
+sudo apt -y install apt-file at nitrogen imagemagick pandoc scrot xinput xbacklight meld thunderbird clementine kupfer terminator pasystray pavucontrol ispell ingerman wngerman aspell-de htop nextcloud-desktop caja-nextcloud i3-wm i3blocks i3lock i3status borgbackup qasmixer qasconfig r-base pmount xcompmgr ack go-mtpfs vlc global info liblo-tools
 sudo apt-file update
-
-
-## Installation of required packages for R
-sudo apt -y install xorg-dev texlive-fonts-extra default-jre default-jre-headless default-jdk texlive-latex-extra intltool multitail libreadline7 libreadline-dev hunspell g++ global libcairo2-dev libssh-dev libcurl4-gnutls-dev libxml2-dev gfortran fort77 texlive libzip-dev lbzip2 libbz2-dev libprotobuf-dev libv8-3.14-dev libgdal-dev gdal-bin libproj-dev libudunits2-dev libnetcdf-dev netcdf-bin libjq-dev protobuf-compiler
-
-mkdir -p $HOME/software/R
-cd $HOME/software/R
-wget https://cran.r-project.org/src/base/R-3/R-3.5.0.tar.gz
-tar -xf R-3.5.0.tar.gz
-rm R-3.5.0.tar.gz 
-cd $HOME/software/R/R-3.5.0
-./configure
-make
-sudo make install
-
-# This script will install a bunch of R libraries to get you
-# started. But it most probably won't work since the user has to agree
-# to install the libraries locally first.
-Rscript --no-init-file -e "options( repos = 'https://cran.uni-muenster.de/'); source( '~/git/configurations-and-scripts/R/package_installation.R' )"
-
 
 ## Install audio-related packages (also to
 ## install corresponding packages)
-sudo apt -y install ecasound libecasoundc-dev libcsound64-dev csound csound-utils csound-data tuxguitar tuxguitar-alsa tuxguitar-fluidsynth tuxguitar-jack supercollider ambdec pavumeter paprefs pulseaudio-module-jack
+sudo apt -y install ecasound libecasoundc-dev libcsound64-dev csound csound-utils csound-data ambdec pavumeter paprefs pulseaudio-module-jack
 
 ## Link audio configuration files
 [ -f $HOME/.ambdecrc ] && rm $HOME/.ambdecrc
@@ -97,10 +68,10 @@ ln -s $HOME/git/configurations-and-scripts/linux/config/pulse/default.pa $HOME/.
 ln -s $HOME/git/configurations-and-scripts/linux/config/rncbc.org/QjackCtl.conf $HOME/.config/rncbc.org/QjackCtl.conf
 
 ## Install LADSPA plugins
-sudo apt -y install amb-plugins autotalent blepvco blop bs2b-ladspa calf-ladspa cmt csladspa fil-plugins guitarix-ladspa invada-studio-plugins-ladspa ladspalist mcp-plugins omins pd-plugin rev-plugins rubberband-ladspa ste-plugins swh-plugins tap-plugins vco-plugins wah-plugins zam-plugins
+sudo apt -y install amb-plugins autotalent blepvco blop bs2b-ladspa calf-plugins cmt csladspa drumgizmo drumkv1-lv2 fil-plugins guitarix-ladspa guitarix-lv2 invada-studio-plugins-ladspa invada-studio-plugins-lv2 ir.lv2 jalv ladspalist lv2-dev mcp-plugins omins pd-plugin rev-plugins rubberband-ladspa ste-plugins swh-plugins swh-lv2 tap-plugins vco-plugins wah-plugins zam-plugins zynadd
 
 ## Compile and install hydrogen
-sudo apt -y install qt5-default libqt5xmlpatterns5-dev libarchive-dev libsndfile1-dev libasound2-dev liblo-dev libpulse-dev libcppunit-dev liblrdf0-dev liblash-compat-dev librubberband-dev libjack-jackd2-dev ccache cmake libtar-dev doxygen qttools5-dev-tools
+sudo apt -y install libqt5xmlpatterns5-dev libarchive-dev libsndfile1-dev libasound2-dev liblo-dev libpulse-dev libcppunit-dev liblrdf0-dev liblash-compat-dev librubberband-dev libjack-jackd2-dev ccache cmake libtar-dev doxygen qttools5-dev-tools qtbase5-dev-tools qttools5-dev qtbase5-dev qtcreator xmlto xmlpo docbook
 git clone https://github.com/hydrogen-music/hydrogen.git $HOME/git/hydrogen
 cd $HOME/git/hydrogen
 ./build.sh mm
@@ -109,25 +80,27 @@ sudo make install
 
 ## Compile and install JACK2. (It has to be configured to NOT use
 ## systemd)
-sudo apt -y install libeigen3-dev libopus-dev opus-tools  libsamplerate0-dev install libdb-dev
+sudo apt -y install libeigen3-dev libopus-dev opus-tools  libsamplerate0-dev libdb-dev
 git clone https://github.com/jackaudio/jack2.git $HOME/git/jack2
 cd $HOME/git/jack2
-./waf configure --systemd=no
+git checkout v1.9.17
+./waf configure --systemd=no --dbus --enable-pkg-config-dbus-service-dir
 ./waf build
 sudo ./waf install
 
 ## Compile and install QJackCtl
 git clone https://github.com/rncbc/qjackctl $HOME/git/qjackctl
-cd $HOME/qjackctl/
+cd $HOME/git/qjackctl/
+git checkout qjackctl_0_9_2
 ./autogen.sh 
-./configure --enable-jack-version=yes --enable-dbus=no
+./configure --enable-jack-version=yes
 make
 sudo make install
 
 ## Compile and install the NON DAW
 sudo apt -y install libsigc++-2.0-dev
 
-git clone git://git.tuxfamily.org/gitroot/non/non.git $HOME/git/non
+git clone git@github.com:theGreatWhiteShark/non $HOME/git/non
 cd $HOME/git/non
 git submodule update --init --recursive
 cd lib/ntk
@@ -138,6 +111,64 @@ cd ../..
 ./waf configure
 ./waf
 sudo ./waf install
+
+## compile and install lsp plugins
+sudo apt install -y libfltk1.3-dev libmxml-dev libfftw3-dev
+git clone git://github.com/sadko4u/lsp-plugins $HOME/lsp-plugins
+cd $HOME/lsp-plugins
+make
+sudo make install
+
+## compile and install Yoshimi
+git clone git://github.com/Yoshimi/yoshimi $HOME/git/yoshimi
+cd $HOME/git/yoshimi
+git checkout 2.0
+cd src
+cmake .
+make
+sudo make install
+
+## compile and install ZPlugins
+sudo apt install -y python3-setuptools guile-2.2-dev
+
+git clone git://github.com/mesonbuild/meson $HOME/git/meson
+cd $HOME/git/meson
+git checkout 0.57.1
+sudo python3 setup.py install
+
+git clone git://github.com/ninja-build/ninja $HOME/git/ninja
+cd $HOME/git/ninja
+git checkout v1.10.2
+./configure.py --bootstrap
+cp ninja $HOME/bin
+
+sudo apt install -y meson
+git clone https://git.sr.ht/~alextee/zplugins $HOME/git/zplugins
+cd $HOME/git/zplugins
+git checkout v0.2.3
+meson build
+ninja -C build
+sudo ninja -C build install
+
+## compile and install ZRythm
+sudo apt install -y gettext rubberband-cli cppcheck clang-tidy jq sphinx-common sphinx-intl sass-spec help2man texi2html libyaml-dev libgtksourceviewmm-3.0-dev libzstd-dev libpcre2-dev
+git clone https://git.sr.ht/~alextee/zrythm $HOME/git/zrythm
+cd $HOME/git/zrythm
+git checkout v1.0.0-alpha.14.1.2
+meson build
+meson compile -C
+sudo meson install -C build
+
+## compile and install MuseScore
+sudo apt install -y qtwebengine5-dev qtquickcontrols2-5-dev qml-module-qtquick-templates2 libmp3lame-dev libqt5svg5-dev
+git clone https://github.com/musescore/MuseScore $HOME/git/MuseScore
+cd $HOME/git/MuseScore
+git checkout v3.6.2
+cmake . -DBUILD_PORTAUDIO=OFF -DBUILD_PORTMIDI=OFF
+sudo ln -f /bin/gzip /usr/bin/gzip
+sudo ln -s /bin/ln /usr/bin/ln
+make -j4
+sudo make install
 
 ## building and configuring mutt
 sudo apt install mutt postfix libncursesw5-dev libgpgme-dev gpgsm dirmngr gnupg2 libdb-dev pass
