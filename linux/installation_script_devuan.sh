@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function paths_and_folders() {
-	echo -e " * generating basic environment (linking scripts and creating folders)...\n"
+	echo -e "\n * generating basic environment (linking scripts and creating folders)...\n"
 	
 	## Configuration of the home environment. 
 	## Since most files are already contained in the git repository they just have to be linked properly.
@@ -25,6 +25,9 @@ function paths_and_folders() {
 	mkdir $HOME/bin
 	export PATH=$HOME/bin:$PATH
 
+	sudo mv /etc/slim.conf /etc/slim.old.conf
+	sudo cp $HOME/git/configurations-and-scripts/linux/slim.conf /etc/slim.conf
+
 	## Link audio configuration files
 	[ -f $HOME/.ambdecrc ] && rm $HOME/.ambdecrc
 	[ -f $HOME/.ambdec-config-stereo ] && rm $HOME/.ambdec-config-stereo
@@ -39,8 +42,18 @@ function paths_and_folders() {
 
 }
 
+function pass_init() {
+	echo -e "\n * initialize password store. Be sure to have both the GPG key of thetruephil@googlemail.com and the SSH key for Gitlab registered.\n"
+
+	git clone git@gitlab.com:theGreatWhiteShark/orga $HOME/git/orga || exit 1
+	rm -r $HOME/.password-store || exit 1
+	ln -s $HOME/git/orga/.password-store $HOME/.password-store || exit 1
+
+	pass init 50B9595503C02D7467FDA1A2B9EB2795611A2033 || exit 1
+}
+
 function emacs_install() {
-	echo -e " * install emacs...\n"
+	echo -e "\n * install emacs...\n"
 	## Compile the most recent Emacs version
 	sudo apt -y install libasound2-dev libgtk-3-dev libxpm-dev libgnutls28-dev libtiff5-dev libgif-dev libxml2-dev libotf-dev libgpm-dev libncurses5-dev libjansson-dev liblcms2-dev texinfo
 
@@ -68,15 +81,15 @@ function emacs_install() {
 }
 
 function general_install() {
-	echo -e " * general installation...\n"
+	echo -e "\n * general installation...\n"
 	
 	## Install helpful packages
-	sudo apt -y install apt-file at nitrogen imagemagick pandoc scrot xinput xbacklight meld thunderbird clementine kupfer terminator pasystray pavucontrol ispell ingerman wngerman aspell-de htop nextcloud-desktop caja-nextcloud i3-wm i3blocks i3lock i3status borgbackup qasmixer qasconfig r-base pmount xcompmgr ack go-mtpfs vlc global info liblo-tools autoconf make gcc g++ pkg-config ecasound libecasoundc-dev libcsound64-dev csound csound-utils csound-data ambdec pavumeter paprefs pulseaudio-module-jack
+	sudo apt -y install apt-file at nitrogen imagemagick pandoc scrot xinput xbacklight meld thunderbird clementine kupfer terminator pasystray pavucontrol ispell ingerman wngerman aspell-de htop nextcloud-desktop caja-nextcloud i3-wm i3blocks i3lock i3status borgbackup qasmixer qasconfig r-base pmount xcompmgr ack go-mtpfs vlc global info liblo-tools autoconf make gcc g++ pkg-config ecasound libecasoundc-dev libcsound64-dev csound csound-utils csound-data ambdec pavumeter paprefs pulseaudio-module-jack pass pm-utils brightnessctl redshift
 	sudo apt-file update
 }
 
 function audio_install() {
-	echo -e " * installing audio packages...\n"
+	echo -e "\n * installing audio packages...\n"
 	
 	## Install LADSPA plugins
 	sudo apt -y install amb-plugins autotalent blepvco blop bs2b-ladspa calf-plugins cmt csladspa drumgizmo drumkv1-lv2 fil-plugins guitarix-ladspa guitarix-lv2 invada-studio-plugins-ladspa invada-studio-plugins-lv2 ir.lv2 jalv ladspalist lv2-dev mcp-plugins omins pd-plugin rev-plugins rubberband-ladspa ste-plugins swh-plugins swh-lv2 tap-plugins vco-plugins wah-plugins zam-plugins zynadd
@@ -112,9 +125,9 @@ function audio_install() {
 }
 
 function hydrogen_install() {
-	echo -e " * install everything required to compile hydrogen...\n"
+	echo -e "\n * install everything required to compile hydrogen...\n"
 	## Compile and install hydrogen
-	sudo apt -y install libqt5xmlpatterns5-dev libarchive-dev libsndfile1-dev libasound2-dev liblo-dev libpulse-dev libcppunit-dev liblrdf0-dev liblash-compat-dev librubberband-dev libjack-jackd2-dev ccache cmake libtar-dev doxygen qttools5-dev-tools qtbase5-dev-tools qttools5-dev qtbase5-dev qtcreator xmlto xmlpo docbook
+	sudo apt -y install libqt5xmlpatterns5-dev libarchive-dev libsndfile1-dev libasound2-dev liblo-dev libpulse-dev libcppunit-dev liblrdf0-dev liblash-compat-dev librubberband-dev libjack-jackd2-dev ccache cmake libtar-dev doxygen qttools5-dev-tools qtbase5-dev-tools qttools5-dev qtbase5-dev qtcreator xmlto docbook
 	git clone https://github.com/hydrogen-music/hydrogen.git $HOME/git/hydrogen
 	cd $HOME/git/hydrogen
 	./build.sh mm
@@ -123,7 +136,7 @@ function hydrogen_install() {
 }
 
 function jack2_install() {
-	echo -e " * install JACK2...\n"
+	echo -e "\n * install JACK2...\n"
 	
 	## Compile and install JACK2. (It has to be configured to NOT use
 	## systemd)
@@ -146,7 +159,7 @@ function jack2_install() {
 }
 
 function configure_mutt() {
-	echo -e " * configure mutt...\n"
+	echo -e "\n * configure mutt...\n"
 	
 	## building and configuring mutt
 	sudo apt install mutt postfix libncursesw5-dev libgpgme-dev gpgsm dirmngr gnupg2 libdb-dev pass
@@ -193,9 +206,10 @@ read -p "Installing audio libraries (apart from hydrogen) as well? [y/n] " AUDIO
 
 paths_and_folders
 general_install
+pass_init
 emacs_install
-jack2_install
 hydrogen_install
+jack2_install
 
 if [ "$AUDIO_REQUESTED" == "y" ]; then
 	audio_install
