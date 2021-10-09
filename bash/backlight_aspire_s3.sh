@@ -25,9 +25,9 @@ function set_aspire_s3_backlight {
 	# ----------------------------------------------------------------
 
 	if [ $1 -gt 0 ]; then
-		sudo light -A $1
+		sudo brightnessctl -d intel_backlight s +$1%
 	else
-		sudo light -U $(echo "-1 * $1" | bc)
+		sudo brightnessctl -d intel_backlight s $(echo "-1 * $1" |bc)%-
 	fi
 }
 
