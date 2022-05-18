@@ -15,12 +15,12 @@ order += "disk /"
 order += "cpu_usage"
 order += "cpu_temperature 0"
 order += "load"
-order += "wireless wlp2s0"
+order += "wireless wlan0"
 order += "battery 0"
 order += "volume master"
 order += "tztime local"
 
-wireless wlp2s0 {
+wireless wlan0 {
         format_up = "W: (%quality at %essid) %ip"
         format_down = "W: down"
 }
@@ -38,7 +38,7 @@ load {
 }
 cpu_temperature 0 {
 	format = "%degrees °C"
-	path = "/sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input"
+	path = "/sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input"
 }
 
 disk "/" {
