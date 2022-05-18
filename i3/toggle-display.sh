@@ -35,7 +35,7 @@ fi
 # turn them off. Instead one manually has to do it manually.
 # So in here it will be checked whether there is a disconnected displays
 # with still a mode attached to it.
-if [ $(xrandr --current | grep -E "disconnected [[:digit:]]+" | wc -c) > 0 ];then.
+if [ $(xrandr --current | grep -E "disconnected [[:digit:]]+" | wc -c) > 0 ];then
    display_names_off=$(xrandr --current | grep -E "disconnected [[:digit:]]+" | awk '{print $1}')
 
    # Turn off all extracted devices

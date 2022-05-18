@@ -1,11 +1,10 @@
-xrandr --output LVDS-1 --auto
+xrandr --output eDP-1 --auto
 
 # Test whether a HDMI1 connection was established. If so, try to make
 # to make the setup work iteratively. 
-if [ "$(xrandr --current | grep "HDMI-1 connected" | wc -m)" -gt "0" ];then
-    xrandr --output HDMI-1 --rotate left
-    xrandr --output HDMI-1 --right-of LVDS-1
-    xrandr --output HDMI-1 --auto
+if [ "$(xrandr --current | grep "HDMI-2 connected" | wc -m)" -gt "0" ];then
+    xrandr --output HDMI-2 --above eDP-1
+    xrandr --output HDMI-2 --auto
 fi
 
 # Reset the brightness adjustment of the previous session
