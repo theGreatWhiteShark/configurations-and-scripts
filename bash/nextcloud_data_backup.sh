@@ -16,7 +16,7 @@ sudo borg create \
 	 --compression lz4 \
 	 --exclude-caches \
 	 \
-	 ::'ncdata-{now}' \
+	 $BORG_REPO::'ncdata-{now}' \
 	 /media/black/ncdata/data 2>> /media/black/ncdata_borg_backups.log
 
 backup_exit=$?
@@ -26,7 +26,7 @@ backup_exit=$?
 ##  2. At most 1 week old
 ##  3. At most 1 month old
 ##  4. At most 10 months old
-sudo borg prune \
+sudo borg prune $BORG_REPO \
 	 --list \
 	 --prefix 'ndata-' \
 	 --show-rc \
