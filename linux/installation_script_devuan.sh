@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 
 function paths_and_folders() {
 	echo -e " * generating basic environment (linking scripts and creating folders)...\n"
@@ -16,9 +16,9 @@ function paths_and_folders() {
 	ln -s $HOME/git/configurations-and-scripts/linux/.xprofile-abyzou $HOME/.xprofile
 	touch $HOME/.profile
 	# i3 window manager
-	ln -s $HOME/git/configurations-and-scripts/i3/.i3status.conf-abyzou $HOME/.i3status.conf
+	ln -s $HOME/git/configurations-and-scripts/i3/.i3status.conf-mastema $HOME/.i3status.conf
 	mkdir $HOME/.i3
-	ln -s $HOME/git/configurations-and-scripts/i3/config-abyzou $HOME/.i3/config
+	ln -s $HOME/git/configurations-and-scripts/i3/config-mastema $HOME/.i3/config
 	# Terminator setting
 	mkdir -p $HOME/.config/terminator
 	ln -s $HOME/git/configurations-and-scripts/linux/config/terminator/config $HOME/.config/terminator/config
@@ -71,7 +71,7 @@ function general_install() {
 	echo -e " * general installation...\n"
 	
 	## Install helpful packages
-	sudo apt -y install apt-file at nitrogen imagemagick pandoc scrot xinput xbacklight meld thunderbird clementine kupfer terminator pasystray pavucontrol ispell ingerman wngerman aspell-de htop nextcloud-desktop caja-nextcloud i3-wm i3blocks i3lock i3status borgbackup qasmixer qasconfig r-base pmount xcompmgr ack go-mtpfs vlc global info liblo-tools autoconf make gcc g++ pkg-config ecasound libecasoundc-dev libcsound64-dev csound csound-utils csound-data ambdec pavumeter paprefs pulseaudio-module-jack
+	sudo apt -y install apt-file at nitrogen imagemagick pandoc scrot xinput brightnessctl meld thunderbird clementine terminator pasystray pavucontrol ispell ingerman wngerman aspell-de htop nextcloud-desktop caja-nextcloud i3-wm i3blocks i3lock i3status borgbackup qasmixer qasconfig r-base pmount xcompmgr ack go-mtpfs vlc global info liblo-tools autoconf make gcc g++ pkg-config ecasound libecasoundc-dev libcsound64-dev csound csound-utils csound-data ambdec pavumeter paprefs pulseaudio-module-jack synapse
 	sudo apt-file update
 }
 
@@ -85,17 +85,18 @@ function audio_install() {
 	sudo apt install -y libfltk1.3-dev libmxml-dev libfftw3-dev
 	git clone git://github.com/sadko4u/lsp-plugins $HOME/git/lsp-plugins
 	cd $HOME/git/lsp-plugins
-	git checkout 1.1.30
-	make
+	git checkout 1.2.1
+	make config FEATURES=’lv2 vst2 doc’
+	make -j4
 	sudo make install
 
 	## compile and install Yoshimi
 	git clone git://github.com/Yoshimi/yoshimi $HOME/git/yoshimi
 	cd $HOME/git/yoshimi
-	git checkout 2.1.0
+	git checkout 2.2.0
 	cd src
 	cmake .
-	make
+	Make -j4
 	sudo make install
 
 	## compile and install MuseScore
@@ -107,6 +108,14 @@ function audio_install() {
 	sudo ln -f /bin/gzip /usr/bin/gzip
 	sudo ln -s /bin/ln /usr/bin/ln
 	make -j4
+	sudo make install
+
+	## install Muse4
+	git clone git://github.com/muse-sequencer/muse $HOME/git/muse
+	cd $HOME/git/muse/src
+	git checkout 4.1.0
+	./compile_muse.sh
+	cd build
 	sudo make install
 
 }
@@ -130,7 +139,7 @@ function jack2_install() {
 	sudo apt -y install libeigen3-dev libopus-dev opus-tools  libsamplerate0-dev libdb-dev
 	git clone https://github.com/jackaudio/jack2.git $HOME/git/jack2
 	cd $HOME/git/jack2
-	git checkout v1.9.19
+	git checkout v1.9.21
 	./waf configure --systemd=no --dbus --enable-pkg-config-dbus-service-dir
 	./waf build
 	sudo ./waf install
@@ -138,56 +147,13 @@ function jack2_install() {
 	## Compile and install QJackCtl
 	git clone https://github.com/rncbc/qjackctl $HOME/git/qjackctl
 	cd $HOME/git/qjackctl/
-	git checkout qjackctl_0_9_5
-	./autogen.sh 
-	./configure --enable-jack-version=yes
-	make
-	sudo make install
+	git checkout qjackctl_0_9_7
+	cmake -DCONFIG_JACK_VERSION=yes -B build
+	cmake --build build --parallel 4
+	sudo cmake --install build
 }
 
-function configure_mutt() {
-	echo -e " * configure mutt...\n"
-	
-	## building and configuring mutt
-	sudo apt install mutt postfix libncursesw5-dev libgpgme-dev gpgsm dirmngr gnupg2 libdb-dev pass
-	sudo apt-mark auto gpgsm dirmngr
-	cd $HOME/software
-	wget ftp://ftp.mutt.org/pub/mutt/mutt-2.1.3.tar.gz
-	tar -xf mutt-2.1.3.tar.gz
-	cd mutt-2.1.3
-	./prepare
-	./configure --enable-pgp --enable-gpgme --enable-compressed --enable-hcache --enable-smtp --enable-imap --enable-sidebar --with-gnutls --with-curses=/usr/lib/x86_64-linux-gnu/
-	make
-	sudo make install
-	cd $HOME/git/configurations-and-scripts/mutt/
-	gpg2 --decrypt --output account.0 account.0.asc
-	gpg2 --decrypt --output account.1 account.1.asc
-	gpg2 --decrypt --output account.2 account.2.asc
-	gpg2 --decrypt --output aliases aliases.asc
-	gpg2 --decrypt --output mailing.lists.and.groups mailing.lists.and.groups.asc
-
-	mkdir $HOME/.mutt
-	ln -s $HOME/git/configurations-and-scripts/mutt/account.0 $HOME/.mutt/account.0
-	ln -s $HOME/git/configurations-and-scripts/mutt/account.1 $HOME/.mutt/account.1
-	ln -s $HOME/git/configurations-and-scripts/mutt/account.2 $HOME/.mutt/account.2
-	ln -s $HOME/git/configurations-and-scripts/mutt/aliases $HOME/.mutt/aliases
-	ln -s $HOME/git/configurations-and-scripts/mutt/mailing.lists.and.groups $HOME/.mutt/mailing.lists.and.groups
-	ln -s $HOME/git/configurations-and-scripts/mutt/colors $HOME/.mutt/colors
-	ln -s $HOME/git/configurations-and-scripts/mutt/gpg.rc $HOME/.mutt/gpg.rc
-	ln -s $HOME/git/configurations-and-scripts/mutt/muttrc $HOME/.mutt/muttrc
-	ln -s $HOME/git/configurations-and-scripts/emacs/.emacs-mutt $HOME/.mutt/.emacs-mutt
-	# Setup the postfix server for outgoing mail
-	cd $HOME/git/configurations-and-scripts/linux/postfix/
-	gpg2 --decrypt --output sasl_passwd sasl_passwd.asc
-	gpg2 --decrypt --output sender_relay sender_relay.asc
-	sudo cp /etc/postfix/main.cf /etc/postfix/main.cf.backup
-	sudo cp /etc/postfix/main.cf /etc/postfix/old.main.cf
-	sudo cp $HOME/git/configurations-and-scripts/linux/postfix/main.cf /etc/postfix/
-	sudo cp $HOME/git/configurations-and-scripts/linux/postfix/sasl_passwd /etc/postfix/
-	sudo cp $HOME/git/configurations-and-scripts/linux/postfix/sender_relay /etc/postfix/
-}
-
-echo -e "Installation script written for Devuan Beowulf 3.1.1 (last updated 2021.10.07)\n"
+echo -e "Installation script written for Devuan Chimaera (last updated 2022.05.18)\n"
 
 read -p "Installing audio libraries (apart from hydrogen) as well? [y/n] " AUDIO_REQUESTED 
 

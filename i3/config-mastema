@@ -34,7 +34,7 @@ bindsym $mod+Return exec terminator
 bindsym $mod+Shift+q kill
 
 # start kupfer (a program launcher and document finder)
-bindsym $mod+d exec kupfer
+# bindsym $mod+d exec synapse
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -175,14 +175,11 @@ bindsym $mod+o exec "xrandr --output HDMI-1 --rotate left"
 bindsym $mod+Shift+o exec "xrandr --output HDMI-1 --rotate normal"
 
 # increase and decrease the brightness of the screen by 10 percent.
-bindsym $mod+F5 exec "sudo ~/git/configurations-and-scripts/bash/backlight_asus_zenbook.sh -10"
-bindsym $mod+F6 exec "sudo ~/git/configurations-and-scripts/bash/backlight_asus_zenbook.sh 10"
+bindsym $mod+F5 exec "brightnessctl set 10%-"
+bindsym $mod+F6 exec "brightnessctl set 10%+"
 
 # toggle the keyboard layout
 bindsym $mod+F7 exec "~/git/configurations-and-scripts/i3/toggle_keyboard_layout.sh"
-
-# Mount the local hard drive.
-bindsym $mod+F8 exec "pmount /dev/disk/by-id/ata-TOSHIBA_MK1059GSM_11LNTERLT black"
 
 # toggle the touchpad
 bindsym $mod+F12 exec "~/git/configurations-and-scripts/i3/toggle_touchpad.sh"
@@ -197,8 +194,9 @@ exec pulseaudio -D
 exec pasystray
 exec qjackctl
 exec qasmixer --tray
-exec wicd --tray
+exec nm-applet
 exec blueman-applet
+exec synapse
 
 # Set color temperature according to sun
 exec redshift -l 51.20:12.23
