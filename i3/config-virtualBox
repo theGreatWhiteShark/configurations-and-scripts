@@ -183,7 +183,7 @@ exec xcompmgr -c -n
 
 exec pulseaudio -D
 exec pasystray
-exec synapse
+exec synapse -s
 
 # Set color temperature according to sun
 exec redshift -l 51.20:12.23
