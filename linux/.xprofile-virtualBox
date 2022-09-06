@@ -1,1 +1,6 @@
 xrandr --output Virtual1 --mode "1920x1200"
+
+# Enable some VirtualBox features
+VBoxClient --clipboard
+VBoxClient --draganddrop
+VBoxClient --seamless
