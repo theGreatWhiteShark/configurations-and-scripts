@@ -83,8 +83,7 @@
 		sh-mode-hook
 		c-mode-hook
 		lua-mode-hook
-		nxml-mode-hook
-		c++-mode-hook) t)
+		nxml-mode-hook) t)
   (add-hook hook (lambda() (flyspell-prog-mode))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -177,7 +176,6 @@
 (dolist (hook '(lisp-interaction-mode-hook
 		emacs-lisp-mode-hook
 		c-mode-hook
-		c++-mode-hook
 		dired-mode-hook
 		eshell-mode-hook) t)
   (add-hook hook (lambda() (helm-gtags-mode 1))))
@@ -409,20 +407,25 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; Activating c-mode for CUDA files
 (setq auto-mode-alist (cons '(".cu$" . c-mode) auto-mode-alist))
 
-;; Use irony for completion
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
+;; style I want to use in c++ mode
+(c-add-style "my-style" 
+			 '("stroustrup"
+			   (indent-tabs-mode . t)        ; use spaces rather than tabs
+			   (c-basic-offset . 4)            ; indent by four spaces
+			   (c-indent-level . 4)
+			   (c++-tab-always-indent . t)
+			   (c-offsets-alist . ((namespace-open . 0)
+								   (innamespace . 0)
+								   (defun-open . +1)))))
 
-;; Use the insane tab width of the Hydrogen code base.
-(add-hook 'c++-mode-hook '(lambda()
-			    (setq tab-width 4)
-			    (setq c-basic-offset 4)
-			    (setq c-indent-level 4)
-			    (setq indent-tabs-mode t)
-			    (setq c++-tab-always-indent t)
-			    ;; use sr-speedbar with cc-mode
-			    ;; (sr-speedbar-open)
-			    ))
+(defun my-c++-mode-hook ()
+  (c-set-style "my-style")        ; use my-style defined above
+  (auto-fill-mode)
+  (irony-mode)
+  (flyspell-prog-mode)
+  (helm-gtags-mode))
+
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
 
 ;; ;; Use C headers to complete in headers using company
 ;; (require 'company-c-headers)
@@ -671,7 +674,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(org-agenda-files
    '("~/git/orga/org/work.org" "~/git/orga/org/private.org" "~/git/orga/org/software.org" "~/git/orga/org/audio.org"))
  '(package-selected-packages
-   '(ess ess-smart-equals ess-smart-underscore docbook docbook-snippets rust-mode editorconfig irony 0blayout elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
+   '(yaml ess ess-smart-equals ess-smart-underscore docbook docbook-snippets rust-mode editorconfig irony 0blayout elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode 'right)
  '(transient-mark-mode 1)
@@ -821,7 +824,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 		emacs-lisp-mode-hook
 		ess-mode-hook
 		c-mode-hook
-		c++-mode-hook
 		lua-mode-hook
 		org-mode-hook) t)
   (add-hook hook (lambda() (auto-fill-mode 1))))
@@ -841,6 +843,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 		lisp-interaction-mode-hook
 		emacs-lisp-mode-hook
 		go-mode-hook
+		c++-mode-hook
 		sh-mode-hook) t)
   (add-hook hook (lambda() (setq tab-width 4))))
 
