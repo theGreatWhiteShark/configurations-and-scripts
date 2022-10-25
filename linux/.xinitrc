@@ -13,6 +13,10 @@ if [ -f ~/.xprofile ]; then
 	source ~/.xprofile
 fi
 
+if [ -f ~/.Xresources ]; then
+	xrdb -merge -I$HOME ~/.Xresources
+fi
+
 # Startup i3
 exec i3
 

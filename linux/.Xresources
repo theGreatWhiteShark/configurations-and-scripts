@@ -1,0 +1,24 @@
+! Black + DarkGrey
+*color0:  #000000
+*color8:  #2B2B2B
+! DarkRed + Red
+*color1:  #9C6363
+*color9:  #CC9393
+! DarkGreen + Green
+*color2:  #4F6F4F
+*color10: #7F9F7F
+! DarkYellow + Yellow
+*color3:  #D0BF8F
+*color11: #F0DFAF
+! DarkBlue + Blue
+*color4:  #5C888B
+*color12: #8CD0D3
+! DarkMagenta + Magenta
+*color5:  #AD709A
+*color13: #DC8CC3
+!DarkCyan + Cyan (both not tango)
+*color6:  #78B7BA
+*color14: #93E0E3
+! LightGrey + White
+*color7:  #A5A59A
+*color15: #DCDCCC
