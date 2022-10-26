@@ -158,7 +158,7 @@ bar {
 
 # enable a lock screen
 bindsym $mod+m exec "~/git/configurations-and-scripts/i3/i3suspend_and_lock.sh"
-bindsym $mod+Shift+m exec "systemctl suspend"
+bindsym $mod+Shift+m exec "sudo pm-suspend"
 # exec xautolock -time 45 -locker '~/git/configurations-and-scripts/i3/i3suspend_and_lock.sh'
 
 # increase and decrease volume
@@ -193,7 +193,14 @@ bindsym $mod+Print exec scrot
 # transparent windows
 exec xcompmgr -c -n
 
-exec nm-applet
+exec pulseaudio -D
+exec pasystray
+exec qjackctl
+exec qasmixer --tray
+exec wicd --tray
+
+# Set color temperature according to sun
+exec redshift -l 51.20:12.23
 
 # open thunderbird, firefox and eamcs as default startup
 exec --no-startup-id i3-msg 'workspace 2; exec firefox; exec thunderbird; workspace 1; exec terminator'
