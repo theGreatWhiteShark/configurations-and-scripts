@@ -15,7 +15,7 @@
 	("gnu" . "http://elpa.gnu.org/packages/")
 	("melpa" . "https://melpa.org/packages/")
 	("marmalade" . "http://marmalade-repo.org/packages/")))
-;; (package-initialize)
+(package-initialize)
 
 ;; remapping caps-lock to M-x
 ;; (if (eq window-system 'x)
@@ -101,7 +101,6 @@
 (global-set-key (kbd "C-x rb") 'helm-bookmarks)
 (global-unset-key (kbd "C-x C-f"))
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "M-s") 'helm-swoop)
 
 ;; Using TAB for completion within the helm search and custom key
 ;; bindings. 
@@ -249,7 +248,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Go ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Run gofmt before saving a file.
-(add-hook 'before-save-hook #'gofmt-before-save)
+;; (add-hook 'before-save-hook #'gofmt-before-save)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; Python ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -273,7 +272,6 @@
 
 ;; Be consistent and use web-mode for all web development stuff
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.ts\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
@@ -435,7 +433,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; Use the many window view of GDB. To use it, one must supply the
 ;; -i=mi argument to gdb
 (setq gdb-many-windows 1
-      gdb-show-main 1)
+      gdb-show-main 1
+	  gdb-speedbar-auto-raise t)
 
 ;; Use function-args-mode
 (require 'function-args)
@@ -515,8 +514,14 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 	  (mode . org-mode))
 	 ("Git"
 	  (filename . "~/git/"))
-	 ("Phd"
-	  (filename . "~/phd/"))
+	 ("Hydrogen"
+	  (filename . "~/git/hydrogen/"))
+	 ("Hydrogen core"
+	  (filename . "~/git/hydrogen/src/core"))
+	 ("Hydrogen gui"
+	  (filename . "~/git/hydrogen/src/gui/src"))
+	 ("Hydrogen tests"
+	  (filename . "~/git/hydrogen/src/gui/tests"))
 	 ("Configuration"
 	  (or
 	   (filename . "~/git/configurations-and-scripts/")
@@ -671,10 +676,12 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(inhibit-startup-screen t)
  '(mark-even-if-inactive t)
  '(markdown-enable-math t)
+ ;; move to subsequent marks in mark ring using C-SPC instead of C-u C-SPC
+ '(set-mark-command-repeat-pop t)
  '(org-agenda-files
    '("~/git/orga/org/work.org" "~/git/orga/org/private.org" "~/git/orga/org/software.org" "~/git/orga/org/audio.org"))
  '(package-selected-packages
-   '(yaml ess ess-smart-equals ess-smart-underscore docbook docbook-snippets rust-mode editorconfig irony 0blayout elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
+   '(tide yaml ess ess-smart-equals ess-smart-underscore docbook docbook-snippets rust-mode editorconfig irony 0blayout elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode 'right)
  '(transient-mark-mode 1)
@@ -730,9 +737,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; Arduino
 (add-to-list 'auto-mode-alist '("\\.\\(pde\\|ino\\)$" . c++-mode))
-
-;; Why is the marking of regions not working with i3 on behemoth?
-(global-set-key (kbd "M-SPC") 'set-mark-command)
 
 ;; Modifying markdown mode for correct displaying of German letters
 (add-to-list 'load-path
@@ -863,4 +867,34 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  
 ;; (load-file "~/git/configurations-and-scripts/emacs/elisp/po-mode.el")
 ;; (require 'po-mode)
-;; (add-to-list 'auto-mode-alist '("\\.po*" . po-mode))
+;; (add-to-list 'auto-mode-alist '("\\.po" . po-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;; TypeScript usage ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; redirect log into a file
+(setq tide-tsserver-process-environment '("TSS_LOG=-level verbose -file /tmp/tss.log"));
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+(use-package tide
+  :ensure t
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save)))
