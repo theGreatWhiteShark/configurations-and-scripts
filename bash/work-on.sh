@@ -12,4 +12,4 @@ firefox -P work &
 disown
 
 # Start VPN
-sudo openvpn --config /home/phil/software/vpn/pm__ssl_vpn_config.ovpn
+sudo openvpn --config /home/phil/software/vpn/dhd_vpn_config.ovpn
