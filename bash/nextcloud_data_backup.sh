@@ -28,12 +28,13 @@ backup_exit=$?
 ##  4. At most 10 months old
 sudo borg prune $BORG_REPO \
 	 --list \
-	 --prefix 'ndata-' \
+	 --prefix 'ncdata-' \
 	 --show-rc \
+	 --keep-within 3d \
 	 --keep-daily 2 \
-	 --keep-weekly 1 \
-	 --keep-monthly 1 \
-	 --keep-yearly 1 2>> /media/black/ncdata_borg_backups.log
+	 --keep-weekly 4 \
+	 --keep-monthly 4 \
+	 --keep-yearly 4 2>> /media/black/ncdata_borg_backups.log
 
 prune_exit=$?
 
