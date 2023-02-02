@@ -440,9 +440,17 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; Format buffer using custom astyle
 (defun my-cc-mode-before-save-format ()
   (when (eq major-mode 'c++-mode)
-	(shell-command-on-region (point-min) (point-max)
+	(let (previous-column previous-line)
+	  (setq previous-column (current-column))
+	  (setq previous-line (line-number-at-pos))
+	  ;; The whole buffer will be replace with the output of the shell
+	  ;; command. Not too pretty, as it does not allow for undo. But
+	  ;; at least we restore the location of point.
+	  (shell-command-on-region (point-min) (point-max)
 							 "astyle -t -T -C -S -K -N -U -H -y -j -k3 -W3 -xG -n"
-							 t t)))
+							 t t)
+	  (move-to-window-line previous-line)
+	  (move-to-column previous-column))))
 
 (add-hook 'before-save-hook #'my-cc-mode-before-save-format)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
