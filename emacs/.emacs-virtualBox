@@ -29,6 +29,11 @@
 (require 'company-gtags)
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; always use speedbar in GUI
+(when window-system (sr-speedbar-open))
+(setq speedbar-directory-unshown-regexp "^\\(\\.\\.*$\\)\\'")
+(setq speedbar-show-unknown-files t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; spell checking ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -412,15 +417,12 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-hook 'c++-mode-hook 'irony-mode)
 (add-hook 'c-mode-hook 'irony-mode)
 
-;; Use the insane tab width of the Hydrogen code base.
 (add-hook 'c++-mode-hook '(lambda()
-			    (setq tab-width 4)
-			    (setq c-basic-offset 4)
-			    (setq c-indent-level 4)
+			    ;; (setq tab-width 4)
+			    ;; (setq c-basic-offset 4)
+			    ;; (setq c-indent-level 4)
 			    (setq indent-tabs-mode t)
 			    (setq c++-tab-always-indent t)
-			    ;; use sr-speedbar with cc-mode
-			    ;; (sr-speedbar-open)
 			    ))
 
 ;; ;; Use C headers to complete in headers using company
