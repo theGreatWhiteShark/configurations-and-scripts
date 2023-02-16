@@ -2,12 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(".zshrc"
+((".zshrc"
  (filename . "~/.zshrc")
  (front-context-string . "# Enable ")
  (rear-context-string)
  (position . 1))
-((".bashrc"
+ (".bashrc"
  (filename . "~/.bashrc")
  (front-context-string . "\n## reduce promp")
  (rear-context-string . ") -l 'inspect'\"\n")
