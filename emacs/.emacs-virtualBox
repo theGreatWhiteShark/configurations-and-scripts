@@ -30,9 +30,9 @@
 (add-hook 'after-init-hook 'global-company-mode)
 
 ;; always use speedbar in GUI
-(when window-system (sr-speedbar-open))
-(setq speedbar-directory-unshown-regexp "^\\(\\.\\.*$\\)\\'")
-(setq speedbar-show-unknown-files t)
+;; (when window-system (sr-speedbar-open))
+;; (setq speedbar-directory-unshown-regexp "^\\(\\.\\.*$\\)\\'")
+;; (setq speedbar-show-unknown-files t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; spell checking ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -93,108 +93,145 @@
   (add-hook hook (lambda() (flyspell-prog-mode))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;; using ido ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'ido)
+(ido-mode 1)
+(ido-everywhere 1)
+
+(use-package flx
+  :ensure t
+  :pin melpa)
+(use-package flx-ido
+  :ensure t
+  :pin melpa
+  :init
+  (flx-ido-mode 1)
+  (setq ido-enable-flex-matching t)
+  (setq ido-use-faces nil))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; using helm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-to-list 'load-path
-	     "~/git/configurations-and-scripts/emacs/helm")
-(require 'helm)
-(require 'helm-config)
-(require 'helm-gtags)
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-unset-key (kbd "C-x b"))
-(global-set-key (kbd "C-x b") 'helm-mini)
-(global-unset-key (kbd "C-x rb"))
-(global-set-key (kbd "C-x rb") 'helm-bookmarks)
-(global-unset-key (kbd "C-x C-f"))
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "M-s") 'helm-swoop)
+;; (add-to-list 'load-path
+;; 	     "~/git/configurations-and-scripts/emacs/helm")
+;; (require 'helm)
+;; (require 'helm-config)
+;; (require 'helm-gtags)
+;; (global-set-key (kbd "M-x") 'helm-M-x)
+;; (global-unset-key (kbd "C-x b"))
+;; (global-set-key (kbd "C-x b") 'helm-mini)
+;; (global-unset-key (kbd "C-x rb"))
+;; (global-set-key (kbd "C-x rb") 'helm-bookmarks)
+;; (global-unset-key (kbd "C-x C-f"))
+;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
+;; (global-set-key (kbd "M-s") 'helm-swoop)
 
-;; Using TAB for completion within the helm search and custom key
-;; bindings. 
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-(define-key helm-map (kbd "C-z") 'helm-select-action)
-(global-set-key (kbd "C-c h l") 'helm-locate)
-(global-set-key (kbd "C-c h s") 'helm-semantic-or-imenu)
-(global-set-key (kbd "C-c h o") 'helm-occur)
-(global-set-key (kbd "C-c h i") 'helm-info)
-(global-set-key (kbd "C-c h r") 'helm-resume)
-(global-set-key (kbd "C-c h SPC") 'helm-all-mark-rings)
-(global-set-key (kbd "C-c h c") 'helm-calcul-expression)
+;; ;; Using TAB for completion within the helm search and custom key
+;; ;; bindings. 
+;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+;; (define-key helm-map (kbd "C-z") 'helm-select-action)
+;; (global-set-key (kbd "C-c h l") 'helm-locate)
+;; (global-set-key (kbd "C-c h s") 'helm-semantic-or-imenu)
+;; (global-set-key (kbd "C-c h o") 'helm-occur)
+;; (global-set-key (kbd "C-c h i") 'helm-info)
+;; (global-set-key (kbd "C-c h r") 'helm-resume)
+;; (global-set-key (kbd "C-c h SPC") 'helm-all-mark-rings)
+;; (global-set-key (kbd "C-c h c") 'helm-calcul-expression)
 
-;; Use helm-projectile
-(require 'helm-projectile)
-(projectile-global-mode)
-(setq projectile-completion-system 'helm)
-(helm-projectile-on)
-(global-set-key (kbd "C-c h f") 'helm-projectile-find-file)
-(global-set-key (kbd "C-c h p") 'helm-projectile-switch-project)
-(global-set-key (kbd "C-c h d") 'helm-projectile-find-other-file)
-(global-set-key (kbd "C-c h g") 'helm-projectile-grep)
-(global-set-key (kbd "C-c h b")
-  'helm-projectile-switch-to-buffer)
+;; ;; General helm configuration
+;; (setq helm-split-window-in-side-p t ;; open helm buffer in current
+;; 				    ;; window
+;;       helm-move-to-line-cycle-in-source t ;; periodic boundary
+;; 					  ;; conditions in selection
+;;       helm-ff-file-name-history-use-recentf t
+;;       helm-echo-input-in-header-line t ;; Show search in both the echo
+;;       ;; line and in the first line of the current buffer.
+;;       helm-buffers-fuzzy-matching t
+;;       helm-recentf-fuzzy-match t
+;;       helm-semantic-fuzzy-match t
+;;       )
 
-(setq projectile-switch-project-action 'helm-projectile
-      projectile-enable-caching t)
-
-;; General helm configuration
-(setq helm-split-window-in-side-p t ;; open helm buffer in current
-				    ;; window
-      helm-move-to-line-cycle-in-source t ;; periodic boundary
-					  ;; conditions in selection
-      helm-ff-file-name-history-use-recentf t
-      helm-echo-input-in-header-line t ;; Show search in both the echo
-      ;; line and in the first line of the current buffer.
-      helm-buffers-fuzzy-matching t
-      helm-recentf-fuzzy-match t
-      helm-semantic-fuzzy-match t
-      )
-
-;; Configure the handling of gtags
-(setq helm-gtags-ignore-case t
-      helm-gtags-auto-update t
-      helm-gtags-use-input-at-cursor t
-      helm-gtags-pulse-at-cursor t
-      helm-gtags-prefix-key "\C-cg"
-      helm-gtags-suggested-key-mapping t
-      helm-gtags-direct-helm-completing t)
+;; ;; Configure the handling of gtags
+;; (setq helm-gtags-ignore-case t
+;;       helm-gtags-auto-update t
+;;       helm-gtags-use-input-at-cursor t
+;;       helm-gtags-pulse-at-cursor t
+;;       helm-gtags-prefix-key "\C-cg"
+;;       helm-gtags-suggested-key-mapping t
+;;       helm-gtags-direct-helm-completing t)
 
 
-;; Define custom keyboard mapping to harness the power of helm-gtags
-;; alongside of lightning-keymap-mode.
-(global-set-key (kbd "C-c g a")
-  'helm-gtags-tags-in-this-function)
-(global-set-key (kbd "C-c g f") 'helm-gtags-select)
-(global-set-key (kbd "C-c g s") 'helm-gtags-dwim)
-(global-set-key (kbd "C-c g o") 'helm-gtags-pop-stack)
-(global-set-key (kbd "C-c g p") 'helm-gtags-previous-history)
-(global-set-key (kbd "C-c g n") 'helm-gtags-next-history)
-(global-set-key (kbd "C-c j") 'helm-gtags-previous-history)
-(global-set-key (kbd "C-c k") 'helm-gtags-previous-history)
-(global-set-key (kbd "C-c l") 'helm-gtags-next-history)
-(global-set-key (kbd "C-c ;") 'helm-gtags-next-history)
-(global-set-key (kbd "C-c g r") 'helm-gtags-resume)
-(global-set-key (kbd "C-c g h") 'helm-gtags-show-stack)
-(global-set-key (kbd "C-c g c") 'helm-gtags-clear-all-stacks)
-(global-set-key (kbd "C-c g u") 'helm-gtags-update-tags)
+;; ;; Define custom keyboard mapping to harness the power of helm-gtags
+;; ;; alongside of lightning-keymap-mode.
+;; (global-set-key (kbd "C-c g a")
+;;   'helm-gtags-tags-in-this-function)
+;; (global-set-key (kbd "C-c g f") 'helm-gtags-select)
+;; (global-set-key (kbd "C-c g s") 'helm-gtags-dwim)
+;; (global-set-key (kbd "C-c g o") 'helm-gtags-pop-stack)
+;; (global-set-key (kbd "C-c g p") 'helm-gtags-previous-history)
+;; (global-set-key (kbd "C-c g n") 'helm-gtags-next-history)
+;; (global-set-key (kbd "C-c j") 'helm-gtags-previous-history)
+;; (global-set-key (kbd "C-c k") 'helm-gtags-previous-history)
+;; (global-set-key (kbd "C-c l") 'helm-gtags-next-history)
+;; (global-set-key (kbd "C-c ;") 'helm-gtags-next-history)
+;; (global-set-key (kbd "C-c g r") 'helm-gtags-resume)
+;; (global-set-key (kbd "C-c g h") 'helm-gtags-show-stack)
+;; (global-set-key (kbd "C-c g c") 'helm-gtags-clear-all-stacks)
+;; (global-set-key (kbd "C-c g u") 'helm-gtags-update-tags)
 
 
-(dolist (hook '(lisp-interaction-mode-hook
-		emacs-lisp-mode-hook
-		c-mode-hook
-		c++-mode-hook
-		dired-mode-hook
-		eshell-mode-hook) t)
-  (add-hook hook (lambda() (helm-gtags-mode 1))))
+;; (dolist (hook '(lisp-interaction-mode-hook
+;; 		emacs-lisp-mode-hook
+;; 		c-mode-hook
+;; 		c++-mode-hook
+;; 		dired-mode-hook
+;; 		eshell-mode-hook) t)
+;;   (add-hook hook (lambda() (helm-gtags-mode 1))))
 
-;; Use helm history expansion in eshell
-(require 'helm-eshell)
-(add-hook 'eshell-mode-hook
-	  #'(lambda()
-	      (define-key eshell-mode-map (kbd "C-c h h")
-		'helm-eshell-history)))
-(define-key minibuffer-local-map (kbd "C-c h h")
-  'helm-minibuffer-history)
+;; ;; Use helm history expansion in eshell
+;; (require 'helm-eshell)
+;; (add-hook 'eshell-mode-hook
+;; 	  #'(lambda()
+;; 	      (define-key eshell-mode-map (kbd "C-c h h")
+;; 		'helm-eshell-history)))
+;; (define-key minibuffer-local-map (kbd "C-c h h")
+;;   'helm-minibuffer-history)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;; using projectile ;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package projectile
+  :ensure t
+  :pin melpa
+  :init
+  (projectile-mode +1)
+  :bind (:map projectile-mode-map
+              ("C-c p" . projectile-command-map)))
+;; (use-package helm-projectile
+;;   :ensure t
+;;   :pin melpa
+;;   :init
+;;   (helm-projectile-on))
+
+;; Recursive discovery of known projects
+(setq projectile-project-search-path '("~/git/"))
+
+;; ;; Use helm-projectile
+;; (require 'helm-projectile)
+;; (projectile-global-mode)
+;; (setq projectile-completion-system 'helm)
+;; (helm-projectile-on)
+;; (global-set-key (kbd "C-c h f") 'helm-projectile-find-file)
+;; (global-set-key (kbd "C-c h p") 'helm-projectile-switch-project)
+;; (global-set-key (kbd "C-c h d") 'helm-projectile-find-other-file)
+;; (global-set-key (kbd "C-c h g") 'helm-projectile-grep)
+;; (global-set-key (kbd "C-c h b")
+;;   'helm-projectile-switch-to-buffer)
+
+;; (setq projectile-switch-project-action 'helm-projectile
+;;       projectile-enable-caching t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; ESS and R ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -689,7 +726,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(org-agenda-files
    '("~/git/orga/org/work.org" "~/git/orga/org/private.org" "~/git/orga/org/software.org" "~/git/orga/org/audio.org"))
  '(package-selected-packages
-   '(meson-mode mustache json-mode json indium ess ess-smart-equals ess-smart-underscore docbook docbook-snippets rust-mode editorconfig irony 0blayout elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
+   '(ag projectile-codesearch projectile-speedbar sr-speedbar magit-filenotify magit-find-file magit-gitflow magit-lfs meson-mode mustache json-mode json indium ess ess-smart-equals ess-smart-underscore docbook docbook-snippets rust-mode editorconfig irony 0blayout elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode 'right)
  '(transient-mark-mode 1)
@@ -778,6 +815,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; Use magit for handling the interaction with git
 (global-set-key (kbd "C-x g") 'magit-status)
+(setq magit-display-buffer-same-window-except-diff-v1 1)
 
 ;; Use iedit
 (add-to-list 'load-path "~/git/configurations-and-scripts/emacs/iedit")
