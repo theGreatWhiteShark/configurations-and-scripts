@@ -1,6 +1,7 @@
 *~
 $~
 emacs/*/cache
+emacs/.emacs.d/transient
 
 # Ignoring some of the Emacs cache
 emacs/.emacs.d/recentf
@@ -34,6 +35,9 @@ emacs/.emacs.d/.aspell.en.pws
 # Ignoring changes in the installed package versions
 emacs/.emacs.d/elpa/*
 emacs/.emacs.d/network-security.data
+
+emacs/.emacs.d/ido.last
+emacs/.emacs.d/projectile.cache
 
 # Ignoring all Python caches
 python/**/__pycache__/
