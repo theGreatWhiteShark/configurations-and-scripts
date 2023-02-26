@@ -29,6 +29,12 @@
 (require 'company-gtags)
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; always use speedbar in GUI
+;; (when window-system (sr-speedbar-open))
+;; (setq speedbar-directory-unshown-regexp "^\\(\\.\\.*$\\)\\'")
+;; (setq speedbar-show-unknown-files t)
+;; (global-set-key (kbd "M-s") 'sr-speedbar-select-window)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; spell checking ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -87,6 +93,24 @@
   (add-hook hook (lambda() (flyspell-prog-mode))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;; using ido ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'ido)
+(ido-mode 1)
+(ido-everywhere 1)
+
+(use-package flx
+  :ensure t
+  :pin melpa)
+(use-package flx-ido
+  :ensure t
+  :pin melpa
+  :init
+  (flx-ido-mode 1)
+  (setq ido-enable-flex-matching t)
+  (setq ido-use-faces nil))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; using helm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'load-path
@@ -95,18 +119,18 @@
 (require 'helm-config)
 (require 'helm-gtags)
 (global-set-key (kbd "M-x") 'helm-M-x)
-(global-unset-key (kbd "C-x b"))
-(global-set-key (kbd "C-x b") 'helm-mini)
+;; (global-unset-key (kbd "C-x b"))
+;; (global-set-key (kbd "C-x b") 'helm-mini)
 (global-unset-key (kbd "C-x rb"))
 (global-set-key (kbd "C-x rb") 'helm-bookmarks)
-(global-unset-key (kbd "C-x C-f"))
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
+;; (global-unset-key (kbd "C-x C-f"))
+;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
 
 ;; Using TAB for completion within the helm search and custom key
 ;; bindings. 
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-(define-key helm-map (kbd "C-z") 'helm-select-action)
+;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+;; (define-key helm-map (kbd "C-z") 'helm-select-action)
 (global-set-key (kbd "C-c h l") 'helm-locate)
 (global-set-key (kbd "C-c h s") 'helm-semantic-or-imenu)
 (global-set-key (kbd "C-c h o") 'helm-occur)
@@ -116,19 +140,19 @@
 (global-set-key (kbd "C-c h c") 'helm-calcul-expression)
 
 ;; Use helm-projectile
-(require 'helm-projectile)
-(projectile-global-mode)
-(setq projectile-completion-system 'helm)
-(helm-projectile-on)
-(global-set-key (kbd "C-c h f") 'helm-projectile-find-file)
-(global-set-key (kbd "C-c h p") 'helm-projectile-switch-project)
-(global-set-key (kbd "C-c h d") 'helm-projectile-find-other-file)
-(global-set-key (kbd "C-c h g") 'helm-projectile-grep)
-(global-set-key (kbd "C-c h b")
-  'helm-projectile-switch-to-buffer)
+;; (require 'helm-projectile)
+;; (projectile-global-mode)
+;; (setq projectile-completion-system 'helm)
+;; (helm-projectile-on)
+;; (global-set-key (kbd "C-c h f") 'helm-projectile-find-file)
+;; (global-set-key (kbd "C-c h p") 'helm-projectile-switch-project)
+;; (global-set-key (kbd "C-c h d") 'helm-projectile-find-other-file)
+;; (global-set-key (kbd "C-c h g") 'helm-projectile-grep)
+;; (global-set-key (kbd "C-c h b")
+;;   'helm-projectile-switch-to-buffer)
 
-(setq projectile-switch-project-action 'helm-projectile
-      projectile-enable-caching t)
+;; (setq projectile-switch-project-action 'helm-projectile
+;;       projectile-enable-caching t)
 
 ;; General helm configuration
 (setq helm-split-window-in-side-p t ;; open helm buffer in current
@@ -162,10 +186,10 @@
 (global-set-key (kbd "C-c g o") 'helm-gtags-pop-stack)
 (global-set-key (kbd "C-c g p") 'helm-gtags-previous-history)
 (global-set-key (kbd "C-c g n") 'helm-gtags-next-history)
-(global-set-key (kbd "C-c j") 'helm-gtags-previous-history)
-(global-set-key (kbd "C-c k") 'helm-gtags-previous-history)
-(global-set-key (kbd "C-c l") 'helm-gtags-next-history)
-(global-set-key (kbd "C-c ;") 'helm-gtags-next-history)
+(global-set-key (kbd "C-c g j") 'helm-gtags-previous-history)
+(global-set-key (kbd "C-c g k") 'helm-gtags-previous-history)
+(global-set-key (kbd "C-c g l") 'helm-gtags-next-history)
+(global-set-key (kbd "C-c g ;") 'helm-gtags-next-history)
 (global-set-key (kbd "C-c g r") 'helm-gtags-resume)
 (global-set-key (kbd "C-c g h") 'helm-gtags-show-stack)
 (global-set-key (kbd "C-c g c") 'helm-gtags-clear-all-stacks)
@@ -187,6 +211,40 @@
 		'helm-eshell-history)))
 (define-key minibuffer-local-map (kbd "C-c h h")
   'helm-minibuffer-history)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;; using projectile ;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package projectile
+  :ensure t
+  :pin melpa
+  :init
+  (projectile-mode +1)
+  :bind (:map projectile-mode-map
+              ("C-c p" . projectile-command-map)))
+;; (use-package helm-projectile
+;;   :ensure t
+;;   :pin melpa
+;;   :init
+;;   (helm-projectile-on))
+
+;; Recursive discovery of known projects
+(setq projectile-project-search-path '("~/git/"))
+
+;; ;; Use helm-projectile
+;; (require 'helm-projectile)
+;; (projectile-global-mode)
+;; (setq projectile-completion-system 'helm)
+;; (helm-projectile-on)
+;; (global-set-key (kbd "C-c h f") 'helm-projectile-find-file)
+;; (global-set-key (kbd "C-c h p") 'helm-projectile-switch-project)
+;; (global-set-key (kbd "C-c h d") 'helm-projectile-find-other-file)
+;; (global-set-key (kbd "C-c h g") 'helm-projectile-grep)
+;; (global-set-key (kbd "C-c h b")
+;;   'helm-projectile-switch-to-buffer)
+
+;; (setq projectile-switch-project-action 'helm-projectile
+;;       projectile-enable-caching t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; ESS and R ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -439,6 +497,131 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; Use function-args-mode
 (require 'function-args)
 (fa-config-default)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ibuffer ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Using 'ibuffer' to group buffer. This becomes handy when there is
+;; a large amount of them.
+(require 'ibuffer)
+(setq ibuffer-saved-filter-groups
+      '(("default"
+	 ("Hydrogen core"
+	  (filename . "/git/hydrogen*/src/core"))
+	 ("Hydrogen gui"
+	  (filename . "git/hydrogen*/src/gui/src/"))
+	 ("Hydrogen tests"
+	  (filename . "/git/hydrogen*/src/tests"))
+	 ("Hydrogen"
+	  (filename . "/git/hydrogen"))
+	 ("Configuration"
+	  (or
+	   (filename . "/git/configurations-and-scripts")
+	   (mode . conf-mode)))
+	 ("Programming"
+	  (or
+	   (derived-mode . prog-mode)
+	   (mode . c-mode)
+	   (mode . c++-mode)
+	   (mode . c-or-c++-mode)
+	   (mode . cmake-mode)
+	   (mode . typescript-mode)
+	   (mode . web-mode)
+	   (mode . python-mode)
+	   (mode . sh-mode)
+	   (mode . awk-mode)))
+	 ("Org"
+	  (mode . org-mode))
+	 ("Dired" (mode . dired-mode))
+	 ("Helm"
+	   (name . "^\\*helm"))
+	 ("Emacs"
+	  (or
+	   (mode . message-mode)
+	   (mode . ess-mode)
+	   (mode . emacs-lisp-mode)
+	   (name . "\\*scratch\\*")
+	   (name . "\\*Help\\*")
+	   (name . "\\*Messages\\*")))
+	 ("Interpreter"
+	  (or
+	   (name . "^\\*terminal\\*$")
+	   (name . "\\*ESS\\*$")))
+	 ("Web"
+	  (or
+	   (derived-mode . css-mode)
+	   (mode . sass-mode)
+	   (mode . web-mode))))))
+(add-hook 'ibuffer-mode-hook
+		  (lambda()
+			(ibuffer-switch-to-saved-filter-groups "default")
+			(setq ibuffer-hidden-filter-groups (list "Emacs" "Helm"))
+			;; (ibuffer-update nil t)
+			))
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+(defun ajv/human-readable-file-sizes-to-bytes (string)
+  "Convert a human-readable file size into bytes."
+  (interactive)
+  (cond
+   ((string-suffix-p "G" string t)
+    (* 1000000000 (string-to-number (substring string 0 (- (length string) 1)))))
+   ((string-suffix-p "M" string t)
+    (* 1000000 (string-to-number (substring string 0 (- (length string) 1)))))
+   ((string-suffix-p "K" string t)
+    (* 1000 (string-to-number (substring string 0 (- (length string) 1)))))
+   (t
+    (string-to-number (substring string 0 (- (length string) 1))))
+   )
+  )
+
+(defun ajv/bytes-to-human-readable-file-sizes (bytes)
+  "Convert number of bytes to human-readable file size."
+  (interactive)
+  (cond
+   ((> bytes 1000000000) (format "%10.1fG" (/ bytes 1000000000.0)))
+   ((> bytes 100000000) (format "%10.0fM" (/ bytes 1000000.0)))
+   ((> bytes 1000000) (format "%10.1fM" (/ bytes 1000000.0)))
+   ((> bytes 100000) (format "%10.0fk" (/ bytes 1000.0)))
+   ((> bytes 1000) (format "%10.1fk" (/ bytes 1000.0)))
+   (t (format "%10d" bytes)))
+  )
+
+;; Use human readable Size column instead of original one
+(define-ibuffer-column size-h
+  (:name "Size"
+	 :inline t
+	 :summarizer
+	 (lambda (column-strings)
+	   (let ((total 0))
+	     (dolist (string column-strings)
+	       (setq total
+		     ;; like, ewww ...
+		     (+ (float (ajv/human-readable-file-sizes-to-bytes string))
+			total)))
+	     (ajv/bytes-to-human-readable-file-sizes total)))	 ;; :summarizer nil
+	 )
+  (ajv/bytes-to-human-readable-file-sizes (buffer-size)))
+
+;; Modify the default ibuffer-formats
+(setq ibuffer-formats
+      '((mark modified read-only locked " "
+	      (name 20 20 :left :elide)
+	      " "
+	      (size-h 11 -1 :right)
+	      " "
+	      (mode 16 16 :left :elide)
+	      " "
+	      filename-and-process)
+	(mark " "
+	      (name 16 -1)
+	      " " filename)))
+
+;; Use exuberant-ctags over the version shipped with emacs
+(setq projectile-tags-command "/usr/bin/ctags")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;; Diverse ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -504,46 +687,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; Making buffer names unique
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward uniquify-separatir ":")
-
-;; Using 'ibuffer' to group buffer. This becomes handy when there is
-;; a large amount of them.
-(require 'ibuffer)
-(setq ibuffer-saved-filter-groups
-      '(("default"
-	 ("Org"
-	  (mode . org-mode))
-	 ("Git"
-	  (filename . "~/git/"))
-	 ("Hydrogen"
-	  (filename . "~/git/hydrogen/"))
-	 ("Hydrogen core"
-	  (filename . "~/git/hydrogen/src/core"))
-	 ("Hydrogen gui"
-	  (filename . "~/git/hydrogen/src/gui/src"))
-	 ("Hydrogen tests"
-	  (filename . "~/git/hydrogen/src/gui/tests"))
-	 ("Configuration"
-	  (or
-	   (filename . "~/git/configurations-and-scripts/")
-	   (mode . conf-mode)))
-	 ("Emacs"
-	  (mode . emacs-lisp-mode))
-	 ("Interpreter"
-	  (or
-	   (name . "^\\*terminal*")
-	   (name . "\\*ESS*")))
-	 ("Programming"
-	  (or
-	   (mode . ess-mode)
-	   (mode . LaTeX-mode)
-	   (mode . c-mode)
-	   (mode . lua-mode)
-	   (mode . python-mode)
-	   (mode . sh-mode)
-	   (mode . awk-mode))))))
-(add-hook 'ibuffer-mode-hook
-	  (lambda() (ibuffer-switch-to-saved-filter-groups "default")))
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Uses abbreviations for the modes in the mode-line to shrink it down.
 (when (require 'diminish nil 'noerror)
@@ -676,14 +819,13 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(inhibit-startup-screen t)
  '(mark-even-if-inactive t)
  '(markdown-enable-math t)
- ;; move to subsequent marks in mark ring using C-SPC instead of C-u C-SPC
- '(set-mark-command-repeat-pop t)
  '(org-agenda-files
    '("~/git/orga/org/work.org" "~/git/orga/org/private.org" "~/git/orga/org/software.org" "~/git/orga/org/audio.org"))
  '(package-selected-packages
-   '(tide yaml ess ess-smart-equals ess-smart-underscore docbook docbook-snippets rust-mode editorconfig irony 0blayout elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
+   '(sr-speedbar tide yaml ess ess-smart-equals ess-smart-underscore docbook docbook-snippets rust-mode editorconfig irony 0blayout elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode 'right)
+ '(set-mark-command-repeat-pop t)
  '(transient-mark-mode 1)
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
@@ -765,6 +907,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; Use magit for handling the interaction with git
 (global-set-key (kbd "C-x g") 'magit-status)
+(setq magit-display-buffer-same-window-except-diff-v1 1)
 
 ;; Use iedit
 (add-to-list 'load-path "~/git/configurations-and-scripts/emacs/iedit")
