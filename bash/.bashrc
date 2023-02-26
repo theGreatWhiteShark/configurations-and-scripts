@@ -129,3 +129,7 @@ export LV2_PATH=$HOME/.lv2:/usr/lib/lv2/:
 if [ -d "$HOME/software/android/platform-tools" ]; then
 	export PATH=$HOME/software/android/platform-tools:$PATH
 fi
+
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
