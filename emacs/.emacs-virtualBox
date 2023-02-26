@@ -113,91 +113,90 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; using helm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (add-to-list 'load-path
-;; 	     "~/git/configurations-and-scripts/emacs/helm")
-;; (require 'helm)
-;; (require 'helm-config)
-;; (require 'helm-gtags)
-;; (global-set-key (kbd "M-x") 'helm-M-x)
+(add-to-list 'load-path
+	     "~/git/configurations-and-scripts/emacs/helm")
+(require 'helm)
+(require 'helm-config)
+(require 'helm-gtags)
+(global-set-key (kbd "M-x") 'helm-M-x)
 ;; (global-unset-key (kbd "C-x b"))
 ;; (global-set-key (kbd "C-x b") 'helm-mini)
-;; (global-unset-key (kbd "C-x rb"))
-;; (global-set-key (kbd "C-x rb") 'helm-bookmarks)
+(global-unset-key (kbd "C-x rb"))
+(global-set-key (kbd "C-x rb") 'helm-bookmarks)
 ;; (global-unset-key (kbd "C-x C-f"))
 ;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
-;; (global-set-key (kbd "M-s") 'helm-swoop)
 
 ;; ;; Using TAB for completion within the helm search and custom key
 ;; ;; bindings. 
 ;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
 ;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
 ;; (define-key helm-map (kbd "C-z") 'helm-select-action)
-;; (global-set-key (kbd "C-c h l") 'helm-locate)
-;; (global-set-key (kbd "C-c h s") 'helm-semantic-or-imenu)
-;; (global-set-key (kbd "C-c h o") 'helm-occur)
-;; (global-set-key (kbd "C-c h i") 'helm-info)
-;; (global-set-key (kbd "C-c h r") 'helm-resume)
-;; (global-set-key (kbd "C-c h SPC") 'helm-all-mark-rings)
-;; (global-set-key (kbd "C-c h c") 'helm-calcul-expression)
+(global-set-key (kbd "C-c h l") 'helm-locate)
+(global-set-key (kbd "C-c h s") 'helm-semantic-or-imenu)
+(global-set-key (kbd "C-c h o") 'helm-occur)
+(global-set-key (kbd "C-c h i") 'helm-info)
+(global-set-key (kbd "C-c h r") 'helm-resume)
+(global-set-key (kbd "C-c h SPC") 'helm-all-mark-rings)
+(global-set-key (kbd "C-c h c") 'helm-calcul-expression)
 
-;; ;; General helm configuration
-;; (setq helm-split-window-in-side-p t ;; open helm buffer in current
-;; 				    ;; window
-;;       helm-move-to-line-cycle-in-source t ;; periodic boundary
-;; 					  ;; conditions in selection
-;;       helm-ff-file-name-history-use-recentf t
-;;       helm-echo-input-in-header-line t ;; Show search in both the echo
-;;       ;; line and in the first line of the current buffer.
-;;       helm-buffers-fuzzy-matching t
-;;       helm-recentf-fuzzy-match t
-;;       helm-semantic-fuzzy-match t
-;;       )
+;; General helm configuration
+(setq helm-split-window-in-side-p t ;; open helm buffer in current
+				    ;; window
+      helm-move-to-line-cycle-in-source t ;; periodic boundary
+					  ;; conditions in selection
+      helm-ff-file-name-history-use-recentf t
+      helm-echo-input-in-header-line t ;; Show search in both the echo
+      ;; line and in the first line of the current buffer.
+      helm-buffers-fuzzy-matching t
+      helm-recentf-fuzzy-match t
+      helm-semantic-fuzzy-match t
+      )
 
-;; ;; Configure the handling of gtags
-;; (setq helm-gtags-ignore-case t
-;;       helm-gtags-auto-update t
-;;       helm-gtags-use-input-at-cursor t
-;;       helm-gtags-pulse-at-cursor t
-;;       helm-gtags-prefix-key "\C-cg"
-;;       helm-gtags-suggested-key-mapping t
-;;       helm-gtags-direct-helm-completing t)
-
-
-;; ;; Define custom keyboard mapping to harness the power of helm-gtags
-;; ;; alongside of lightning-keymap-mode.
-;; (global-set-key (kbd "C-c g a")
-;;   'helm-gtags-tags-in-this-function)
-;; (global-set-key (kbd "C-c g f") 'helm-gtags-select)
-;; (global-set-key (kbd "C-c g s") 'helm-gtags-dwim)
-;; (global-set-key (kbd "C-c g o") 'helm-gtags-pop-stack)
-;; (global-set-key (kbd "C-c g p") 'helm-gtags-previous-history)
-;; (global-set-key (kbd "C-c g n") 'helm-gtags-next-history)
-;; (global-set-key (kbd "C-c j") 'helm-gtags-previous-history)
-;; (global-set-key (kbd "C-c k") 'helm-gtags-previous-history)
-;; (global-set-key (kbd "C-c l") 'helm-gtags-next-history)
-;; (global-set-key (kbd "C-c ;") 'helm-gtags-next-history)
-;; (global-set-key (kbd "C-c g r") 'helm-gtags-resume)
-;; (global-set-key (kbd "C-c g h") 'helm-gtags-show-stack)
-;; (global-set-key (kbd "C-c g c") 'helm-gtags-clear-all-stacks)
-;; (global-set-key (kbd "C-c g u") 'helm-gtags-update-tags)
+;; Configure the handling of gtags
+(setq helm-gtags-ignore-case t
+      helm-gtags-auto-update t
+      helm-gtags-use-input-at-cursor t
+      helm-gtags-pulse-at-cursor t
+      helm-gtags-prefix-key "\C-cg"
+      helm-gtags-suggested-key-mapping t
+      helm-gtags-direct-helm-completing t)
 
 
-;; (dolist (hook '(lisp-interaction-mode-hook
-;; 		emacs-lisp-mode-hook
-;; 		c-mode-hook
-;; 		c++-mode-hook
-;; 		dired-mode-hook
-;; 		eshell-mode-hook) t)
-;;   (add-hook hook (lambda() (helm-gtags-mode 1))))
+;; Define custom keyboard mapping to harness the power of helm-gtags
+;; alongside of lightning-keymap-mode.
+(global-set-key (kbd "C-c g a")
+  'helm-gtags-tags-in-this-function)
+(global-set-key (kbd "C-c g f") 'helm-gtags-select)
+(global-set-key (kbd "C-c g s") 'helm-gtags-dwim)
+(global-set-key (kbd "C-c g o") 'helm-gtags-pop-stack)
+(global-set-key (kbd "C-c g p") 'helm-gtags-previous-history)
+(global-set-key (kbd "C-c g n") 'helm-gtags-next-history)
+(global-set-key (kbd "C-c g j") 'helm-gtags-previous-history)
+(global-set-key (kbd "C-c g k") 'helm-gtags-previous-history)
+(global-set-key (kbd "C-c g l") 'helm-gtags-next-history)
+(global-set-key (kbd "C-c g ;") 'helm-gtags-next-history)
+(global-set-key (kbd "C-c g r") 'helm-gtags-resume)
+(global-set-key (kbd "C-c g h") 'helm-gtags-show-stack)
+(global-set-key (kbd "C-c g c") 'helm-gtags-clear-all-stacks)
+(global-set-key (kbd "C-c g u") 'helm-gtags-update-tags)
 
-;; ;; Use helm history expansion in eshell
-;; (require 'helm-eshell)
-;; (add-hook 'eshell-mode-hook
-;; 	  #'(lambda()
-;; 	      (define-key eshell-mode-map (kbd "C-c h h")
-;; 		'helm-eshell-history)))
-;; (define-key minibuffer-local-map (kbd "C-c h h")
-;;   'helm-minibuffer-history)
+
+(dolist (hook '(lisp-interaction-mode-hook
+		emacs-lisp-mode-hook
+		c-mode-hook
+		c++-mode-hook
+		dired-mode-hook
+		eshell-mode-hook) t)
+  (add-hook hook (lambda() (helm-gtags-mode 1))))
+
+;; Use helm history expansion in eshell
+(require 'helm-eshell)
+(add-hook 'eshell-mode-hook
+	  #'(lambda()
+	      (define-key eshell-mode-map (kbd "C-c h h")
+		'helm-eshell-history)))
+(define-key minibuffer-local-map (kbd "C-c h h")
+  'helm-minibuffer-history)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; using projectile ;;;;;;;;;;;;;;;;;;;;;;;;
