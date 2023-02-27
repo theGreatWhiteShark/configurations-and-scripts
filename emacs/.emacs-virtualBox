@@ -491,10 +491,125 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 	  (move-to-column previous-column))))
 
 (add-hook 'before-save-hook #'my-cc-mode-before-save-format)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ibuffer ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Using 'ibuffer' to group buffer. This becomes handy when there is
+;; a large amount of them.
+(require 'ibuffer)
+(setq ibuffer-saved-filter-groups
+      '(("default"
+	 ("Programming"
+	  (or
+	   (derived-mode . prog-mode)
+	   (mode . c-mode)
+	   (mode . c++-mode)
+	   (mode . c-or-c++-mode)
+	   (mode . cmake-mode)
+	   (mode . typescript-mode)
+	   (mode . web-mode)
+	   (mode . python-mode)
+	   (mode . sh-mode)
+	   (mode . awk-mode)))
+	 ("Configuration"
+	  (or
+	   (filename . "/git/configurations-and-scripts")
+	   (mode . conf-mode)))
+	 ("Org"
+	  (mode . org-mode))
+	 ("Dired" (mode . dired-mode))
+	 ("Helm"
+	   (name . "^\\*helm"))
+	 ("Emacs"
+	  (or
+	   (mode . message-mode)
+	   (mode . ess-mode)
+	   (mode . emacs-lisp-mode)
+	   (name . "\\*scratch\\*")
+	   (name . "\\*Help\\*")
+	   (name . "\\*Messages\\*")))
+	 ("Interpreter"
+	  (or
+	   (name . "^\\*terminal\\*$")
+	   (name . "\\*ESS\\*$")))
+	 ("Web"
+	  (or
+	   (derived-mode . css-mode)
+	   (mode . sass-mode)
+	   (mode . web-mode))))))
+(add-hook 'ibuffer-mode-hook
+		  (lambda()
+			(ibuffer-switch-to-saved-filter-groups "default")
+			(setq ibuffer-hidden-filter-groups (list "Emacs" "Helm" "Dired"))
+			;; (ibuffer-update nil t)
+			))
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+(defun ajv/human-readable-file-sizes-to-bytes (string)
+  "Convert a human-readable file size into bytes."
+  (interactive)
+  (cond
+   ((string-suffix-p "G" string t)
+    (* 1000000000 (string-to-number (substring string 0 (- (length string) 1)))))
+   ((string-suffix-p "M" string t)
+    (* 1000000 (string-to-number (substring string 0 (- (length string) 1)))))
+   ((string-suffix-p "K" string t)
+    (* 1000 (string-to-number (substring string 0 (- (length string) 1)))))
+   (t
+    (string-to-number (substring string 0 (- (length string) 1))))
+   )
+  )
+
+(defun ajv/bytes-to-human-readable-file-sizes (bytes)
+  "Convert number of bytes to human-readable file size."
+  (interactive)
+  (cond
+   ((> bytes 1000000000) (format "%10.1fG" (/ bytes 1000000000.0)))
+   ((> bytes 100000000) (format "%10.0fM" (/ bytes 1000000.0)))
+   ((> bytes 1000000) (format "%10.1fM" (/ bytes 1000000.0)))
+   ((> bytes 100000) (format "%10.0fk" (/ bytes 1000.0)))
+   ((> bytes 1000) (format "%10.1fk" (/ bytes 1000.0)))
+   (t (format "%10d" bytes)))
+  )
+
+;; Use human readable Size column instead of original one
+(define-ibuffer-column size-h
+  (:name "Size"
+	 :inline t
+	 :summarizer
+	 (lambda (column-strings)
+	   (let ((total 0))
+	     (dolist (string column-strings)
+	       (setq total
+		     ;; like, ewww ...
+		     (+ (float (ajv/human-readable-file-sizes-to-bytes string))
+			total)))
+	     (ajv/bytes-to-human-readable-file-sizes total)))	 ;; :summarizer nil
+	 )
+  (ajv/bytes-to-human-readable-file-sizes (buffer-size)))
+
+;; Modify the default ibuffer-formats
+(setq ibuffer-formats
+      '((mark modified read-only locked " "
+	      (name 20 20 :left :elide)
+	      " "
+	      (size-h 11 -1 :right)
+	      " "
+	      (mode 16 16 :left :elide)
+	      " "
+	      filename-and-process)
+	(mark " "
+	      (name 16 -1)
+	      " " filename)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;; Diverse ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Enable the narrowing	     
+
+;; Enable the narrowing
 (put 'narrow-to-region 'disabled nil)
 ;; And write a function that checks whether narrowing was activated.
 ;; This will be used in the mode line to display a customize note.
@@ -557,40 +672,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward uniquify-separatir ":")
 
-;; Using 'ibuffer' to group buffer. This becomes handy when there is
-;; a large amount of them.
-(require 'ibuffer)
-(setq ibuffer-saved-filter-groups
-      '(("default"
-	 ("Org"
-	  (mode . org-mode))
-	 ("Git"
-	  (filename . "~/git/"))
-	 ("Phd"
-	  (filename . "~/phd/"))
-	 ("Configuration"
-	  (or
-	   (filename . "~/git/configurations-and-scripts/")
-	   (mode . conf-mode)))
-	 ("Emacs"
-	  (mode . emacs-lisp-mode))
-	 ("Interpreter"
-	  (or
-	   (name . "^\\*terminal*")
-	   (name . "\\*ESS*")))
-	 ("Programming"
-	  (or
-	   (mode . ess-mode)
-	   (mode . LaTeX-mode)
-	   (mode . c-mode)
-	   (mode . lua-mode)
-	   (mode . python-mode)
-	   (mode . sh-mode)
-	   (mode . awk-mode))))))
-(add-hook 'ibuffer-mode-hook
-	  (lambda() (ibuffer-switch-to-saved-filter-groups "default")))
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
 ;; Uses abbreviations for the modes in the mode-line to shrink it down.
 (when (require 'diminish nil 'noerror)
   (eval-after-load "yasnippet"
@@ -607,9 +688,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 		markdown-mode-hook
 		web-mode-hook) t)
   (add-hook hook 'rainbow-delimiters-mode))
-
-;; Use Eshell over multiterm.
-(global-set-key (kbd "C-c t") 'eshell)
 
 ;; Changing the style of the mode-line
 (setq-default mode-line-format
@@ -722,8 +800,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(inhibit-startup-screen t)
  '(mark-even-if-inactive t)
  '(markdown-enable-math t)
- '(org-agenda-files
-   '("~/git/orga/org/work.org" "~/git/orga/org/private.org" "~/git/orga/org/software.org" "~/git/orga/org/audio.org"))
  '(package-selected-packages
    '(ag projectile-codesearch projectile-speedbar sr-speedbar magit-filenotify magit-find-file magit-gitflow magit-lfs meson-mode mustache json-mode json indium ess ess-smart-equals ess-smart-underscore docbook docbook-snippets rust-mode editorconfig irony 0blayout elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint tide scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
  '(polymode-exporter-output-file-format "%s")
