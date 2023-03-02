@@ -198,6 +198,28 @@
 (define-key minibuffer-local-map (kbd "C-c h h")
   'helm-minibuffer-history)
 
+(use-package helm-ag
+  :ensure t
+  :pin melpa
+  :init
+  (setq helm-ag-base-command "ag --nocolor --nogroup --ignore-case")
+  (setq helm-ag-insert-at-point 'symbol)
+  (setq helm-ag-fuzzy-match t)
+  (global-set-key (kbd "C-c a w") 'helm-ag)
+  (global-set-key (kbd "C-c a e") 'helm-ag-this-file)
+  (global-set-key (kbd "C-c a f") 'helm-do-ag)
+  (global-set-key (kbd "C-c a s") 'helm-do-ag-this-file)
+  ;; (global-set-key (kbd "C-c a s") 'helm-do-ag-this-file-or-occur)
+  (global-set-key (kbd "C-c a p") 'helm-ag-project-root)
+  (global-set-key (kbd "C-c a a") 'helm-do-ag-project-root)
+  (global-set-key (kbd "C-c a v") 'helm-ag-buffers)
+  (global-set-key (kbd "C-c a b") 'helm-do-ag-buffers)
+  ;; move to point before jump
+  (global-set-key (kbd "C-c a j") 'helm-ag-pop-stack)
+  (global-set-key (kbd "C-c a c") 'helm-ag-clear-stack)
+  (define-key helm-map (kbd "C-c l") 'helm-ag--up-one-level))
+  
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; using projectile ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -344,7 +366,7 @@
 ;;(require 'ox-html)
 (require 'ox-latex)
 
-(global-set-key "\C-ca" 'org-agenda)
+;; (global-set-key "\C-ca" 'org-agenda)
 (setq
  ;; My private files containing all different kinds of notes
  org-agenda-files (list
@@ -413,9 +435,15 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (global-semanticdb-minor-mode 1)
 (global-semantic-idle-scheduler-mode 1)
 
+;; Let semantic treat all folders in the `git` directory as larger
+;; projects.
+(setq semanticdb-project-roots
+	  (directory-files (expand-file-name "~/git")
+					   t "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))
+
 ;; Make Semantics aware of the Qt5 headers
-;; (require 'semantic/bovine/c)
-;; (require 'cc-mode)
+(require 'semantic/bovine/c)
+(require 'cc-mode)
 ;; (load (expand-file-name "find-file.el" emacs-lisp-source-path))
 ;; (setq qt-include-directory "/usr/include/x86_64-linux-gnu/qt5/")
 ;; (dolist (file (directory-files qt-include-directory))
@@ -432,13 +460,13 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; 		    "QtCore/qconfig-small.h" "QtCore/qglobal.h" ))
 ;;   (add-to-list 'semantic-lex-c-preprocessor-symbol-file
 ;; 	       (expand-file-name file qt-include-directory)))
-;; ;; Some more on semantics
-;; ;; Display the interface of a function in the bottom minibuffer.
-;; (global-semantic-idle-summary-mode 1)
-;; ;; Keep the line containing the definition of a function in the
-;; ;; top-most line
-;; (add-to-list 'semantic-default-submodes
-;; 	     'global-semantic-stickyfunc-mode)
+;; Some more on semantics
+;; Display the interface of a function in the bottom minibuffer.
+(global-semantic-idle-summary-mode 1)
+;; Keep the line containing the definition of a function in the
+;; top-most line
+(add-to-list 'semantic-default-submodes
+	     'global-semantic-stickyfunc-mode)
 
 ;; ;; Use a dedicated mode for Qt build-system files
 ;; (add-to-list 'load-path
@@ -454,9 +482,9 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-hook 'c-mode-hook 'irony-mode)
 
 (add-hook 'c++-mode-hook '(lambda()
-			    ;; (setq tab-width 4)
-			    ;; (setq c-basic-offset 4)
-			    ;; (setq c-indent-level 4)
+			    (setq tab-width 4)
+			    (setq c-basic-offset 4)
+			    (setq c-indent-level 4)
 			    (setq indent-tabs-mode t)
 			    (setq c++-tab-always-indent t)
 			    ))
