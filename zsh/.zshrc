@@ -113,5 +113,27 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 ### Device shortcuts
-alias xc3grat2='sshpass -p$(pass show Dev/xc3grat2) ssh xc3grat2'
-alias xd3pm='sshpass -p$(pass show Dev/xd3-pm) ssh xd3-pm'
+
+## arg1 : hostname
+## arg2 : source path
+## arg3 : target path
+function scp_to_device() {
+	sshpass -p $(pass show Dev/$1) scp -r $2 root@$1:$3
+}
+function scp_from_device() {
+	sshpass -p $(pass show Dev/$1) scp -r root@$1:$2 $3 
+}
+alias xc3='sshpass -p$(pass show Dev/xc3grat2) ssh xc3grat2'
+alias cpToXc3='scp_to_device xc3grat2'
+alias cpFromXc3='scp_from_device xc3grat2'
+					   
+alias xd3='sshpass -p$(pass show Dev/xd3-pm) ssh xd3-pm'
+alias cpToXd3='scp_to_device xd3pm'
+alias cpFromXd3='scp_from_device xd3pm'
+
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/phil\/.local\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
+    PATH=$HOME/.local/bin:$PATH
+fi
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/phil\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
+    PATH=$HOME/bin:$PATH
+fi
