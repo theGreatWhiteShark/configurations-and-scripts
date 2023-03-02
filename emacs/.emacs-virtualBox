@@ -29,11 +29,6 @@
 (require 'company-gtags)
 (add-hook 'after-init-hook 'global-company-mode)
 
-;; always use speedbar in GUI
-;; (when window-system (sr-speedbar-open))
-;; (setq speedbar-directory-unshown-regexp "^\\(\\.\\.*$\\)\\'")
-;; (setq speedbar-show-unknown-files t)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; spell checking ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -119,18 +114,9 @@
 (require 'helm-config)
 (require 'helm-gtags)
 (global-set-key (kbd "M-x") 'helm-M-x)
-;; (global-unset-key (kbd "C-x b"))
-;; (global-set-key (kbd "C-x b") 'helm-mini)
 (global-unset-key (kbd "C-x rb"))
 (global-set-key (kbd "C-x rb") 'helm-bookmarks)
-;; (global-unset-key (kbd "C-x C-f"))
-;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
 
-;; ;; Using TAB for completion within the helm search and custom key
-;; ;; bindings. 
-;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-;; (define-key helm-map (kbd "C-z") 'helm-select-action)
 (global-set-key (kbd "C-c h l") 'helm-locate)
 (global-set-key (kbd "C-c h s") 'helm-semantic-or-imenu)
 (global-set-key (kbd "C-c h o") 'helm-occur)
@@ -230,29 +216,9 @@
   (projectile-mode +1)
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map)))
-;; (use-package helm-projectile
-;;   :ensure t
-;;   :pin melpa
-;;   :init
-;;   (helm-projectile-on))
 
 ;; Recursive discovery of known projects
 (setq projectile-project-search-path '("~/git/"))
-
-;; ;; Use helm-projectile
-;; (require 'helm-projectile)
-;; (projectile-global-mode)
-;; (setq projectile-completion-system 'helm)
-;; (helm-projectile-on)
-;; (global-set-key (kbd "C-c h f") 'helm-projectile-find-file)
-;; (global-set-key (kbd "C-c h p") 'helm-projectile-switch-project)
-;; (global-set-key (kbd "C-c h d") 'helm-projectile-find-other-file)
-;; (global-set-key (kbd "C-c h g") 'helm-projectile-grep)
-;; (global-set-key (kbd "C-c h b")
-;;   'helm-projectile-switch-to-buffer)
-
-;; (setq projectile-switch-project-action 'helm-projectile
-;;       projectile-enable-caching t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; ESS and R ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -314,7 +280,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Go ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Run gofmt before saving a file.
-(add-hook 'before-save-hook #'gofmt-before-save)
+;; (add-hook 'before-save-hook #'gofmt-before-save)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; Python ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -327,9 +293,6 @@
 ;; (setq python-shell-interpreter "ipython3"
 ;;       python-shell-intepreter-args "-i")
 
-;; Load elpy for .bzl files since their Skylark language resembles in
-;; some way the python syntax
-(add-to-list 'auto-mode-alist '(".bzl$" . python-mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -473,9 +436,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; 	     "~/git/configurations-and-scripts/emacs/qt-pro-mode")
 ;; (require 'qt-pro-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.pr[io]$" . qt-pro-mode))
-
-;; Activating c-mode for CUDA files
-(setq auto-mode-alist (cons '(".cu$" . c-mode) auto-mode-alist))
 
 ;; Use irony for completion
 (add-hook 'c++-mode-hook 'irony-mode)
@@ -962,9 +922,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; ‘-H’   Print the filename for each match.
 ;; ‘-e’   Protect patterns beginning with a hyphen character, ‘-’ 
 (setq grep-command "grep -i -nH -e ")
-
-;; Open dired, even when I'm typing C-x C-d by mistake
-(global-set-key (kbd "C-x C-d") 'dired)
 
 ;; Easy evaluate lisp expressions even if `lightning-keymap-mode' is
 ;; activated. (Mapped to C-j in default Emacs).

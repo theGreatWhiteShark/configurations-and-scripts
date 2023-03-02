@@ -29,12 +29,6 @@
 (require 'company-gtags)
 (add-hook 'after-init-hook 'global-company-mode)
 
-;; always use speedbar in GUI
-;; (when window-system (sr-speedbar-open))
-;; (setq speedbar-directory-unshown-regexp "^\\(\\.\\.*$\\)\\'")
-;; (setq speedbar-show-unknown-files t)
-;; (global-set-key (kbd "M-s") 'sr-speedbar-select-window)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; spell checking ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -89,7 +83,8 @@
 		sh-mode-hook
 		c-mode-hook
 		lua-mode-hook
-		nxml-mode-hook) t)
+		nxml-mode-hook
+		c++-mode-hook) t)
   (add-hook hook (lambda() (flyspell-prog-mode))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -119,18 +114,9 @@
 (require 'helm-config)
 (require 'helm-gtags)
 (global-set-key (kbd "M-x") 'helm-M-x)
-;; (global-unset-key (kbd "C-x b"))
-;; (global-set-key (kbd "C-x b") 'helm-mini)
 (global-unset-key (kbd "C-x rb"))
 (global-set-key (kbd "C-x rb") 'helm-bookmarks)
-;; (global-unset-key (kbd "C-x C-f"))
-;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
 
-;; Using TAB for completion within the helm search and custom key
-;; bindings. 
-;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-;; (define-key helm-map (kbd "C-z") 'helm-select-action)
 (global-set-key (kbd "C-c h l") 'helm-locate)
 (global-set-key (kbd "C-c h s") 'helm-semantic-or-imenu)
 (global-set-key (kbd "C-c h o") 'helm-occur)
@@ -138,21 +124,6 @@
 (global-set-key (kbd "C-c h r") 'helm-resume)
 (global-set-key (kbd "C-c h SPC") 'helm-all-mark-rings)
 (global-set-key (kbd "C-c h c") 'helm-calcul-expression)
-
-;; Use helm-projectile
-;; (require 'helm-projectile)
-;; (projectile-global-mode)
-;; (setq projectile-completion-system 'helm)
-;; (helm-projectile-on)
-;; (global-set-key (kbd "C-c h f") 'helm-projectile-find-file)
-;; (global-set-key (kbd "C-c h p") 'helm-projectile-switch-project)
-;; (global-set-key (kbd "C-c h d") 'helm-projectile-find-other-file)
-;; (global-set-key (kbd "C-c h g") 'helm-projectile-grep)
-;; (global-set-key (kbd "C-c h b")
-;;   'helm-projectile-switch-to-buffer)
-
-;; (setq projectile-switch-project-action 'helm-projectile
-;;       projectile-enable-caching t)
 
 ;; General helm configuration
 (setq helm-split-window-in-side-p t ;; open helm buffer in current
@@ -199,6 +170,7 @@
 (dolist (hook '(lisp-interaction-mode-hook
 		emacs-lisp-mode-hook
 		c-mode-hook
+		c++-mode-hook
 		dired-mode-hook
 		eshell-mode-hook) t)
   (add-hook hook (lambda() (helm-gtags-mode 1))))
@@ -212,6 +184,28 @@
 (define-key minibuffer-local-map (kbd "C-c h h")
   'helm-minibuffer-history)
 
+(use-package helm-ag
+  :ensure t
+  :pin melpa
+  :init
+  (setq helm-ag-base-command "ag --nocolor --nogroup --ignore-case")
+  (setq helm-ag-insert-at-point 'symbol)
+  (setq helm-ag-fuzzy-match t)
+  (global-set-key (kbd "C-c a w") 'helm-ag)
+  (global-set-key (kbd "C-c a e") 'helm-ag-this-file)
+  (global-set-key (kbd "C-c a f") 'helm-do-ag)
+  (global-set-key (kbd "C-c a s") 'helm-do-ag-this-file)
+  ;; (global-set-key (kbd "C-c a s") 'helm-do-ag-this-file-or-occur)
+  (global-set-key (kbd "C-c a p") 'helm-ag-project-root)
+  (global-set-key (kbd "C-c a a") 'helm-do-ag-project-root)
+  (global-set-key (kbd "C-c a v") 'helm-ag-buffers)
+  (global-set-key (kbd "C-c a b") 'helm-do-ag-buffers)
+  ;; move to point before jump
+  (global-set-key (kbd "C-c a j") 'helm-ag-pop-stack)
+  (global-set-key (kbd "C-c a c") 'helm-ag-clear-stack)
+  (define-key helm-map (kbd "C-c l") 'helm-ag--up-one-level))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; using projectile ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -222,29 +216,9 @@
   (projectile-mode +1)
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map)))
-;; (use-package helm-projectile
-;;   :ensure t
-;;   :pin melpa
-;;   :init
-;;   (helm-projectile-on))
 
 ;; Recursive discovery of known projects
 (setq projectile-project-search-path '("~/git/"))
-
-;; ;; Use helm-projectile
-;; (require 'helm-projectile)
-;; (projectile-global-mode)
-;; (setq projectile-completion-system 'helm)
-;; (helm-projectile-on)
-;; (global-set-key (kbd "C-c h f") 'helm-projectile-find-file)
-;; (global-set-key (kbd "C-c h p") 'helm-projectile-switch-project)
-;; (global-set-key (kbd "C-c h d") 'helm-projectile-find-other-file)
-;; (global-set-key (kbd "C-c h g") 'helm-projectile-grep)
-;; (global-set-key (kbd "C-c h b")
-;;   'helm-projectile-switch-to-buffer)
-
-;; (setq projectile-switch-project-action 'helm-projectile
-;;       projectile-enable-caching t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; ESS and R ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -319,9 +293,6 @@
 ;; (setq python-shell-interpreter "ipython3"
 ;;       python-shell-intepreter-args "-i")
 
-;; Load elpy for .bzl files since their Skylark language resembles in
-;; some way the python syntax
-(add-to-list 'auto-mode-alist '(".bzl$" . python-mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -358,7 +329,7 @@
 ;;(require 'ox-html)
 (require 'ox-latex)
 
-(global-set-key "\C-ca" 'org-agenda)
+;; (global-set-key "\C-ca" 'org-agenda)
 (setq
  ;; My private files containing all different kinds of notes
  org-agenda-files (list
@@ -427,6 +398,12 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (global-semanticdb-minor-mode 1)
 (global-semantic-idle-scheduler-mode 1)
 
+;; Let semantic treat all folders in the `git` directory as larger
+;; projects.
+(setq semanticdb-project-roots
+	  (directory-files (expand-file-name "~/git")
+					   t "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))
+
 ;; Make Semantics aware of the Qt5 headers
 (require 'semantic/bovine/c)
 (require 'cc-mode)
@@ -459,9 +436,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 	     "~/git/configurations-and-scripts/emacs/qt-pro-mode")
 (require 'qt-pro-mode)
 (add-to-list 'auto-mode-alist '("\\.pr[io]$" . qt-pro-mode))
-
-;; Activating c-mode for CUDA files
-(setq auto-mode-alist (cons '(".cu$" . c-mode) auto-mode-alist))
 
 ;; style I want to use in c++ mode
 (c-add-style "my-style" 
@@ -705,9 +679,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 		web-mode-hook) t)
   (add-hook hook 'rainbow-delimiters-mode))
 
-;; Use Eshell over multiterm.
-(global-set-key (kbd "C-c t") 'eshell)
-
 ;; Changing the style of the mode-line
 (setq-default mode-line-format
 	      (list
@@ -822,7 +793,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(org-agenda-files
    '("~/git/orga/org/work.org" "~/git/orga/org/private.org" "~/git/orga/org/software.org" "~/git/orga/org/audio.org"))
  '(package-selected-packages
-   '(sr-speedbar tide yaml ess ess-smart-equals ess-smart-underscore docbook docbook-snippets rust-mode editorconfig irony 0blayout elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
+   '(ag helm-ag helm-company helm-flycheck helm-flymake helm-flyspell sr-speedbar tide yaml ess ess-smart-equals ess-smart-underscore docbook docbook-snippets rust-mode editorconfig irony 0blayout elpy pyvenv package-build shut-up epl git commander f dash s company-irony-c-headers helm-projectile golden-ratio stickyfunc-enhance company function-args helm-gtags ggtags csound-mode yasnippet-snippets cmake-mode noxml-fold nxml-mode xml+ yaml-mode web-mode ts-comint scss-mode r-autoyas php-mode pdf-tools org2blog multi-web-mode meghanada magit lua-mode jinja2-mode jedi javascript javap-mode java-snippets hydra helm-youtube helm-swoop helm-bibtex helm-R go-mode elm-yasnippets elm-mode dockerfile-mode docker cask awk-it auctex))
  '(polymode-exporter-output-file-format "%s")
  '(scroll-bar-mode 'right)
  '(set-mark-command-repeat-pop t)
@@ -905,6 +876,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 (add-to-list 'auto-mode-alist '("\\.plx" . perl-mode))
 (add-to-list 'auto-mode-alist '("\\.pl" . perl-mode))
 
+(add-to-list 'auto-mode-alist '("\\.json" . json-mode))
+
 ;; Use magit for handling the interaction with git
 (global-set-key (kbd "C-x g") 'magit-status)
 (setq magit-display-buffer-same-window-except-diff-v1 1)
@@ -951,9 +924,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; ‘-H’   Print the filename for each match.
 ;; ‘-e’   Protect patterns beginning with a hyphen character, ‘-’ 
 (setq grep-command "grep -i -nH -e ")
-
-;; Open dired, even when I'm typing C-x C-d by mistake
-(global-set-key (kbd "C-x C-d") 'dired)
 
 ;; Easy evaluate lisp expressions even if `lightning-keymap-mode' is
 ;; activated. (Mapped to C-j in default Emacs).
