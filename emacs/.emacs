@@ -223,9 +223,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; ESS and R ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (add-to-list 'load-path
-;; 	     "~/git/configurations-and-scripts/emacs/ESS/lisp"
-;; 	     "~/git/configurations-and-scripts/emacs/ESS")
+(add-to-list 'load-path
+ 	     "~/git/configurations-and-scripts/emacs/ESS/lisp"
+ 	     "~/git/configurations-and-scripts/emacs/ESS")
 (require 'ess-site)
 
 ;; Specify the export options of polymode to accelerate the export of
@@ -235,8 +235,6 @@
 	    (defvar pm--exporter-hist "Rmarkdown")
 	    (defvar pm--export:to-last "html document (html)")
 	    (defvar pm--export:to-hist "html document (html)")))
-;; using Rutils
-(require 'rutils)
 
 (setq
  ;;R-binary-folder "~/software/R/R-3.5.0/bin/"
@@ -392,7 +390,10 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Globally enable Semantic mode
 (require 'semantic)
-(require 'stickyfunc-enhance)
+(use-package stickyfunc-enhance
+  :ensure t
+  :pin melpa)
+
 (semantic-mode 1)
 ;; Enable parsing via Semantic
 (global-semanticdb-minor-mode 1)
@@ -469,7 +470,9 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 	  gdb-speedbar-auto-raise t)
 
 ;; Use function-args-mode
-(require 'function-args)
+(use-package function-args
+  :ensure t
+  :pin melpa)
 (fa-config-default)
 
 
@@ -781,6 +784,82 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#3F3F3F" "#CC93932" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
+ '(connection-local-criteria-alist
+   '(((:application tramp)
+      tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
+ '(connection-local-profile-alist
+   '((tramp-connection-local-darwin-ps-profile
+      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,uid,user,gid,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state=abcde" "-o" "ppid,pgid,sess,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etime,pcpu,pmem,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (euid . number)
+       (user . string)
+       (egid . number)
+       (comm . 52)
+       (state . 5)
+       (ppid . number)
+       (pgrp . number)
+       (sess . number)
+       (ttname . string)
+       (tpgid . number)
+       (minflt . number)
+       (majflt . number)
+       (time . tramp-ps-time)
+       (pri . number)
+       (nice . number)
+       (vsize . number)
+       (rss . number)
+       (etime . tramp-ps-time)
+       (pcpu . number)
+       (pmem . number)
+       (args)))
+     (tramp-connection-local-busybox-ps-profile
+      (tramp-process-attributes-ps-args "-o" "pid,user,group,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "stat=abcde" "-o" "ppid,pgid,tty,time,nice,etime,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (user . string)
+       (group . string)
+       (comm . 52)
+       (state . 5)
+       (ppid . number)
+       (pgrp . number)
+       (ttname . string)
+       (time . tramp-ps-time)
+       (nice . number)
+       (etime . tramp-ps-time)
+       (args)))
+     (tramp-connection-local-bsd-ps-profile
+      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,euid,user,egid,egroup,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state,ppid,pgid,sid,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etimes,pcpu,pmem,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (euid . number)
+       (user . string)
+       (egid . number)
+       (group . string)
+       (comm . 52)
+       (state . string)
+       (ppid . number)
+       (pgrp . number)
+       (sess . number)
+       (ttname . string)
+       (tpgid . number)
+       (minflt . number)
+       (majflt . number)
+       (time . tramp-ps-time)
+       (pri . number)
+       (nice . number)
+       (vsize . number)
+       (rss . number)
+       (etime . number)
+       (pcpu . number)
+       (pmem . number)
+       (args)))
+     (tramp-connection-local-default-shell-profile
+      (shell-file-name . "/bin/sh")
+      (shell-command-switch . "-c"))
+     (tramp-connection-local-default-system-profile
+      (path-separator . ":")
+      (null-device . "/dev/null"))))
  '(custom-safe-themes
    '("6383295fb0c974d24c9dca1230c0489edf1cd5dd03d4b036aab290b6d3ceb50c" default))
  '(delete-selection-mode nil)
@@ -801,23 +880,23 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
    '((20 . "#BC8383")
-	 (40 . "#CC9393")
-	 (60 . "#DFAF8F")
-	 (80 . "#D0BF8F")
-	 (100 . "#E0CF9F")
-	 (120 . "#F0DFAF")
-	 (140 . "#5F7F5F")
-	 (160 . "#7F9F7F")
-	 (180 . "#8FB28F")
-	 (200 . "#9FC59F")
-	 (220 . "#AFD8AF")
-	 (240 . "#BFEBBF")
-	 (260 . "#93E0E3")
-	 (280 . "#6CA0A3")
-	 (300 . "#7CB8BB")
-	 (320 . "#8CD0D3")
-	 (340 . "#94BFF3")
-	 (360 . "#DC8CC3")))
+     (40 . "#CC9393")
+     (60 . "#DFAF8F")
+     (80 . "#D0BF8F")
+     (100 . "#E0CF9F")
+     (120 . "#F0DFAF")
+     (140 . "#5F7F5F")
+     (160 . "#7F9F7F")
+     (180 . "#8FB28F")
+     (200 . "#9FC59F")
+     (220 . "#AFD8AF")
+     (240 . "#BFEBBF")
+     (260 . "#93E0E3")
+     (280 . "#6CA0A3")
+     (300 . "#7CB8BB")
+     (320 . "#8CD0D3")
+     (340 . "#94BFF3")
+     (360 . "#DC8CC3")))
  '(vc-annotate-very-old-color "#DC8CC3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
