@@ -45,8 +45,13 @@ bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
+# change focus (and avoiding Windows log screen)
+bindsym $mod+Ctrl+j focus left
+bindsym $mod+Ctrl+k focus down
+bindsym $mod+Ctrl+l focus up
+bindsym $mod+Ctrl+semicolon focus right
 
-# alternatively, you can use the cursor keys:
+# alternatively, you can use the cursor keys
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
