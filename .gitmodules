@@ -48,7 +48,7 @@
 	url = https://github.com/emacs-helm/helm
 [submodule "emacs/company-mode"]
 	path = emacs/company-mode
-	url = https://github.com/company-mode/company-mode
+	url = https://github.com/theGreatWhiteShark/company-mode
 [submodule "zsh/custom/themes/powerlevel10k"]
 	path = zsh/custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
