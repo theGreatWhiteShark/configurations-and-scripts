@@ -17,11 +17,6 @@
 	("marmalade" . "http://marmalade-repo.org/packages/")))
 ;; (package-initialize)
 
-;; remapping caps-lock to M-x
-;; (if (eq window-system 'x)
-;;     (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
-;; (define-key key-translation-map [f13] (kbd "M-x"))
-
 ;; Use company for autocompletion
 (add-to-list 'load-path
 	     "~/git/configurations-and-scripts/emacs/company-mode")
@@ -112,7 +107,6 @@
 	     "~/git/configurations-and-scripts/emacs/helm")
 (require 'helm)
 (require 'helm-config)
-(require 'helm-gtags)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-unset-key (kbd "C-x rb"))
 (global-set-key (kbd "C-x rb") 'helm-bookmarks)
@@ -139,32 +133,41 @@
       )
 
 ;; Configure the handling of gtags
-(setq helm-gtags-ignore-case t
-      helm-gtags-auto-update t
-      helm-gtags-use-input-at-cursor t
-      helm-gtags-pulse-at-cursor t
-      helm-gtags-prefix-key "\C-cg"
-      helm-gtags-suggested-key-mapping t
-      helm-gtags-direct-helm-completing t)
+(use-package helm-gtags
+  :ensure t
+  :pin melpa
+  :init
+  (add-hook 'c-mode-hook 'helm-gtags-mode)
+  (add-hook 'c++-mode-hook 'helm-gtags-mode)
+  
+  (setq helm-gtags-ignore-case t
+		helm-gtags-auto-update t
+		helm-gtags-use-input-at-cursor t
+		helm-gtags-display-style 'detail
+		helm-gtags-auto-update t
+		helm-gtags-fuzzy-match t
+		helm-gtags-pulse-at-cursor t
+		helm-gtags-prefix-key "\C-cg"
+		helm-gtags-suggested-key-mapping t
+		helm-gtags-direct-helm-completing t)
 
-
-;; Define custom keyboard mapping to harness the power of helm-gtags
-;; alongside of lightning-keymap-mode.
-(global-set-key (kbd "C-c g a")
-  'helm-gtags-tags-in-this-function)
-(global-set-key (kbd "C-c g f") 'helm-gtags-select)
-(global-set-key (kbd "C-c g s") 'helm-gtags-dwim)
-(global-set-key (kbd "C-c g o") 'helm-gtags-pop-stack)
-(global-set-key (kbd "C-c g p") 'helm-gtags-previous-history)
-(global-set-key (kbd "C-c g n") 'helm-gtags-next-history)
-(global-set-key (kbd "C-c g j") 'helm-gtags-previous-history)
-(global-set-key (kbd "C-c g k") 'helm-gtags-previous-history)
-(global-set-key (kbd "C-c g l") 'helm-gtags-next-history)
-(global-set-key (kbd "C-c g ;") 'helm-gtags-next-history)
-(global-set-key (kbd "C-c g r") 'helm-gtags-resume)
-(global-set-key (kbd "C-c g h") 'helm-gtags-show-stack)
-(global-set-key (kbd "C-c g c") 'helm-gtags-clear-all-stacks)
-(global-set-key (kbd "C-c g u") 'helm-gtags-update-tags)
+  (global-set-key (kbd "C-c g a")
+				  'helm-gtags-tags-in-this-function)
+  (global-set-key (kbd "C-c g t") 'helm-gtags-find-tag)
+  (global-set-key (kbd "C-c g p") 'helm-gtags-find-tag-from-here)
+  (global-set-key (kbd "C-c g e") 'helm-gtags-fing-rtag)
+  (global-set-key (kbd "C-c g s") 'helm-gtags-find-symbol)
+  (global-set-key (kbd "C-c g f") 'helm-gtags-parse-file)
+  (global-set-key (kbd "C-c g w") 'helm-gtags-select)
+  (global-set-key (kbd "C-c g g") 'helm-gtags-dwim)
+  (global-set-key (kbd "C-c g j") 'helm-gtags-pop-stack)
+  (global-set-key (kbd "C-c g ;") 'helm-gtags-push-stack)
+  (global-set-key (kbd "C-c g k") 'helm-gtags-next-history)
+  (global-set-key (kbd "C-c g l") 'helm-gtags-previous-history)
+  (global-set-key (kbd "C-c g r") 'helm-gtags-resume)
+  (global-set-key (kbd "C-c g h") 'helm-gtags-show-stack)
+  (global-set-key (kbd "C-c g c") 'helm-gtags-clear-all-stacks)
+  (global-set-key (kbd "C-c g u") 'helm-gtags-update-tags))
 
 
 (dolist (hook '(lisp-interaction-mode-hook
@@ -174,15 +177,6 @@
 		dired-mode-hook
 		eshell-mode-hook) t)
   (add-hook hook (lambda() (helm-gtags-mode 1))))
-
-;; Use helm history expansion in eshell
-(require 'helm-eshell)
-(add-hook 'eshell-mode-hook
-	  #'(lambda()
-	      (define-key eshell-mode-map (kbd "C-c h h")
-		'helm-eshell-history)))
-(define-key minibuffer-local-map (kbd "C-c h h")
-  'helm-minibuffer-history)
 
 (use-package helm-ag
   :ensure t
@@ -392,8 +386,12 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Globally enable Semantic mode
 (require 'semantic)
-(require 'stickyfunc-enhance)
 (semantic-mode 1)
+
+(use-package stickyfunc-enhance
+  :ensure t
+  :pin melpa)
+
 ;; Enable parsing via Semantic
 (global-semanticdb-minor-mode 1)
 (global-semantic-idle-scheduler-mode 1)
@@ -402,9 +400,11 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; Keep the line containing the definition of a function in the
 ;; top-most line
 (add-to-list 'semantic-default-submodes
-			 'global-semantic-stickyfunc-mode)
+			 'global-semantic-stickyfunc-mode
+			 'global-semantic-mru-bookmark-mode)
 
 (define-key c++-mode-map (kbd "M-TAB") 'semantic-ia-complete-symbol)
+(define-key c++-mode-map (kbd "C-c , f") 'semantic-ia-fast-jump)
 
 ;; Let semantic treat all folders in the `git` directory as larger
 ;; projects.
@@ -463,7 +463,9 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
       gdb-show-main 1)
 
 ;; Use function-args-mode
-(require 'function-args)
+(use-package function-args
+  :ensure t
+  :pin melpa)
 (fa-config-default)
 
 ;; ;; Format buffer using custom astyle
@@ -482,7 +484,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;; 	  (move-to-column previous-column))))
 
 ;; (add-hook 'before-save-hook #'my-cc-mode-before-save-format)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ibuffer ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -799,23 +800,23 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
    '((20 . "#BC8383")
-	 (40 . "#CC9393")
-	 (60 . "#DFAF8F")
-	 (80 . "#D0BF8F")
-	 (100 . "#E0CF9F")
-	 (120 . "#F0DFAF")
-	 (140 . "#5F7F5F")
-	 (160 . "#7F9F7F")
-	 (180 . "#8FB28F")
-	 (200 . "#9FC59F")
-	 (220 . "#AFD8AF")
-	 (240 . "#BFEBBF")
-	 (260 . "#93E0E3")
-	 (280 . "#6CA0A3")
-	 (300 . "#7CB8BB")
-	 (320 . "#8CD0D3")
-	 (340 . "#94BFF3")
-	 (360 . "#DC8CC3")))
+     (40 . "#CC9393")
+     (60 . "#DFAF8F")
+     (80 . "#D0BF8F")
+     (100 . "#E0CF9F")
+     (120 . "#F0DFAF")
+     (140 . "#5F7F5F")
+     (160 . "#7F9F7F")
+     (180 . "#8FB28F")
+     (200 . "#9FC59F")
+     (220 . "#AFD8AF")
+     (240 . "#BFEBBF")
+     (260 . "#93E0E3")
+     (280 . "#6CA0A3")
+     (300 . "#7CB8BB")
+     (320 . "#8CD0D3")
+     (340 . "#94BFF3")
+     (360 . "#DC8CC3")))
  '(vc-annotate-very-old-color "#DC8CC3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -1012,3 +1013,5 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
   :hook ((typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)
          (before-save . tide-format-before-save)))
+
+(setq add-log-mailing-address "pm@dhd-audio.de")

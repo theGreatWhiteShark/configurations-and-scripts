@@ -17,11 +17,6 @@
 	("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
-;; remapping caps-lock to M-x
-;; (if (eq window-system 'x)
-;;     (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
-;; (define-key key-translation-map [f13] (kbd "M-x"))
-
 ;; Use company for autocompletion
 (add-to-list 'load-path
 	     "~/git/configurations-and-scripts/emacs/company-mode")
@@ -112,7 +107,6 @@
 	     "~/git/configurations-and-scripts/emacs/helm")
 (require 'helm)
 (require 'helm-config)
-(require 'helm-gtags)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-unset-key (kbd "C-x rb"))
 (global-set-key (kbd "C-x rb") 'helm-bookmarks)
@@ -139,33 +133,41 @@
       )
 
 ;; Configure the handling of gtags
-(setq helm-gtags-ignore-case t
-      helm-gtags-auto-update t
-      helm-gtags-use-input-at-cursor t
-      helm-gtags-pulse-at-cursor t
-      helm-gtags-prefix-key "\C-cg"
-      helm-gtags-suggested-key-mapping t
-      helm-gtags-direct-helm-completing t)
+(use-package helm-gtags
+  :ensure t
+  :pin melpa
+  :init
+  (add-hook 'c-mode-hook 'helm-gtags-mode)
+  (add-hook 'c++-mode-hook 'helm-gtags-mode)
+  
+  (setq helm-gtags-ignore-case t
+		helm-gtags-auto-update t
+		helm-gtags-use-input-at-cursor t
+		helm-gtags-display-style 'detail
+		helm-gtags-auto-update t
+		helm-gtags-fuzzy-match t
+		helm-gtags-pulse-at-cursor t
+		helm-gtags-prefix-key "\C-cg"
+		helm-gtags-suggested-key-mapping t
+		helm-gtags-direct-helm-completing t)
 
-
-;; Define custom keyboard mapping to harness the power of helm-gtags
-;; alongside of lightning-keymap-mode.
-(global-set-key (kbd "C-c g a")
-  'helm-gtags-tags-in-this-function)
-(global-set-key (kbd "C-c g f") 'helm-gtags-select)
-(global-set-key (kbd "C-c g s") 'helm-gtags-dwim)
-(global-set-key (kbd "C-c g o") 'helm-gtags-pop-stack)
-(global-set-key (kbd "C-c g p") 'helm-gtags-previous-history)
-(global-set-key (kbd "C-c g n") 'helm-gtags-next-history)
-(global-set-key (kbd "C-c g j") 'helm-gtags-previous-history)
-(global-set-key (kbd "C-c g k") 'helm-gtags-previous-history)
-(global-set-key (kbd "C-c g l") 'helm-gtags-next-history)
-(global-set-key (kbd "C-c g ;") 'helm-gtags-next-history)
-(global-set-key (kbd "C-c g r") 'helm-gtags-resume)
-(global-set-key (kbd "C-c g h") 'helm-gtags-show-stack)
-(global-set-key (kbd "C-c g c") 'helm-gtags-clear-all-stacks)
-(global-set-key (kbd "C-c g u") 'helm-gtags-update-tags)
-
+  (global-set-key (kbd "C-c g a")
+				  'helm-gtags-tags-in-this-function)
+  (global-set-key (kbd "C-c g t") 'helm-gtags-find-tag)
+  (global-set-key (kbd "C-c g p") 'helm-gtags-find-tag-from-here)
+  (global-set-key (kbd "C-c g e") 'helm-gtags-fing-rtag)
+  (global-set-key (kbd "C-c g s") 'helm-gtags-find-symbol)
+  (global-set-key (kbd "C-c g f") 'helm-gtags-parse-file)
+  (global-set-key (kbd "C-c g w") 'helm-gtags-select)
+  (global-set-key (kbd "C-c g g") 'helm-gtags-dwim)
+  (global-set-key (kbd "C-c g j") 'helm-gtags-pop-stack)
+  (global-set-key (kbd "C-c g ;") 'helm-gtags-push-stack)
+  (global-set-key (kbd "C-c g k") 'helm-gtags-next-history)
+  (global-set-key (kbd "C-c g l") 'helm-gtags-previous-history)
+  (global-set-key (kbd "C-c g r") 'helm-gtags-resume)
+  (global-set-key (kbd "C-c g h") 'helm-gtags-show-stack)
+  (global-set-key (kbd "C-c g c") 'helm-gtags-clear-all-stacks)
+  (global-set-key (kbd "C-c g u") 'helm-gtags-update-tags))
 
 (dolist (hook '(lisp-interaction-mode-hook
 		emacs-lisp-mode-hook
@@ -174,15 +176,6 @@
 		dired-mode-hook
 		eshell-mode-hook) t)
   (add-hook hook (lambda() (helm-gtags-mode 1))))
-
-;; Use helm history expansion in eshell
-(require 'helm-eshell)
-(add-hook 'eshell-mode-hook
-	  #'(lambda()
-	      (define-key eshell-mode-map (kbd "C-c h h")
-		'helm-eshell-history)))
-(define-key minibuffer-local-map (kbd "C-c h h")
-  'helm-minibuffer-history)
 
 (use-package helm-ag
   :ensure t
@@ -390,20 +383,33 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Globally enable Semantic mode
 (require 'semantic)
+(semantic-mode 1)
+
 (use-package stickyfunc-enhance
   :ensure t
   :pin melpa)
 
-(semantic-mode 1)
 ;; Enable parsing via Semantic
 (global-semanticdb-minor-mode 1)
 (global-semantic-idle-scheduler-mode 1)
+;; Display the interface of a function in the bottom minibuffer.
+(global-semantic-idle-summary-mode 1)
+;; Keep the line containing the definition of a function in the
+;; top-most line
+(add-to-list 'semantic-default-submodes
+			 'global-semantic-stickyfunc-mode
+			 'global-semantic-mru-bookmark-mode)
+
+(define-key c++-mode-map (kbd "M-TAB") 'semantic-ia-complete-symbol)
+(define-key c++-mode-map (kbd "C-c , f") 'semantic-ia-fast-jump)
 
 ;; Let semantic treat all folders in the `git` directory as larger
 ;; projects.
 (setq semanticdb-project-roots
 	  (directory-files (expand-file-name "~/git")
-					   t "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))
+					   t "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)")
+	  semantic-complete-inline-analyzer-idle-displayer-class
+	  'semantic-displayer-ghost)
 
 ;; Make Semantics aware of the Qt5 headers
 (require 'semantic/bovine/c)
@@ -595,9 +601,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 	(mark " "
 	      (name 16 -1)
 	      " " filename)))
-
-;; Use exuberant-ctags over the version shipped with emacs
-(setq projectile-tags-command "/usr/bin/ctags")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;; Diverse ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
