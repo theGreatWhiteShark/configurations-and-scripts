@@ -24,6 +24,25 @@
 (require 'company-gtags)
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t
+	  company-frontends '(company-pseudo-tooltip-frontend))
+(global-set-key (kbd "C-c c k") 'company-select-next-or-abort)
+(global-set-key (kbd "C-c c l") 'company-select-previous-or-abort)
+(global-set-key (kbd "C-c c i") 'company-complete-common-or-show-delayed-tooltip)
+(global-set-key (kbd "C-c c m") 'company-complete-selection)
+(global-set-key (kbd "C-c c s") 'company-filter-candidates)
+(global-set-key (kbd "C-c c j") 'company-abort)
+(global-set-key (kbd "C-c c ;") 'company-abort)
+
+(global-set-key (kbd "C-S-l") 'company-select-previous-or-abort)
+(global-set-key (kbd "S-TAB") 'company-complete-common-or-show-delayed-tooltip)
+(global-set-key (kbd "C-S-s") 'company-filter-candidates)
+(global-set-key (kbd "S-RET") 'company-complete-selection)
+(global-set-key (kbd "C-S-j") 'company-abort)
+(global-set-key (kbd "C-S-k") 'company-select-next-or-abort)
+(global-set-key (kbd "C-:") 'company-abort)
+ 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;; spell checking ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1075,9 +1094,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
   (company-mode +1))
-
-;; aligns annotation to the right hand side
-(setq company-tooltip-align-annotations t)
 
 ;; redirect log into a file
 (setq tide-tsserver-process-environment '("TSS_LOG=-level verbose -file /tmp/tss.log"));
