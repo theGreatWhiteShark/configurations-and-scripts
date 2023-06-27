@@ -137,3 +137,6 @@ fi
 if [ "$( echo $PATH | awk 'BEGIN {ck=0};/phil\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
     PATH=$HOME/bin:$PATH
 fi
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/usr\/local\/go/ {ck=1};END {print ck}')" -eq "0" ];then
+    PATH=/usr/local/go/bin:$PATH
+fi
