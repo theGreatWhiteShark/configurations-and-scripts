@@ -1051,7 +1051,10 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 ;; Load some custom functions to edit Hydrogen files
 (load "~/git/configurations-and-scripts/emacs/elisp/hydrogen.el")
-(add-to-list 'auto-mode-alist '("hydrogen.conf" . xml-mode))
+(add-to-list 'auto-mode-alist '("hydrogen.conf" . xml-mode)
+			 '("*.h2map" . xml-mode))
+;; Adopt the tab width already used in CMake files in Hydrogen.
+(setq cmake-tab-width 4)
 
 ;; Mute Emacs. Yes, there are devices playing a 'beep' received from Emacs.
 (setq visible-bell 1)
