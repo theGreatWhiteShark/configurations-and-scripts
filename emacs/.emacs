@@ -483,10 +483,13 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false" "hyperref" t)
 
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 
-;; ;; Use C headers to complete in headers using company
-;; (require 'company-c-headers)
-;; (add-to-list 'company-backends 'company-c-headers)
-;; (add-to-list 'company-c-headers-path-system "/usr/include/c++/6/")
+;; Use C headers to complete in headers using company
+(use-package company-c-headers
+  :ensure t
+  :pin melpa
+  :init
+  (add-to-list 'company-backends 'company-c-headers)
+  (setq company-c-headers-path-system "/usr/include/c++/10/"))
 
 ;; Use the many window view of GDB. To use it, one must supply the
 ;; -i=mi argument to gdb
