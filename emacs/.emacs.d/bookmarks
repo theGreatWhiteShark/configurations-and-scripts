@@ -1,13 +1,19 @@
-;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-((".zshrc"
+(("programming.org"
+ (filename . "~/git/notes/programming.org")
+ (front-context-string)
+ (rear-context-string . "elve Debugger]]\n")
+ (position . 139)
+ (last-modified 25683 40194 720224 62000))
+(".zshrc"
  (filename . "~/.zshrc")
  (front-context-string . "# Enable ")
  (rear-context-string)
  (position . 1))
- (".bashrc"
+(".bashrc"
  (filename . "~/.bashrc")
  (front-context-string . "\n## reduce promp")
  (rear-context-string . ") -l 'inspect'\"\n")
