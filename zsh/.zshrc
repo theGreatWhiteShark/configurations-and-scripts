@@ -123,20 +123,41 @@ function scp_to_device() {
 function scp_from_device() {
 	sshpass -p $(pass show Dev/$1) scp -r root@$1:$2 $3 
 }
-alias xc3='sshpass -p$(pass show Dev/xc3grat2) ssh xc3grat2'
-alias cpToXc3='scp_to_device xc3grat2'
-alias cpFromXc3='scp_from_device xc3grat2'
-					   
+# alias xc3='sshpass -p$(pass show Dev/xc3grat2) ssh xc3grat2'
+# alias cpToXc3='scp_to_device xc3grat2'
+# alias cpFromXc3='scp_from_device xc3grat2'
+ 
 alias xd3='sshpass -p$(pass show Dev/xd3-pm) ssh xd3-pm'
-alias cpToXd3='scp_to_device xd3pm'
-alias cpFromXd3='scp_from_device xd3pm'
+alias cpToXd3='scp_to_device xd3-pm'
+alias cpFromXd3='scp_from_device xd3-pm'
 
-if [ "$( echo $PATH | awk 'BEGIN {ck=0};/phil\/.local\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
+function start_go-webrtc-server_on_xd3() {
+	remoteProcess=$(sshpass -p$(pass show Dev/xd3-pm) ssh -C xd3-pm ps -aux | grep go-webrtc-server | grep '\-develop')
+
+	if [[ "$(echo $remoteProcess | wc -l)" -gt "0" ]];then
+		echo "killing go-webrtc-server [$(echo $remoteProcess | awk '{print $2}')]"
+		sshpass -p$(pass show Dev/xd3-pm) ssh -C xd3-pm kill $(echo $remoteProcess | awk '{print $2}')
+	fi
+
+	sleep 1
+
+	echo "Copy new binary"
+	scp_to_device xd3-pm $HOME/git/go-webrtc-server/go-webrtc-server
+	echo "Start new go-webrtc-server"
+	sshpass -p$(pass show Dev/xd3-pm) ssh -C xd3-pm /root/go-webrtc-server -develop -debug $1 $2 $3
+}
+
+alias startGo='start_go-webrtc-server_on_xd3'
+
+export GOPATH="$HOME/go"
+export GOROOT="/usr/local/go"
+
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/phil\/.local\/bin/ {ck=1};END {print ck}')" -eq "0" ]; then
     PATH=$HOME/.local/bin:$PATH
 fi
-if [ "$( echo $PATH | awk 'BEGIN {ck=0};/phil\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
+if [ "$( echo $PATH | awk 'BEGIN {ck=0};/phil\/bin/ {ck=1};END {print ck}')" -eq "0" ]; then
     PATH=$HOME/bin:$PATH
 fi
-if [ "$( echo $PATH | awk 'BEGIN {ck=0};/usr\/local\/go/ {ck=1};END {print ck}')" -eq "0" ];then
-    PATH=/usr/local/go/bin:$PATH
+if [ "$( echo $PATH | sed 's/cargo/XXX/g' | awk 'BEGIN {ck=0};/go\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
+   PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
 fi
