@@ -127,24 +127,24 @@ function scp_from_device() {
 # alias cpToXc3='scp_to_device xc3grat2'
 # alias cpFromXc3='scp_from_device xc3grat2'
  
-alias xd3='sshpass -p$(pass show Dev/xd3-pm) ssh xd3-pm'
-alias cpToXd3='scp_to_device xd3-pm'
-alias cpFromXd3='scp_from_device xd3-pm'
+alias xd3='sshpass -p$(pass show Dev/quadbert) ssh quadbert'
+alias cpToXd3='scp_to_device quadbert'
+alias cpFromXd3='scp_from_device quadbert'
 
 function start_go-webrtc-server_on_xd3() {
-	remoteProcess=$(sshpass -p$(pass show Dev/xd3-pm) ssh -C xd3-pm ps -aux | grep go-webrtc-server | grep '\-develop')
+	remoteProcess=$(sshpass -p$(pass show Dev/quadbert) ssh -C quadbert ps -aux | grep go-webrtc-server | grep '\-develop')
 
 	if [[ "$(echo $remoteProcess | wc -l)" -gt "0" ]];then
 		echo "killing go-webrtc-server [$(echo $remoteProcess | awk '{print $2}')]"
-		sshpass -p$(pass show Dev/xd3-pm) ssh -C xd3-pm kill $(echo $remoteProcess | awk '{print $2}')
+		sshpass -p$(pass show Dev/quadbert) ssh -C quadbert kill $(echo $remoteProcess | awk '{print $2}')
 	fi
 
 	sleep 1
 
 	echo "Copy new binary"
-	scp_to_device xd3-pm $HOME/git/go-webrtc-server/go-webrtc-server
+	scp_to_device quadbert $HOME/git/go-webrtc-server/go-webrtc-server
 	echo "Start new go-webrtc-server"
-	sshpass -p$(pass show Dev/xd3-pm) ssh -C xd3-pm /root/go-webrtc-server -develop -debug $1 $2 $3
+	sshpass -p$(pass show Dev/quadbert) ssh -C quadbert /root/go-webrtc-server -develop -debug $1 $2 $3
 }
 
 alias startGo='start_go-webrtc-server_on_xd3'
@@ -161,3 +161,7 @@ fi
 if [ "$( echo $PATH | sed 's/cargo/XXX/g' | awk 'BEGIN {ck=0};/go\/bin/ {ck=1};END {print ck}')" -eq "0" ];then
    PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
 fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
