@@ -95,3 +95,4 @@
   nil nil nil
   (ansi-color-apply-on-region 1 (buffer-size)))
 (add-to-list 'auto-mode-alist '("hydrogen.log" . ansi-color-mode))
+(add-to-list 'auto-mode-alist '("hydrogen.log" . word-wrap-mode))
