@@ -16,10 +16,5 @@ mogrify -scale 20% -scale 500% /tmp/screen_shot.png
 
 ## -------------------------------------------------------------------
 
-## Suspend the system into memory
-sudo pm-suspend
-
-## -------------------------------------------------------------------
-
 ## Lock the screen
 i3lock -i /tmp/screen_shot.png
