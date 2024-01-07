@@ -188,7 +188,7 @@ bindsyn $mod+F1 exec "~/git/configurations-and-scripts/i3/adjust_volume.sh 0"
 
 # shortcuts for applications
 bindsym $mod+Ctrl+e exec "emacs"
-bindsym $mod+Ctrl+d exec "caja"
+bindsym $mod+Ctrl+d exec "nemo"
 
 # rotate the external monitor by 90 degrees
 bindsym $mod+o exec "xrandr --output HDMI-1 --rotate left"
