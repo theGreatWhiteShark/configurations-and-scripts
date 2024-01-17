@@ -11,8 +11,8 @@ setxkbmap -layout us
 ## -------------------------------------------------------------------
 
 ## As a nice screensaver, take a screenshot and blurs it.
-scrot /tmp/screen_shot.png
-mogrify -scale 20% -scale 500% /tmp/screen_shot.png
+scrot --overwrite /tmp/screen_shot.png
+mogrify -scale 10% -scale 1000% /tmp/screen_shot.png
 
 ## -------------------------------------------------------------------
 
