@@ -3,12 +3,14 @@
 function paths_and_folders() {
 	echo -e "\n * generating basic environment (linking scripts and creating folders)...\n"
 	
+	cd $HOME/git/configurations-and-scripts || exit 1
+	git submodule update --init --recursive || exit 1
+	cd - || exit 1
+	
 	## Configuration of the home environment. 
 	## Since most files are already contained in the git repository they just have to be linked properly.
 	# Emacs stuff
-	rm -r $HOME/.emacs $HOME/.emacs.d
-	ln -s $HOME/git/configurations-and-scripts/emacs/.emacs $HOME/.emacs
-	ln -s $HOME/git/configurations-and-scripts/emacs/.emacs.d $HOME/.emacs.d
+	ln -s $HOME/git/configurations-and-scripts/emacs/.doom.d $HOME/.doom.d
 	# Bash and linux
 	rm $HOME/.bashrc $HOME/.xinitrc $HOME/.xprofile $HOME/.profile
 	ln -s $HOME/git/configurations-and-scripts/bash/.bashrc $HOME/.bashrc
@@ -25,12 +27,13 @@ function paths_and_folders() {
 	mkdir $HOME/bin
 	export PATH=$HOME/bin:$PATH
 
-	sudo mv /etc/slim.conf /etc/slim.old.conf
-	sudo cp $HOME/git/configurations-and-scripts/linux/slim.conf /etc/slim.conf
+	# sudo mv /etc/slim.conf /etc/slim.old.conf
+	# sudo cp $HOME/git/configurations-and-scripts/linux/slim.conf /etc/slim.conf
 
 	## Link audio configuration files
 	[ -f $HOME/.ambdecrc ] && rm $HOME/.ambdecrc
 	[ -f $HOME/.ambdec-config-stereo ] && rm $HOME/.ambdec-config-stereo
+	[ -d $HOME/.config/pulse ] && rm -rf $HOME/.config/pulse
 	mkdir $HOME/.config/pulse
 	mkdir $HOME/.config/rncbc.org
 
@@ -46,10 +49,10 @@ function pass_init() {
 	echo -e "\n * initialize password store. Be sure to have both the GPG key of thetruephil@googlemail.com and the SSH key for Gitlab registered.\n"
 
 	git clone git@gitlab.com:theGreatWhiteShark/orga $HOME/git/orga || exit 1
-	rm -r $HOME/.password-store || exit 1
+	rm -rf $HOME/.password-store || exit 1
 	ln -s $HOME/git/orga/.password-store $HOME/.password-store || exit 1
 
-	pass init 50B9595503C02D7467FDA1A2B9EB2795611A2033 || exit 1
+	pass init AFC1393E3E68B9300862D32D54A7A708A136FE39 || exit 1
 }
 
 function emacs_install() {
@@ -59,32 +62,25 @@ function emacs_install() {
 
 	git clone https://github.com/emacs-mirror/emacs.git $HOME/git/emacs
 	cd $HOME/git/emacs/
-	git checkout emacs-28
+	git checkout emacs-29.1.90
 	./autogen.sh
 	./configure
 	make
 	sudo make install
-
-	## Load and compile the custom packages of Emacs
-	## Enabling all Emacs submodules
-	cd $HOME/git/configurations-and-scripts/emacs
-	git submodule update --init --recursive
-	cd org-mode
-	make
-	make autoloads
-	cd ../ESS
-	make
-	cd ../helm
-	make
-	cd ../company
-	make
 }
 
 function general_install() {
 	echo -e "\n * general installation...\n"
 	
 	## Install helpful packages
-	sudo apt -y install apt-file at nitrogen imagemagick pandoc scrot xinput xbacklight brightnessctl meld thunderbird clementine terminator pasystray pavucontrol ispell ingerman wngerman aspell-de htop nextcloud-desktop caja-nextcloud i3-wm i3blocks i3lock i3status borgbackup qasmixer qasconfig r-base pmount xcompmgr ack go-mtpfs vlc global info liblo-tools autoconf make gcc g++ pkg-config ecasound libecasoundc-dev libcsound64-dev csound csound-utils csound-data ambdec pavumeter paprefs pulseaudio-module-jack synapse pass pm-utils redshift
+	sudo apt -y install apt-file at imagemagick pandoc scrot xinput xbacklight brightnessctl zsh \
+			meld thunderbird strawberry terminator pasystray pavucontrol ispell ingerman  \
+			wngerman aspell-de htop nextcloud-desktop nemo nemo-nextcloud i3-wm i3blocks  \
+			i3lock i3status borgbackup qasmixer qasconfig r-base pmount xcompmgr adb vlc  \
+			global info liblo-tools autoconf make gcc g++ pkg-config ecasound blueman git \
+			libecasoundc-dev libcsound64-dev csound csound-utils csound-data ambdec curl  \
+			pavumeter paprefs pulseaudio-module-jack synapse pass pm-utils redshift       \
+			silversearcher-ag fd-find flatpak chromium openvpn rfkill
 	sudo apt-file update
 }
 
@@ -92,51 +88,52 @@ function audio_install() {
 	echo -e "\n * installing audio packages...\n"
 	
 	## Install LADSPA plugins
-	sudo apt -y install amb-plugins autotalent blepvco blop bs2b-ladspa calf-plugins cmt csladspa drumgizmo drumkv1-lv2 fil-plugins guitarix-ladspa guitarix-lv2 invada-studio-plugins-ladspa invada-studio-plugins-lv2 ir.lv2 jalv ladspalist lv2-dev mcp-plugins omins pd-plugin rev-plugins rubberband-ladspa ste-plugins swh-plugins swh-lv2 tap-plugins vco-plugins wah-plugins zam-plugins zynadd
+	sudo apt -y install amb-plugins autotalent blepvco blop bs2b-ladspa \
+		calf-plugins cmt csladspa drumgizmo drumkv1-lv2 fil-plugins     \
+		guitarix-ladspa guitarix-lv2 invada-studio-plugins-ladspa       \
+		invada-studio-plugins-lv2 ir.lv2 jalv ladspalist lv2-dev        \
+		mcp-plugins omins pd-plugin rev-plugins rubberband-ladspa       \
+		ste-plugins swh-plugins swh-lv2 tap-plugins vco-plugins         \
+		wah-plugins zam-plugins php extra-cmake-modules || exit 1
 	
 	## compile and install lsp plugins
-	sudo apt install -y libfltk1.3-dev libmxml-dev libfftw3-dev
-	git clone git://github.com/sadko4u/lsp-plugins $HOME/git/lsp-plugins
-	cd $HOME/git/lsp-plugins
-	git checkout 1.2.1
-	make config FEATURES=’lv2 vst2 doc’
-	make -j4
-	sudo make install
+	sudo apt install -y libfltk1.3-dev libmxml-dev libfftw3-dev || exit 1
+	git clone https://github.com/sadko4u/lsp-plugins $HOME/git/lsp-plugins || exit 1
+	cd $HOME/git/lsp-plugins || exit 1
+	git checkout 1.2.14 || exit 1
+	make config FEATURES=’lv2 vst2 doc’ || exit 1
+	make fetch || exit 1
+	make -j4 || exit 1
+	sudo make install || exit 1
 
 	## compile and install Yoshimi
-	git clone git://github.com/Yoshimi/yoshimi $HOME/git/yoshimi
-	cd $HOME/git/yoshimi
-	git checkout 2.2.0
-	cd src
-	cmake .
-	Make -j4
-	sudo make install
-
-	## compile and install MuseScore
-	sudo apt install -y qtwebengine5-dev qtquickcontrols2-5-dev qml-module-qtquick-templates2 libmp3lame-dev libqt5svg5-dev
-	git clone https://github.com/musescore/MuseScore $HOME/git/MuseScore
-	cd $HOME/git/MuseScore
-	git checkout v3.6.2
-	cmake . -DBUILD_PORTAUDIO=OFF -DBUILD_PORTMIDI=OFF
-	sudo ln -f /bin/gzip /usr/bin/gzip
-	sudo ln -s /bin/ln /usr/bin/ln
-	make -j4
-	sudo make install
+	git clone https://github.com/Yoshimi/yoshimi $HOME/git/yoshimi || exit 1
+	cd $HOME/git/yoshimi || exit 1
+	git checkout 2.3.1.3 || exit 1
+	cd src || exit 1
+	cmake . || exit 1
+	make -j4 || exit 1
+	sudo make install || exit 1
 
 	## install Muse4
-	git clone git://github.com/muse-sequencer/muse $HOME/git/muse
-	cd $HOME/git/muse/src
-	git checkout 4.1.0
-	./compile_muse.sh
-	cd build
-	sudo make install
+	git clone https://github.com/muse-sequencer/muse $HOME/git/muse || exit 1
+	cd $HOME/git/muse/src || exit 1
+	git checkout 4.2.1 || exit 1
+	./compile_muse.sh || exit 1
+	cd build || exit 1
+	sudo make install || exit 1
 
 }
 
 function hydrogen_install() {
 	echo -e "\n * install everything required to compile hydrogen...\n"
 	## Compile and install hydrogen
-	sudo apt -y install libqt5xmlpatterns5-dev libarchive-dev libsndfile1-dev libasound2-dev liblo-dev libpulse-dev libcppunit-dev liblrdf0-dev liblash-compat-dev librubberband-dev libjack-jackd2-dev ccache cmake libtar-dev doxygen qttools5-dev-tools qtbase5-dev-tools qttools5-dev qtbase5-dev qtcreator xmlto docbook
+	sudo apt -y install libqt5xmlpatterns5-dev libarchive-dev libsndfile1-dev \
+			libasound2-dev liblo-dev libpulse-dev libcppunit-dev      \
+			liblrdf0-dev librubberband-dev qtcreator xmlto docbook    \
+			libjack-jackd2-dev ccache cmake libtar-dev doxygen        \
+			qttools5-dev-tools qtbase5-dev-tools qttools5-dev         \
+			qtbase5-dev libqt5svg5-dev
 	git clone https://github.com/hydrogen-music/hydrogen.git $HOME/git/hydrogen
 	cd $HOME/git/hydrogen
 	./build.sh mm
@@ -149,10 +146,11 @@ function jack2_install() {
 	
 	## Compile and install JACK2. (It has to be configured to NOT use
 	## systemd)
-	sudo apt -y install libeigen3-dev libopus-dev opus-tools  libsamplerate0-dev libdb-dev
+	sudo apt -y install libeigen3-dev libopus-dev opus-tools  \
+		libsamplerate0-dev libdb-dev
 	git clone https://github.com/jackaudio/jack2.git $HOME/git/jack2
 	cd $HOME/git/jack2
-	git checkout v1.9.21
+	git checkout v1.9.22
 	./waf configure --systemd=no --dbus --enable-pkg-config-dbus-service-dir
 	./waf build
 	sudo ./waf install
@@ -160,7 +158,7 @@ function jack2_install() {
 	## Compile and install QJackCtl
 	git clone https://github.com/rncbc/qjackctl $HOME/git/qjackctl
 	cd $HOME/git/qjackctl/
-	git checkout qjackctl_0_9_7
+	git checkout qjackctl_0_9_12
 	cmake -DCONFIG_JACK_VERSION=yes -B build
 	cmake --build build --parallel 4
 	sudo cmake --install build
@@ -168,7 +166,7 @@ function jack2_install() {
 
 echo -e "Installation script written for Devuan Chimaera (last updated 2022.05.18)\n"
 
-read -p "Installing audio libraries (apart from hydrogen) as well? [y/n] " AUDIO_REQUESTED 
+read -p "Installing audio libraries (apart from hydrogen) as well? [y/n] " AUDIO_REQUESTED
 
 paths_and_folders
 general_install
