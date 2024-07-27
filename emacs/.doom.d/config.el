@@ -81,7 +81,7 @@
 
 (after! lsp-clangd
   (setq lsp-clients-clangd-args
-        '("-j=3"
+        '("-j=1"
           "--background-index"
           "--clang-tidy"
           "--completion-style=detailed"
